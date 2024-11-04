@@ -1,0 +1,79 @@
+@charset "UTF-8";
+
+/* CSS Document */
+
+:root {
+    --main-color: aliceblue;
+    --main-color-light: #41688C;
+    --main-color-dark: #122b8c;
+    --main-color-grey: #464545;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    background-color: var(--main-color);
+}
+
+header {
+    background-color: #EEF1F6;
+    color: black;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    min-height: 70px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header-container {
+    margin: auto;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo {
+    float: left;
+    font-size: 20px;
+    width: 125px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    color: black;
+    border-radius: 15px;
+    ;
+}
+
+.user {
+    color: black;
+    font-size: 20px;
+    float: right;
+    margin-right: 10px;
+    width: 125px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+}
+
+.nav {
+    margin-left: 10px;
+    display: flex;
+    width: 35%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.nav a:hover {
+    background-color: var(--main-color-grey);
+    color: white;
+    border-radius: 15px;
+    padding: 16px 6px 16px 6px;
+}
