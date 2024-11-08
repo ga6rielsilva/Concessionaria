@@ -158,20 +158,67 @@ a {
 /**
  * Define o estilo do conteúdo da página.
  */
+.main-container {
+    padding: 49px;
+    margin: -30px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
+.main-menu {
+    scale: 1.2;
+    height: 60%;
+    margin: 10px auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    justify-items: center;
+    align-items: center;
+}
 
+.menu-item {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #d2e3fc67;
+    color: black;
+    text-align: center;
+    transition: all 0.5s ease;
+    width: 90px;
+    height: 90px;
+    cursor: pointer;
+}
+
+.menu-item p, .menu-item i {
+    scale: 1;
+}
+
+.menu-item:hover {
+    background-color: #d2e3fc;
+    color: black;
+    scale: 1.1;
+}
 /**
  * Define o estilo do rodapé da página.
  */
 
 .footer-container{
+    position: fixed;
+    width: 100%;
     background-color: #dee1e6;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
-    margin: 10px auto;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+    bottom: 0;
     align-items: center;
     display: flex;
     flex-direction: column;
-    height: 40%;
     justify-content: center;
     text-align: center;
 }
