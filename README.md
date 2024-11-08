@@ -96,7 +96,7 @@ _(Substitua com a URL de uma imagem hospedada ou local do diagrama de classes do
 
 Abaixo está o diagrama ER do banco de dados.
 
-![Modelo conceitual](https://github.com/ga6rielsilva/Concessionaria/Banco de dados/modeloER/Conceitual/Banco de dados conceitual do projeto.pdf)  
+![Modelo conceitual](https://github.com/ga6rielsilva/Concessionaria/blob/main/Banco%20de%20dados/modeloER/Conceitual/Banco%20de%20dados%20conceitual%20do%20projeto.pdf)  
 _(Substitua com a URL de uma imagem hospedada ou local do diagrama ER)_
 
 #### Estrutura das Tabelas
