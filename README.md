@@ -83,7 +83,7 @@ Este é um sistema de gerenciamento ERP para uma Concessionaria de veículos, on
 
 ### Modelagem do Sistema
 
-![Diagrama de Classes](https://github.com/ga6rielsilva/Concessionaria/imagens/diagrama_classes.png)  
+![Diagrama de Classes](https://github.com/ga6rielsilva/Concessionaria/imagens/diagrama_classes.png)
 _(Substitua com a URL de uma imagem hospedada ou local do diagrama de classes do sistema)_
 
 ### Descrição das Entidades
@@ -96,7 +96,7 @@ _(Substitua com a URL de uma imagem hospedada ou local do diagrama de classes do
 
 Abaixo está o diagrama ER do banco de dados.
 
-![Diagrama ER](https://github.com/ga6rielsilva/Concessionaria/imagens/diagrama_er.png)  
+![Modelo conceitual](https://github.com/ga6rielsilva/Concessionaria/blob/main/Banco%20de%20dados/modeloER/Conceitual/Banco%20de%20dados%20conceitual%20do%20projeto.pdf)  
 _(Substitua com a URL de uma imagem hospedada ou local do diagrama ER)_
 
 #### Estrutura das Tabelas
