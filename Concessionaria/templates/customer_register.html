@@ -62,35 +62,59 @@
     <main>
         <div class="main-container">
             <div class="main-content">
-                <h1>Seja bem-vindo, {username}! </h1>
-                <p>Escolha uma das opções no menu abaixo para começar.</p>
+                <h1>Cadastro de Clientes </h1>
             </div>
-            <div class="main-menu">
-                <a href="../templates/vehicle_register.html" class="menu-item">
-                    <p>Cadastro <br> Veiculos</p>
-                    <i class="material-symbols-outlined">directions_car</i>
-                </a>
-                <a href="../templates/customer_register.html" class="menu-item">
-                    <p>Cadastro <br> Clientes</p>
-                    <i class="material-symbols-outlined menu-icon">person_add</i>
-                </a>
-                <a href="employee_register.html" class="menu-item">
-                    <p>Cadastro <br>Funcionário</p>
-                    <i class="material-symbols-outlined">group_add</i>
-                </a>
-                <a href="../templates/vehicle_search.html" class="menu-item">
-                    <p>Consulta <br> Veiculos</p>
-                    <i class="material-symbols-outlined menu-icon">traffic_jam</i>
-                </a>
-                <a href="../templates/customer_search.html" class="menu-item">
-                    <p>Consulta <br> Clientes</p>
-                    <i class="material-symbols-outlined menu-icon">person_search</i>
-                </a>
-                <a href="../templates/reports.html" class="menu-item">
-                    <p>Relatórios</p>
-                    <i class="material-symbols-outlined menu-icon">assignment</i>
-                </a>
-            </div>
+            <form action="" method="POST">
+                <div class="form-container">
+                    <div class="form-item">
+                        <label for="profilePhoto">Foto de Perfil</label>
+                        <img id="preview" src="#" alt="Pré-visualização"
+                            style="display: none; margin-top: 10px; max-width: 150px; max-height: 200px;">
+                        <input type="file" id="profilePhoto" name="profilePhoto" accept="image/*"
+                            onchange="previewImage(event)">
+                    </div>
+                    <div class="form-item">
+                        <label for="name">Nome</label>
+                        <input type="text" name="name" id="name" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="cpf">CPF</label>
+                        <input type="text" name="cpf" id="cpf" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="email">E-mail</label>
+                        <input type="email" name="email" id="email" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="phone">Telefone</label>
+                        <input type="text" name="phone" id="phone" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="address">Endereço</label>
+                        <input type="text" name="address" id="address" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="city">Cidade</label>
+                        <input type="text" name="city" id="city" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="state">Estado</label>
+                        <input type="text" name="state" id="state" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="zip">CEP</label>
+                        <input type="text" name="zip" id="zip" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="country">País</label>
+                        <input type="text" name="country" id="country" required>
+                    </div>
+                    <div class="form-item form-button">
+                        <button type="submit">Cadastrar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </main>
     <footer>
         <div class="footer-container">

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/Concessionaria/Assets/css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@600" />
+    <script src="../javascript/scripts.js"></script>
+    <title>Nome Empresa</title>
+</head>
+
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="../Assets/img/imagemteste.png"
+                    alt="logo-empresa">
+            </div>
+            <nav class="nav ">
+                <div class="nav-item">
+                    <a href="../templates/index.html">Home</a>
+                </div>
+                <div class="nav-item">
+                    <a href="#">Cadastro</a>
+                    <div class="submenu">
+                        <a href="../templates/vehicle_register.html">Veículos</a>
+                        <a href="../templates/customer_register.html">Clientes</a>
+                        <a href="../templates/employee_register.html">Funcionários</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="#">Consulta</a>
+                    <div class="submenu">
+                        <a href="../templates/vehicle_search.html">Veículos</a>
+                        <a href="../templates/customer_search.html">Clientes</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="#">Relatórios</a>
+                    <div class="submenu">
+                        <a href="../templates/sales_reports.html">Vendas</a>
+                        <a href="../templates/stock_reports.html">Estoque</a>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="user-container">
+                <a class="user" id="user-icon" href="#">
+                    <p>{username}</p>
+                    <i class="material-symbols-outlined user-icon">account_circle</i>
+                </a>
+                <div id="user-submenu" class="user-submenu">
+                    <a href="#">Perfil</a>
+                    <a href="#">Configurações</a>
+                    <a href="#">Sair</a>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <main>
+        <div class="main-container">
+            <div class="main-content">
+                <h1>Cadastro de Veículos </h1>
+            </div>
+            <form action="" method="POST">
+                <div class="form-container">
+                    <div class="form-item">
+                        <label for="profilePhoto">Foto do Veículo</label>
+                        <img id="preview" src="#" alt="Pré-visualização"
+                            style="display: none; margin-top: 10px; max-width: 150px; max-height: 200px;">
+                        <input type="file" id="profilePhoto" name="profilePhoto" accept="image/*"
+                            onchange="previewImage(event)">
+                    </div>
+                    <div class="form-item">
+                        <label for="modelo">Modelo</label>
+                        <input type="text" name="modelo" id="modelo" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="plate_vehicle">Placa</label>
+                        <input type="text" name="plate_vehicle" id="plate_vehicle" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="chassi">Chassi</label>
+                        <input type="text" name="chassi" id="chassi" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="year_vehicle">Ano do Veículo</label>
+                        <input type="text" name="year_vehicle" id="year_vehicle" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="type_vehicle">Tipo Carroceria</label>
+                        <select name="type_vehicle" id="type_vehicle">
+                            <option value="" disabled selected>Selecione um tipo</option>
+                            <option value="Sedan">Sedan</option>
+                            <option value="Hatch">Hatch</option>
+                            <option value="SUV">SUV</option>
+                            <option value="Picape">Picape</option>
+                            <option value="Van">Van</option>
+                            <option value="Caminhão">Caminhão</option>
+                            <option value="Moto">Moto</option>
+                        </select>
+                    </div>
+                    <div class="form-item">
+                        <label for="kms_vehicle">Quilometragem</label>
+                        <input type="text" name="kms_vehicle" id="kms_vehicle" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="condition_vehicle">Condição</label>
+                        <select name="condition_vehicle" id="condition_vehicle">
+                            <option value="" disabled selected>Selecione uma Condição</option>
+                            <option value="Novo">Novo</option>
+                            <option value="Semi-novo">Semi-novo</option>
+                            <option value="Usado">Usado</option>
+                        </select>
+                    </div>
+                    <div class="form-item">
+                        <label for="color_vehicle">Cor</label>
+                        <input type="text" name="color_vehicle" id="color_vehicle" required>
+                    </div>
+                    <div class="form-item form-button-vehicle-register">
+                        <button type="submit">Cadastrar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+    <footer>
+        <div class="footer-container">
+            <p>© {Ydate} - {Nome Empresa} - Todos os direitos reservados</p>
+        </div>
+    </footer>
+    <script src="../javascript/scripts.js"></script>
+</body>
+
+</html>

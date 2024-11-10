@@ -14,7 +14,8 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <img src="../Assets/img/imagemteste.png" alt="logo-empresa">
+                <img src="../Assets/img/imagemteste.png"
+                    alt="logo-empresa">
             </div>
             <nav class="nav ">
                 <div class="nav-item">
@@ -62,35 +63,27 @@
     <main>
         <div class="main-container">
             <div class="main-content">
-                <h1>Seja bem-vindo, {username}! </h1>
-                <p>Escolha uma das opções no menu abaixo para começar.</p>
+                <h1>Consulta de Clientes </h1>
             </div>
-            <div class="main-menu">
-                <a href="../templates/vehicle_register.html" class="menu-item">
-                    <p>Cadastro <br> Veiculos</p>
-                    <i class="material-symbols-outlined">directions_car</i>
-                </a>
-                <a href="../templates/customer_register.html" class="menu-item">
-                    <p>Cadastro <br> Clientes</p>
-                    <i class="material-symbols-outlined menu-icon">person_add</i>
-                </a>
-                <a href="employee_register.html" class="menu-item">
-                    <p>Cadastro <br>Funcionário</p>
-                    <i class="material-symbols-outlined">group_add</i>
-                </a>
-                <a href="../templates/vehicle_search.html" class="menu-item">
-                    <p>Consulta <br> Veiculos</p>
-                    <i class="material-symbols-outlined menu-icon">traffic_jam</i>
-                </a>
-                <a href="../templates/customer_search.html" class="menu-item">
-                    <p>Consulta <br> Clientes</p>
-                    <i class="material-symbols-outlined menu-icon">person_search</i>
-                </a>
-                <a href="../templates/reports.html" class="menu-item">
-                    <p>Relatórios</p>
-                    <i class="material-symbols-outlined menu-icon">assignment</i>
-                </a>
+            <div class="search-container search-item">
+                <form action="/search_customer" method="GET" id="search-form">
+                    <label for="cpf">CPF:</label>
+                    <input type="text" id="cpf" name="cpf" placeholder="Digite o CPF" required>
+                    <button type="submit">Buscar</button>
+                </form>
             </div>
+            
+            <div id="result-container" style="display:none;">
+                <h2>Resultado da Busca</h2>
+                <div id="profile-picture" style="margin-top: 10px; max-width: 150px; max-height: 200px;">
+                    <!-- A foto de perfil será inserida aqui -->
+                </div>
+                <div id="customer-details">
+                    <!-- Os detalhes do cliente serão inseridos aqui -->
+                </div>
+            </div>
+            
+        </div>
     </main>
     <footer>
         <div class="footer-container">
