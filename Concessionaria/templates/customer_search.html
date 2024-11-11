@@ -68,7 +68,7 @@
             <div class="search-container search-item">
                 <form action="/search_customer" method="GET" id="search-form">
                     <label for="cpf">CPF:</label>
-                    <input type="text" id="cpf" name="cpf" placeholder="Digite o CPF" required>
+                    <input type="text" id="cpf" name="cpf" placeholder="Digite o CPF" maxlength="14" required>
                     <button type="submit">Buscar</button>
                 </form>
             </div>
@@ -76,10 +76,13 @@
             <div id="result-container" style="display:none;">
                 <h2>Resultado da Busca</h2>
                 <div id="profile-picture" style="margin-top: 10px; max-width: 150px; max-height: 200px;">
-                    <!-- A foto de perfil será inserida aqui -->
                 </div>
                 <div id="customer-details">
-                    <!-- Os detalhes do cliente serão inseridos aqui -->
+                    <p><strong>Nome:</strong> <span id="customer-name"></span></p>
+                    <p><strong>CPF:</strong> <span id="customer-cpf"></span></p>
+                    <p><strong>Telefone:</strong> <span id="customer-phone"></span></p>
+                    <p><strong>Email:</strong> <span id="customer-email"></span></p>
+                    <p><strong>Endereço:</strong> <span id="customer-address"></span></p>
                 </div>
             </div>
             
@@ -90,7 +93,6 @@
             <p>© {Ydate} - {Nome Empresa} - Todos os direitos reservados</p>
         </div>
     </footer>
-    <script src="../javascript/scripts.js"></script>
 </body>
 
 </html>

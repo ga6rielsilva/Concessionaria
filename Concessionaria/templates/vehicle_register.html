@@ -68,27 +68,39 @@
             <form action="" method="POST">
                 <div class="form-container">
                     <div class="form-item">
-                        <label for="profilePhoto">Foto do Veículo</label>
+                        <label for="vehiclePhoto">Foto do Veículo</label>
                         <img id="preview" src="#" alt="Pré-visualização"
                             style="display: none; margin-top: 10px; max-width: 150px; max-height: 200px;">
                         <input type="file" id="profilePhoto" name="profilePhoto" accept="image/*"
                             onchange="previewImage(event)">
                     </div>
                     <div class="form-item">
+                        <label for="brand_vehicle">Marca</label>
+                        <input type="text" name="brand_vehicle" id="brand_vehicle" required>
+                    </div>
+                    <div class="form-item">
                         <label for="modelo">Modelo</label>
-                        <input type="text" name="modelo" id="modelo" required>
+                        <input type="text" name="modelo" id="vehicle_model" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="engine_vehicle">Motor</label>
+                        <input type="text" name="engine_vehicle" id="engine_vehicle" required>
                     </div>
                     <div class="form-item">
                         <label for="plate_vehicle">Placa</label>
                         <input type="text" name="plate_vehicle" id="plate_vehicle" required>
                     </div>
                     <div class="form-item">
-                        <label for="chassi">Chassi</label>
-                        <input type="text" name="chassi" id="chassi" required>
+                        <label for="color_vehicle">Cor</label>
+                        <input type="text" name="color_vehicle" id="color_vehicle" required>
                     </div>
                     <div class="form-item">
                         <label for="year_vehicle">Ano do Veículo</label>
                         <input type="text" name="year_vehicle" id="year_vehicle" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="kms_vehicle">Quilometragem</label>
+                        <input type="text" name="kms_vehicle" id="kms_vehicle" required>
                     </div>
                     <div class="form-item">
                         <label for="type_vehicle">Tipo Carroceria</label>
@@ -104,10 +116,6 @@
                         </select>
                     </div>
                     <div class="form-item">
-                        <label for="kms_vehicle">Quilometragem</label>
-                        <input type="text" name="kms_vehicle" id="kms_vehicle" required>
-                    </div>
-                    <div class="form-item">
                         <label for="condition_vehicle">Condição</label>
                         <select name="condition_vehicle" id="condition_vehicle">
                             <option value="" disabled selected>Selecione uma Condição</option>
@@ -117,8 +125,12 @@
                         </select>
                     </div>
                     <div class="form-item">
-                        <label for="color_vehicle">Cor</label>
-                        <input type="text" name="color_vehicle" id="color_vehicle" required>
+                        <label for="chassi">Chassi</label>
+                        <input type="text" name="chassi" id="chassi_vehicle" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="price_vehicle">Preço</label>
+                        <input type="text" name="price_vehicle" id="price_vehicle" required>
                     </div>
                     <div class="form-item form-button-vehicle-register">
                         <button type="submit">Cadastrar</button>
@@ -132,7 +144,6 @@
             <p>© {Ydate} - {Nome Empresa} - Todos os direitos reservados</p>
         </div>
     </footer>
-    <script src="../javascript/scripts.js"></script>
 </body>
 
 </html>
