@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/Concessionaria/Assets/css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@600" />
+    <script src="../javascript/scripts.js"></script>
+    <title>Nome Empresa</title>
+</head>
+
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="../Assets/img/imagemteste.png" alt="logo-empresa">
+            </div>
+            <nav class="nav ">
+                <div class="nav-item">
+                    <a href="../templates/index.html">Home</a>
+                </div>
+                
+                <div class="nav-item">
+                    <a href="#">Cadastro</a>
+                    <div class="submenu">
+                        <a href="../templates/vehicle_register.html">Veículos</a>
+                        <a href="../templates/customer_register.html">Clientes</a>
+                        <a href="../templates/employee_register.html">Funcionários</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="#">Consulta</a>
+                    <div class="submenu">
+                        <a href="../templates/vehicle_search.html">Veículos</a>
+                        <a href="../templates/customer_search.html">Clientes</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="#">Relatórios</a>
+                    <div class="submenu">
+                        <a href="../templates/sales_reports.html">Vendas</a>
+                        <a href="../templates/stock_reports.html">Estoque</a>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="user-container">
+                <a class="user" id="user-icon" href="#">
+                    <p>{username}</p>
+                    <i class="material-symbols-outlined user-icon">account_circle</i>
+                </a>
+                <div id="user-submenu" class="user-submenu">
+                    <a href="#">Perfil</a>
+                    <a href="#">Configurações</a>
+                    <a href="#">Sair</a>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <main>
+        <div class="main-container">
+            <div class="main-content">
+                <h1>Cadastro de Funcionários </h1>
+            </div>
+            <form action="" method="POST">
+                <div class="form-container">
+                    <div class="form-item">
+                        <label for="profilePhoto">Foto de Perfil</label>
+                        <img id="preview" src="#" alt="Pré-visualização"
+                            style="display: none; margin-top: 10px; max-width: 150px; max-height: 200px;">
+                        <input type="file" id="profilePhoto" name="profilePhoto" accept="image/*"
+                            onchange="previewImage(event)">
+                    </div>
+                    <div class="form-item">
+                        <label for="name">Nome</label>
+                        <input type="text" name="name" id="name" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="cpf">CPF</label>
+                        <input type="text" name="cpf" id="cpf" maxlength="14" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="birthdate_employer">Data de Nascimento</label>
+                        <input type="date" name="birthdate_employer" id="birthdate_employer" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="position_employer">Cargo</label>
+                        <select name="position_employer" id="position_employer">
+                            <option value="selecione" selected disabled>Selecione</option>
+                            <option value="vendedor">Vendedor</option>
+                            <option value="estoque">Estoque</option>
+                            <option value="supervisor">Supervisor</option>
+                            <option value="financeiro">Financeiro</option>
+                            <option value="gerente">Gerente</option>
+                        </select>
+                    </div>
+                    <div class="form-item">
+                        <label for="email">E-mail</label>
+                        <input type="email" name="email" id="email" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="phone">Telefone</label>
+                        <input type="text" name="phone" id="phone" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="address">Endereço</label>
+                        <input type="text" name="address" id="address" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="city">Cidade</label>
+                        <input type="text" name="city" id="city" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="state">Estado</label>
+                        <input type="text" name="state" id="state" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="zip">CEP</label>
+                        <input type="text" name="zip" id="zip" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="country">País</label>
+                        <input type="text" name="country" id="country" required>
+                    </div>
+                    <div class="form-item form-button">
+                        <button type="submit">Cadastrar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+    <footer>
+        <div class="footer-container register-footer">
+            <p>© {Ydate} - {Nome Empresa} - Todos os direitos reservados</p>
+        </div>
+    </footer>
+</body>
+
+</html>

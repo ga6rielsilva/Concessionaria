@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let price = event.target.value;
 
             price = price.replace(/\D/g, "")
-                .replace( /\B(?=(\d{3})+(?!\d))/g, ".");
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
             event.target.value = "R$ " + price;
         });
@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Carregamento da consulta de cliente
+    // Carregamento da consulta de cliente ** PRECISA SER ALTERADO **
     const searchForm = document.getElementById("search-form");
 
     if (searchForm) {
@@ -168,7 +168,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const cpf = document.getElementById("cpf").value;
 
-            fetch(`/search_customer?cpf=${cpf}`)
+            // Simula a resposta do servidor
+            const mockData = {
+                fotoPerfil: "https://via.placeholder.com/150",
+                nome: "João Silva",
+                telefone: "(11) 98765-4321",
+                email: "joao.silva@example.com",
+                endereco: "Rua Fictícia, 123",
+                cidade: "São Paulo",
+                estado: "SP",
+                pais: "Brasil"
+            };
+
+            // Simula o promesso do `fetch`
+            Promise.resolve({ ok: true, json: () => Promise.resolve(mockData) })
                 .then(response => {
                     if (response.ok) {
                         return response.json();
@@ -185,22 +198,23 @@ document.addEventListener("DOMContentLoaded", function () {
                     profilePicture.innerHTML = `<img src="${data.fotoPerfil}" alt="Foto de Perfil" style="width: 150px; height: auto;">`;
 
                     customerDetails.innerHTML = `
-                        <p><strong>Nome:</strong> ${data.nome}</p>
-                        <p><strong>Telefone:</strong> ${data.telefone}</p>
-                        <p><strong>Email:</strong> ${data.email}</p>
-                        <p><strong>Endereço:</strong> ${data.endereco}</p>
-                        <p><strong>Cidade:</strong> ${data.cidade}</p>
-                        <p><strong>Estado:</strong> ${data.estado}</p>
-                        <p><strong>País:</strong> ${data.pais}</p>
-                    `;
+                    <p><strong>Nome:</strong> ${data.nome}</p>
+                    <p><strong>Telefone:</strong> ${data.telefone}</p>
+                    <p><strong>Email:</strong> ${data.email}</p>
+                    <p><strong>Endereço:</strong> ${data.endereco}</p>
+                    <p><strong>Cidade:</strong> ${data.cidade}</p>
+                    <p><strong>Estado:</strong> ${data.estado}</p>
+                    <p><strong>País:</strong> ${data.pais}</p>
+                `;
 
-                    resultContainer.style.display = "block";
+                    resultContainer.style.display = "grid";
                 })
                 .catch(error => {
                     alert(error.message);
                 });
         });
     }
+
 });
 
 

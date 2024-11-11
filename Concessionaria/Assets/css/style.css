@@ -225,7 +225,8 @@ a {
 .footer-container {
     position: fixed;
     width: 100%;
-    background-color: #dee1e6;
+    background-color: black;
+    color: white;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
     bottom: 0;
     align-items: center;
@@ -238,6 +239,11 @@ a {
 .footer-container p {
     display: flex;
     justify-content: center;
+}
+
+.register-footer {
+    position: relative;
+    display: inline-block;
 }
 
 /* Estilo básico do contêiner do menu */
