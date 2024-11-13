@@ -178,7 +178,8 @@ a {
 }
 
 .main-content {
-    margin: 50px auto;
+    margin-top: 10px;
+    margin-bottom: 45px;
 }
 
 .main-menu {
