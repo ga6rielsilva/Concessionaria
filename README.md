@@ -103,7 +103,7 @@ Abaixo está o [**diagrama ER**](https://github.com/ga6rielsilva/Concessionaria/
 ![Modelo lógico](https://github.com/ga6rielsilva/Concessionaria/blob/main/Banco%20de%20dados/Modelo%20ER/Modelo%20logico.png)
 ---
 **Modelo físico**
-- ![Modelo físico](https://github.com/ga6rielsilva/Concessionaria/blob/main/Banco%20de%20dados/Modelo%20ER/Modelo%20fisico.png)
+![Modelo físico](https://github.com/ga6rielsilva/Concessionaria/blob/main/Banco%20de%20dados/Modelo%20ER/Modelo%20fisico.png)
 
 #### Estrutura das Tabelas
 
