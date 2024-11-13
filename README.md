@@ -96,13 +96,13 @@ _(Substitua com a URL de uma imagem hospedada ou local do diagrama de classes do
 
 Abaixo está o [**diagrama ER**](https://github.com/ga6rielsilva/Concessionaria/tree/main/Banco%20de%20dados/Modelo%20ER) do banco de dados.
 
-# Modelo conceitual
-- ![Modelo conceitual](https://github.com/ga6rielsilva/Concessionaria/blob/main/Banco%20de%20dados/Modelo%20ER/Modelo%20conceitual.png?raw=true)
+**Modelo conceitual**
+![Modelo conceitual](https://github.com/ga6rielsilva/Concessionaria/blob/main/Banco%20de%20dados/Modelo%20ER/Modelo%20conceitual.png?raw=true)
 ---
-# Modelo lógico
-- ![Modelo lógico](https://github.com/ga6rielsilva/Concessionaria/blob/main/Banco%20de%20dados/Modelo%20ER/Modelo%20logico.png)
+**Modelo lógico**
+![Modelo lógico](https://github.com/ga6rielsilva/Concessionaria/blob/main/Banco%20de%20dados/Modelo%20ER/Modelo%20logico.png)
 ---
-# Modelo físico
+**Modelo físico**
 - ![Modelo físico](https://github.com/ga6rielsilva/Concessionaria/blob/main/Banco%20de%20dados/Modelo%20ER/Modelo%20fisico.png)
 
 #### Estrutura das Tabelas
