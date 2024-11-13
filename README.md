@@ -94,10 +94,11 @@ _(Substitua com a URL de uma imagem hospedada ou local do diagrama de classes do
 
 ### Modelagem do Banco de Dados
 
-Abaixo está o diagrama ER do banco de dados.
+Abaixo está o [**diagrama ER**](https://github.com/ga6rielsilva/Concessionaria/tree/main/Banco%20de%20dados/Modelo%20ER) do banco de dados.
 
-![Modelo conceitual](https://github.com/ga6rielsilva/Concessionaria/blob/main/Banco%20de%20dados/modeloER/Conceitual/Banco%20de%20dados%20conceitual%20do%20projeto.pdf)  
-_(Substitua com a URL de uma imagem hospedada ou local do diagrama ER)_
+- ![Modelo conceitual](https://github.com/ga6rielsilva/Concessionaria/blob/main/Banco%20de%20dados/Modelo%20ER/Modelo%20conceitual.png?raw=true)
+- ![Modelo lógico](https://github.com/ga6rielsilva/Concessionaria/blob/main/Banco%20de%20dados/Modelo%20ER/Modelo%20logico.png)
+- ![Modelo físico](https://github.com/ga6rielsilva/Concessionaria/blob/main/Banco%20de%20dados/Modelo%20ER/Modelo%20fisico.png)
 
 #### Estrutura das Tabelas
 

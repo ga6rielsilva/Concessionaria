@@ -267,10 +267,12 @@ a {
     position: absolute;
     top: 100%;
     left: 0;
-    background-color: rgb(255, 64, 64);
+    background-color: rgb(238, 238, 238);
     min-width: 150px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
+    padding-top: 8px;
+    padding-bottom: 8px;
     z-index: 1;
 }
 
@@ -283,7 +285,7 @@ a {
 }
 
 .submenu a:hover {
-    background-color: #d2e3fc67;
+    background-color:  rgb(238, 238, 238);
 }
 
 /* Mostra o submenu ao passar o mouse sobre o item principal */
