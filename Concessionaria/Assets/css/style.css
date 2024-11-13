@@ -3,7 +3,7 @@
  */
 
 :root {
-    --main-color: aliceblue;
+    --main-color: rgb(243, 249, 255);
     --main-color-light: #41688C;
     --main-color-dark: #122b8c;
     --main-color-grey: #464545;
@@ -33,7 +33,7 @@ body a {
  * Define o estilo do cabeçalho da página.
  */
 header {
-    background-color: #EEF1F6;
+    background-color: white;
     color: black;
     padding: 10px;
     min-height: 70px;
@@ -177,6 +177,10 @@ a {
     align-items: center;
 }
 
+.main-content {
+    margin: 50px auto;
+}
+
 .main-menu {
     scale: 1.2;
     height: 60%;
@@ -189,7 +193,6 @@ a {
 }
 
 .menu-item {
-
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -198,7 +201,7 @@ a {
     padding: 10px;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    background-color: #d2e3fc67;
+    background-color: #ffffff;
     color: black;
     text-align: center;
     transition: all 0.5s ease;
@@ -213,7 +216,7 @@ a {
 }
 
 .menu-item:hover {
-    background-color: #d2e3fc;
+    /* background-color: #d2e3fc; */
     color: black;
     scale: 1.1;
 }
@@ -264,7 +267,7 @@ a {
     position: absolute;
     top: 100%;
     left: 0;
-    background-color: var(--main-color);
+    background-color: rgb(255, 64, 64);
     min-width: 150px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
