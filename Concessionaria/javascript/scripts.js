@@ -1,4 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
+
+    // Codigo Ydate Footer
+    const Ydate = document.getElementById("Ydate");
+        if (Ydate) {
+            const date = new Date();
+            Ydate.innerHTML ="&nbsp;" + date.getFullYear() + "&nbsp;";
+        }
+
     // Código do submenu do usuário
     const userIcon = document.getElementById("user-icon");
     const userSubmenu = document.getElementById("user-submenu");
