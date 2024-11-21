@@ -99,12 +99,10 @@ Abaixo está o [**diagrama ER**](https://github.com/ga6rielsilva/Concessionaria/
 **Modelo conceitual**
 ---
 ![Modelo conceitual](https://github.com/ga6rielsilva/Concessionaria/blob/main/Banco%20de%20dados/Modelo%20ER/Modelo%20conceitual.png?raw=true)
----
 
 **Modelo lógico**
 ---
 ![Modelo lógico](https://github.com/ga6rielsilva/Concessionaria/blob/main/Banco%20de%20dados/Modelo%20ER/Modelo%20logico.png)
----
 
 **Modelo físico**
 ---
