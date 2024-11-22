@@ -97,7 +97,6 @@ CREATE TABLE IF NOT EXISTS tb_compra(
 	CONSTRAINT fk_compra_veiculos FOREIGN KEY(id_veiculo) REFERENCES tb_veiculos(id_veiculo)	
 );
 
-
 CREATE TABLE IF NOT EXISTS tb_historico_vendas(
 	id_historico INT NOT NULL AUTO_INCREMENT,
 	data_venda DATE NOT NULL,

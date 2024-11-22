@@ -82,9 +82,16 @@ Este é um sistema de gerenciamento ERP para uma Concessionaria de veículos, on
 ## Modelagem do Sistema e Banco de Dados
 
 ### Modelagem do Sistema
+Abaixo está a [**modelagem**](https://github.com/ga6rielsilva/Concessionaria/tree/main/banco_de_dados/modelagem) do sistema.
 
-![Diagrama de Classes](https://github.com/ga6rielsilva/Concessionaria/imagens/diagrama_classes.png)
-_(Substitua com a URL de uma imagem hospedada ou local do diagrama de classes do sistema)_
+**Diagrama de caso de uso**
+---
+![Diagrama de caso de uso](https://github.com/ga6rielsilva/Concessionaria/tree/main/banco_de_dados/modelagem/diagrama_de_caso_de_uso.png)
+
+**Diagrama de sequencia**
+---
+![Diagrama de sequencia](https://github.com/ga6rielsilva/Concessionaria/tree/main/banco_de_dados/modelagem/diagrama_de_sequencia.png)
+
 
 ### Descrição das Entidades
 
@@ -94,46 +101,110 @@ _(Substitua com a URL de uma imagem hospedada ou local do diagrama de classes do
 
 ### Modelagem do Banco de Dados
 
-Abaixo está o [**diagrama ER**](https://github.com/ga6rielsilva/Concessionaria/tree/main/Banco%20de%20dados/Modelo%20ER) do banco de dados.
+Abaixo está o [**diagrama ER**](https://github.com/ga6rielsilva/Concessionaria/tree/main/banco_de_dados/modelo_er) do banco de dados.
 
 **Modelo conceitual**
 ---
-![Modelo conceitual](https://github.com/ga6rielsilva/Concessionaria/blob/main/Banco%20de%20dados/Modelo%20ER/Modelo%20conceitual.png?raw=true)
+![Modelo conceitual](https://github.com/ga6rielsilva/Concessionaria/tree/main/banco_de_dados/modelo_er/modelo_conceitual.png)
 
 **Modelo lógico**
 ---
-![Modelo lógico](https://github.com/ga6rielsilva/Concessionaria/blob/main/Banco%20de%20dados/Modelo%20ER/Modelo%20logico.png)
+![Modelo lógico](https://github.com/ga6rielsilva/Concessionaria/tree/main/banco_de_dados/modelo_er/modelo_logico.png)
 
 **Modelo físico**
 ---
-![Modelo físico](https://github.com/ga6rielsilva/Concessionaria/blob/main/Banco%20de%20dados/Modelo%20ER/Modelo%20fisico.png)
+![Modelo físico](https://github.com/ga6rielsilva/Concessionaria/tree/main/banco_de_dados/modelo_er/modelo_fisico.png)
 
 #### Estrutura das Tabelas
 
-1. **Tabela `usuarios`**
-   - **id** (PK): Identificador único do usuário.
-   - **nome**: Nome completo do usuário.
-   - **email**: Email do usuário.
-   - **senha**: Senha criptografada para login.
+1. **Tabela `tb_usuarios`**
+   - **id_usuario** (PK): Identificador único do usuário.
+   - **nome**: Nome do usuário.
+   - **login**: Login único do usuário.
 
-2. **Tabela `tarefas`**
-   - **id** (PK): Identificador único da tarefa.
-   - **titulo**: Título da tarefa.
-   - **descricao**: Descrição detalhada da tarefa.
-   - **status**: Status atual (e.g., 'Pendente', 'Em andamento', 'Concluída').
-   - **prioridade**: Nível de prioridade (e.g., 'Baixa', 'Média', 'Alta').
-   - **prazo**: Data de entrega ou prazo final para conclusão.
-   - **usuario_id** (FK): Referência ao usuário que criou a tarefa.
+2. **Tabela `tb_funcionarios`**
+   - **id_funcionario** (PK): Identificador único do funcionário.
+   - **nome**: Nome do funcionário.
+   - **cpf_funcionario**: CPF do funcionário.
+   - **rg**: RG do funcionário.
+   - **data_nascimento**: Data de nascimento do funcionário.
+   - **sexo**: Sexo do funcionário (M/F).
+   - **telefone**: Telefone de contato.
+   - **email**: Email do funcionário.
+   - **foto**: Foto do funcionário (armazenada como BLOB).
+   - **endereco**: Endereço residencial do funcionário.
+   - **cep**: CEP do endereço.
+   - **cidade**: Cidade do funcionário.
+   - **estado**: Estado do funcionário (sigla).
+   - **pais**: País do funcionário.
+   - **salario**: Salário do funcionário.
+   - **cargo**: Cargo do funcionário.
+   - **id_usuario** (FK): Referência ao usuário associado.
 
-3. **Tabela `equipes`**
-   - **id** (PK): Identificador único da equipe.
-   - **nome**: Nome da equipe.
-   - **descricao**: Descrição da equipe.
+3. **Tabela `tb_clientes`**
+   - **id_cliente** (PK): Identificador único do cliente.
+   - **nome_cliente**: Nome do cliente.
+   - **cpf_cliente**: CPF do cliente.
+   - **rg_cliente**: RG do cliente.
+   - **data_nascimento**: Data de nascimento do cliente.
+   - **sexo_cliente**: Sexo do cliente (M/F).
+   - **telefone_cliente**: Telefone de contato.
+   - **email_cliente**: Email do cliente.
+   - **endereco_cliente**: Endereço residencial do cliente.
+   - **cep_cliente**: CEP do endereço.
+   - **cidade_cliente**: Cidade do cliente.
+   - **estado_cliente**: Estado do cliente (sigla).
+   - **pais_cliente**: País do cliente.
 
-4. **Tabela `usuario_equipe`** (Tabela de ligação entre `usuarios` e `equipes`)
-   - **id** (PK): Identificador único.
-   - **usuario_id** (FK): Referência ao usuário.
-   - **equipe_id** (FK): Referência à equipe.
+4. **Tabela `tb_atendimento`**
+   - **id_atendimento** (PK): Identificador único do atendimento.
+   - **hora_atendimento**: Hora do atendimento.
+   - **data_atendimento**: Data do atendimento.
+   - **id_cliente** (FK): Referência ao cliente atendido.
+   - **id_funcionario** (FK): Referência ao funcionário responsável pelo atendimento.
+
+5. **Tabela `tb_categorias`**
+   - **id_categoria** (PK): Identificador único da categoria.
+   - **tipo_veiculo**: Tipo de veículo (ex.: Carro, Moto).
+
+6. **Tabela `tb_veiculos`**
+   - **id_veiculo** (PK): Identificador único do veículo.
+   - **marca**: Marca do veículo.
+   - **modelo**: Modelo do veículo.
+   - **ano_fabricacao**: Ano de fabricação.
+   - **ano_modelo**: Ano do modelo.
+   - **cor**: Cor do veículo.
+   - **placa**: Placa do veículo.
+   - **chassi**: Número do chassi.
+   - **renavam**: Código RENAVAM.
+   - **km_rodado**: Quilometragem rodada.
+   - **valor_compra**: Valor de compra do veículo.
+   - **valor_venda**: Valor de venda do veículo.
+   - **condicao**: Condição do veículo (ex.: Novo, Usado).
+   - **foto_veiculo**: Foto do veículo (armazenada como BLOB).
+   - **id_categoria** (FK): Referência à categoria do veículo.
+
+7. **Tabela `tb_compra`**
+   - **id_compra** (PK): Identificador único da compra.
+   - **data_compra**: Data da compra.
+   - **valor_compra**: Valor pago na compra.
+   - **id_cliente** (FK): Referência ao cliente comprador.
+   - **id_funcionario** (FK): Referência ao funcionário responsável pela venda.
+   - **id_veiculo** (FK): Referência ao veículo adquirido.
+
+8. **Tabela `tb_historico_vendas`**
+   - **id_historico** (PK): Identificador único do histórico de vendas.
+   - **data_venda**: Data da venda.
+   - **valor_venda**: Valor recebido na venda.
+   - **id_funcionario** (FK): Referência ao funcionário responsável pela venda.
+
+9. **Tabela `tb_historico_estoque`**
+   - **id_historico** (PK): Identificador único do histórico de estoque.
+   - **data_entrada**: Data de entrada no estoque.
+   - **data_saida**: Data de saída do estoque.
+   - **id_veiculo** (FK): Referência ao veículo armazenado.
+   - **id_funcionario** (FK): Referência ao funcionário responsável.
+   - **quantidade**: Quantidade de veículos movimentados.
 
 ---
 
