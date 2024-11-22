@@ -10,3 +10,7 @@ conn = mysql.connector.connect(
 
 # Criar um cursor para manipular o banco de dados
 cursor = conn.cursor()
+
+# Fechar o cursor e a conexão
+cursor.close()
+con.close()
