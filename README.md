@@ -86,11 +86,11 @@ Abaixo está a [**modelagem**](https://github.com/ga6rielsilva/Concessionaria/tr
 
 **Diagrama de caso de uso**
 ---
-![Diagrama de caso de uso](https://github.com/ga6rielsilva/Concessionaria/tree/main/banco_de_dados/modelagem/diagrama_de_caso_de_uso.png)
+![Diagrama de caso de uso](https://github.com/ga6rielsilva/Concessionaria/blob/main/banco_de_dados/modelagem/diagrama_de_caso_de_uso.png?raw=true)
 
 **Diagrama de sequencia**
 ---
-![Diagrama de sequencia](https://github.com/ga6rielsilva/Concessionaria/tree/main/banco_de_dados/modelagem/diagrama_de_sequencia.png)
+![Diagrama de sequencia](https://github.com/ga6rielsilva/Concessionaria/blob/main/banco_de_dados/modelagem/diagrama_de_sequencia.png?raw=true)
 
 
 ### Descrição das Entidades
@@ -105,15 +105,15 @@ Abaixo está o [**diagrama ER**](https://github.com/ga6rielsilva/Concessionaria/
 
 **Modelo conceitual**
 ---
-![Modelo conceitual](https://github.com/ga6rielsilva/Concessionaria/tree/main/banco_de_dados/modelo_er/modelo_conceitual.png)
+![Modelo conceitual](https://github.com/ga6rielsilva/Concessionaria/blob/main/banco_de_dados/modelo_er/modelo_conceitual.png?raw=true)
 
 **Modelo lógico**
 ---
-![Modelo lógico](https://github.com/ga6rielsilva/Concessionaria/tree/main/banco_de_dados/modelo_er/modelo_logico.png)
+![Modelo lógico](https://github.com/ga6rielsilva/Concessionaria/blob/main/banco_de_dados/modelo_er/modelo_fisico.png?raw=true)
 
 **Modelo físico**
 ---
-![Modelo físico](https://github.com/ga6rielsilva/Concessionaria/tree/main/banco_de_dados/modelo_er/modelo_fisico.png)
+![Modelo físico](https://github.com/ga6rielsilva/Concessionaria/blob/main/banco_de_dados/modelo_er/modelo_logico.png?raw=true)
 
 #### Estrutura das Tabelas
 
