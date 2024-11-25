@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/Concessionaria/Assets/css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@600" />
-    <script src="../javascript/scripts.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <title>Nome Empresa</title>
 </head>
 
@@ -14,39 +14,39 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <img src="../Assets/img/imagemteste.png" alt="logo-empresa">
+                <img src="{{ url_for('static', filename='img/imagemteste.png')}}" alt="logo-empresa">
             </div>
             <nav class="nav ">
                 <div class="nav-item">
-                    <a href="../templates/index.html">Home</a>
+                    <a href="{{ url_for('index')}}">Home</a>
                 </div>
                 <div class="nav-item">
                     <a href="#">Cadastro</a>
                     <div class="submenu">
-                        <a href="../templates/vehicle_register.html">Veículos</a>
-                        <a href="../templates/customer_register.html">Clientes</a>
-                        <a href="../templates/employee_register.html">Funcionários</a>
+                        <a href="{{ url_for('vehicle_register') }}">Veículos</a>
+                        <a href="{{ url_for('customer_register') }}">Clientes</a>
+                        <a href="{{ url_for('employee_register') }}">Funcionários</a>
                     </div>
                 </div>
                 <div class="nav-item">
                     <a href="#">Consulta</a>
                     <div class="submenu">
-                        <a href="../templates/vehicle_search.html">Veículos</a>
-                        <a href="../templates/customer_search.html">Clientes</a>
+                        <a href="{{ url_for('vehicle_search') }}">Veículos</a>
+                        <a href="{{ url_for('customer_search') }}">Clientes</a>
                     </div>
                 </div>
                 <div class="nav-item">
                     <a href="#">Relatórios</a>
                     <div class="submenu">
-                        <a href="../templates/sales_reports.html">Vendas</a>
-                        <a href="../templates/stock_reports.html">Estoque</a>
+                        <a href="{{ url_for('sales_reports') }}">Vendas</a>
+                        <a href="{{ url_for('stock_reports') }}">Estoque</a>
                     </div>
                 </div>
             </nav>
 
             <div class="user-container">
                 <a class="user" id="user-icon" href="#">
-                    <p>{username}</p>
+                    <p>username</p>
                     <i class="material-symbols-outlined user-icon">account_circle</i>
                 </a>
                 <div id="user-submenu" class="user-submenu">
@@ -62,31 +62,31 @@
     <main>
         <div class="main-container">
             <div class="main-content">
-                <h1>Seja bem-vindo, {username}!</h1>
+                <h1>Seja bem-vindo, gabril gay!</h1>
                 <p>Escolha uma das opções no menu abaixo para começar.</p>
             </div>
             <div class="main-menu">
-                <a href="../templates/vehicle_register.html" class="menu-item">
+                <a href="{{ url_for('vehicle_register') }}" class="menu-item">
                     <p>Cadastro <br> Veiculos</p>
                     <i class="material-symbols-outlined">directions_car</i>
                 </a>
-                <a href="../templates/customer_register.html" class="menu-item">
+                <a href="{{ url_for('customer_register') }}" class="menu-item">
                     <p>Cadastro <br> Clientes</p>
                     <i class="material-symbols-outlined menu-icon">person_add</i>
                 </a>
-                <a href="employee_register.html" class="menu-item">
+                <a href="{{ url_for('employee_register') }}" class="menu-item">
                     <p>Cadastro <br>Funcionário</p>
                     <i class="material-symbols-outlined">group_add</i>
                 </a>
-                <a href="../templates/vehicle_search.html" class="menu-item">
+                <a href="{{ url_for('vehicle_search') }}" class="menu-item">
                     <p>Consulta <br> Veiculos</p>
                     <i class="material-symbols-outlined menu-icon">traffic_jam</i>
                 </a>
-                <a href="../templates/customer_search.html" class="menu-item">
+                <a href="{{ url_for('customer_search') }}" class="menu-item">
                     <p>Consulta <br> Clientes</p>
                     <i class="material-symbols-outlined menu-icon">person_search</i>
                 </a>
-                <a href="../templates/reports.html" class="menu-item">
+                <a href="{{ url_for('reports') }}" class="menu-item">
                     <p>Relatórios</p>
                     <i class="material-symbols-outlined menu-icon">assignment</i>
                 </a>

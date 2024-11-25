@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/Concessionaria/Assets/css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@600" />
-    <script src="../javascript/scripts.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <title>Nome Empresa</title>
 </head>
 
@@ -14,32 +14,32 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <img src="../Assets/img/imagemteste.png" alt="logo-empresa">
+                <img src="{{ url_for('static', filename='img/imagemteste.png')}}" alt="logo-empresa">
             </div>
             <nav class="nav ">
                 <div class="nav-item">
-                    <a href="../templates/index.html">Home</a>
+                    <a href="{{ url_for('index')}}">Home</a>
                 </div>
                 <div class="nav-item">
                     <a href="#">Cadastro</a>
                     <div class="submenu">
-                        <a href="../templates/vehicle_register.html">Veículos</a>
-                        <a href="../templates/customer_register.html">Clientes</a>
-                        <a href="../templates/employee_register.html">Funcionários</a>
+                        <a href="{{ url_for('vehicle_register') }}">Veículos</a>
+                        <a href="{{ url_for('customer_register') }}">Clientes</a>
+                        <a href="{{ url_for('employee_register') }}">Funcionários</a>
                     </div>
                 </div>
                 <div class="nav-item">
                     <a href="#">Consulta</a>
                     <div class="submenu">
-                        <a href="../templates/vehicle_search.html">Veículos</a>
-                        <a href="../templates/customer_search.html">Clientes</a>
+                        <a href="{{ url_for('vehicle_search') }}">Veículos</a>
+                        <a href="{{ url_for('customer_search') }}">Clientes</a>
                     </div>
                 </div>
                 <div class="nav-item">
                     <a href="#">Relatórios</a>
                     <div class="submenu">
-                        <a href="../templates/sales_reports.html">Vendas</a>
-                        <a href="../templates/stock_reports.html">Estoque</a>
+                        <a href="{{ url_for('sales_reports') }}">Vendas</a>
+                        <a href="{{ url_for('stock_reports') }}">Estoque</a>
                     </div>
                 </div>
             </nav>
@@ -65,49 +65,59 @@
                 <h1>Cadastro de Clientes </h1>
             </div>
             <form action="" method="POST">
-                <div class="form-container">
-                    <div class="form-item">
-                        <label for="profilePhoto">Foto de Perfil</label>
-                        <img id="preview" src="#" alt="Pré-visualização"
-                            style="display: none; margin-top: 10px; max-width: 150px; max-height: 200px;">
-                        <input type="file" id="profilePhoto" name="profilePhoto" accept="image/*"
-                            onchange="previewImage(event)">
-                    </div>
+                <div class="form-container">                    
                     <div class="form-item">
                         <label for="name">Nome</label>
-                        <input type="text" name="name" id="name" required>
+                        <input type="text" name="customer_name" id="name" required>
                     </div>
                     <div class="form-item">
                         <label for="cpf">CPF</label>
-                        <input type="text" name="cpf" id="cpf" maxlength="14" required>
+                        <input type="text" name="customer_cpf" id="cpf" maxlength="14" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="rg">RG</label>
+                        <input type="text" name="customer_rg" id="rg" maxlength="12" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="birth">Data de Nascimento</label>
+                        <input type="date" name="customer_birth" id="birth" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="sex">Sexo</label>
+                        <select name="customer_sex">
+                            <option value="" selected disabled>Selecione</option>
+                            <option value="M">Masculino</option>
+                            <option value="F">Feminino</option>
+                            <option value="O">Outro</option>
+                        </select>
                     </div>
                     <div class="form-item">
                         <label for="email">E-mail</label>
-                        <input type="email" name="email" id="email" required>
+                        <input type="email" name="customer_email" id="email" required>
                     </div>
                     <div class="form-item">
                         <label for="phone">Telefone</label>
-                        <input type="text" name="phone" id="phone" required>
+                        <input type="text" name="customer_phone" id="phone" required>
                     </div>
                     <div class="form-item">
                         <label for="address">Endereço</label>
-                        <input type="text" name="address" id="address" required>
+                        <input type="text" name="customer_address" id="address" required>
                     </div>
                     <div class="form-item">
                         <label for="city">Cidade</label>
-                        <input type="text" name="city" id="city" required>
+                        <input type="text" name="customer_city" id="city" required>
                     </div>
                     <div class="form-item">
                         <label for="state">Estado</label>
-                        <input type="text" name="state" id="state" required>
+                        <input type="text" name="customer_state" id="state" required>
                     </div>
                     <div class="form-item">
                         <label for="zip">CEP</label>
-                        <input type="text" name="zip" id="zip" required>
+                        <input type="text" name="customer_zip" id="zip" required>
                     </div>
                     <div class="form-item">
                         <label for="country">País</label>
-                        <input type="text" name="country" id="country" required>
+                        <input type="text" name="customer_country" id="country" required>
                     </div>
                     <div class="form-item form-button">
                         <button type="submit">Cadastrar</button>

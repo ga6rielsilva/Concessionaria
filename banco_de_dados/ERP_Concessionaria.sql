@@ -8,6 +8,8 @@ CREATE TABLE IF NOT EXISTS tb_usuarios(
 	CONSTRAINT pk_usuarios PRIMARY KEY(id_usuario)
 );
 
+insert into tb_usuarios(nome, login) values('admin', 'admin');
+
 CREATE TABLE IF NOT EXISTS tb_funcionarios(
 	id_funcionario INT NOT NULL AUTO_INCREMENT,
 	nome VARCHAR(40) NOT NULL,
@@ -58,11 +60,11 @@ CREATE TABLE IF NOT EXISTS tb_atendimento(
 	CONSTRAINT fk_atendimento_clientes FOREIGN KEY(id_cliente) REFERENCES tb_clientes(id_cliente)
 );
 
-CREATE TABLE IF NOT EXISTS tb_categorias(
-	id_categoria INT NOT NULL AUTO_INCREMENT,
-	tipo_veiculo VARCHAR(40) NOT NULL,
-	CONSTRAINT pk_categorias PRIMARY KEY(id_categoria)
-);
+--CREATE TABLE IF NOT EXISTS tb_categorias(
+--	id_categoria INT NOT NULL AUTO_INCREMENT,
+--	tipo_veiculo VARCHAR(40) NOT NULL,
+--	CONSTRAINT pk_categorias PRIMARY KEY(id_categoria)
+--);
 
 CREATE TABLE IF NOT EXISTS tb_veiculos(
 	id_veiculo INT NOT NULL AUTO_INCREMENT,
@@ -78,10 +80,10 @@ CREATE TABLE IF NOT EXISTS tb_veiculos(
 	valor_compra DECIMAL(10,2) NOT NULL,
 	valor_venda DECIMAL(10,2) NOT NULL,
 	condicao VARCHAR(40) NOT NULL,
-	foto_veiculo BLOB NOT NULL,
-	id_categoria INT NOT NULL,
+	categoria VARCHAR(40) NOT NULL,
+	--id_categoria INT NOT NULL,
 	CONSTRAINT pk_veiculos PRIMARY KEY(id_veiculo),
-	CONSTRAINT fk_veiculos_categorias FOREIGN KEY(id_categoria) REFERENCES tb_categorias(id_categoria)
+	--CONSTRAINT fk_veiculos_categorias FOREIGN KEY(id_categoria) REFERENCES tb_categorias(id_categoria)
 );
 
 CREATE TABLE IF NOT EXISTS tb_compra(
