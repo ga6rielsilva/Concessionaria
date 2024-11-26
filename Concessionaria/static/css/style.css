@@ -336,6 +336,10 @@ a {
     background-color: #d2e3fc67;
 }
 
+form {
+    width: 920px;
+}
+
 /* Contêiner do formulário */
 .form-container {
     display: grid;

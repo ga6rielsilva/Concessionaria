@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@600" />
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+
     <title>Nome Empresa</title>
 </head>
 
@@ -67,28 +68,34 @@
             <div class="search-container search-item">
                 <form action="/search_vehicle" method="GET" id="search-form">
                     <label for="plate_vehicle">Placa</label>
-                    <input type="text" name="plate_vehicle" id="plate_vehicle" placeholder="Digite a Placa do Veículo" required>
+                    <input type="text" name="plate_vehicle" id="plate_vehicle" placeholder="Digite a Placa do Veículo"
+                        required>
                     <button type="submit">Buscar</button>
                 </form>
             </div>
-            <div id="result-container" style="display:none;">
+            {% if vehicle %}
+            <div id="result-container">
                 <h2>Resultado da Busca</h2>
-                <div id="vehicle-picture" style="margin-top: 10px; max-width: 150px; max-height: 200px;">
-                </div>
                 <div id="vehicle-details">
-                    <p><strong>Disponibilidade:</strong> {status}</p>
-                    <p><strong>Modelo:</strong> {vehicle_model}</p>
-                    <p><strong>Marca:</strong> {brand_vehicle}</p>
-                    <p><strong>Motor:</strong> {engine_vehicle}</p>
-                    <p><strong>tipo:</strong> {type_vehicle}</p>
-                    <p><strong>Ano:</strong> {year_vehicle}</p>
-                    <p><strong>Cor:</strong> {color_vehicle}</p>
-                    <p><strong>Placa:</strong> {plate_vehicle}</p>
-                    <p><strong>Chassi:</strong> {chassi_vehicle}</p>
-                    <p><strong>Quilometragem:</strong> {kms_vehicle}</p>
-                    <p><strong>Preço:</strong> {price_vehicle}</p>
+                    <p><strong>Marca:</strong> {{ vehicle['marca'] }}</p>
+                    <p><strong>Modelo:</strong> {{ vehicle['modelo'] }}</p>
+                    <p><strong>Motor:</strong> {{ vehicle['motor_veiculo'] }}</p>
+                    <p><strong>Ano de Fabricação:</strong> {{ vehicle['ano_fabricacao'] }}</p>
+                    <p><strong>Ano do Modelo:</strong> {{ vehicle['ano_modelo'] }}</p>
+                    <p><strong>Cor:</strong> {{ vehicle['cor'] }}</p>
+                    <p><strong>Placa:</strong> {{ vehicle['placa'] }}</p>
+                    <p><strong>Chassi:</strong> {{ vehicle['chassi'] }}</p>
+                    <p><strong>Quilometragem:</strong> {{ vehicle['km_rodado'] }} km</p>
+                    <p><strong>Preço:</strong> R$ {{ vehicle['valor_venda'] }}</p>
+                    <p><strong>Condição:</strong> {{ vehicle['condicao'] }}</p>
                 </div>
             </div>
+            {% else %}
+            <!-- Se nenhum veículo foi encontrado, exibir mensagem -->
+            <div id="result-container">
+                <p>Nenhum veículo encontrado para a placa informada.</p>
+            </div>
+            {% endif %}
 
         </div>
     </main>

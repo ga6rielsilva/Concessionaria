@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@600" />
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+
     <title>Nome Empresa</title>
 </head>
 
@@ -75,19 +76,32 @@
                     </div>
                     <div class="form-item">
                         <label for="name">Nome</label>
-                        <input type="text" name="name" id="name" required>
+                        <input type="text" name="employee_name" id="name" required>
                     </div>
                     <div class="form-item">
                         <label for="cpf">CPF</label>
-                        <input type="text" name="cpf" id="cpf" maxlength="14" required>
+                        <input type="text" name="employee_cpf" id="cpf" maxlength="14" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="rg">RG</label>
+                        <input type="text" name="employee_rg" id="rg" maxlength="14" required>
                     </div>
                     <div class="form-item">
                         <label for="birthdate_employer">Data de Nascimento</label>
-                        <input type="date" name="birthdate_employer" id="birthdate_employer" required>
+                        <input type="date" name="employee_birth" id="birthdate_employer" required>
                     </div>
                     <div class="form-item">
-                        <label for="position_employer">Cargo</label>
-                        <select name="position_employer" id="position_employer">
+                        <label for="sex">Sexo</label>
+                        <select name="employee_sex">
+                            <option value="" selected disabled>Selecione</option>
+                            <option value="M">Masculino</option>
+                            <option value="F">Feminino</option>
+                            <option value="O">Outro</option>
+                        </select required>
+                    </div>
+                    <div class="form-item">
+                        <label for="employee_position">Cargo</label>
+                        <select name="employee_position" id="employee_position">
                             <option value="selecione" selected disabled>Selecione</option>
                             <option value="vendedor">Vendedor</option>
                             <option value="estoque">Estoque</option>
@@ -97,32 +111,32 @@
                         </select>
                     </div>
                     <div class="form-item">
-                        <label for="email">E-mail</label>
-                        <input type="email" name="email" id="email" required>
+                        <label for="employee_email">E-mail</label>
+                        <input type="employee_email" name="employee_email" id="employee_email" required>
                     </div>
                     <div class="form-item">
-                        <label for="phone">Telefone</label>
-                        <input type="text" name="phone" id="phone" required>
+                        <label for="employee_phone">Telefone</label>
+                        <input type="text" name="employee_phone" id="phone" required>
                     </div>
                     <div class="form-item">
-                        <label for="address">Endereço</label>
-                        <input type="text" name="address" id="address" required>
+                        <label for="employee_address">Endereço</label>
+                        <input type="text" name="employee_address" id="employee_address" required>
                     </div>
                     <div class="form-item">
-                        <label for="city">Cidade</label>
-                        <input type="text" name="city" id="city" required>
+                        <label for="employee_city">Cidade</label>
+                        <input type="text" name="employee_city" id="employee_city" required>
                     </div>
                     <div class="form-item">
-                        <label for="state">Estado</label>
-                        <input type="text" name="state" id="state" required>
+                        <label for="employee_state">Estado</label>
+                        <input type="text" name="employee_state" id="employee_state" required>
                     </div>
                     <div class="form-item">
-                        <label for="zip">CEP</label>
-                        <input type="text" name="zip" id="zip" required>
+                        <label for="employee_zip">CEP</label>
+                        <input type="text" name="employee_zip" id="zip" required>
                     </div>
                     <div class="form-item">
-                        <label for="country">País</label>
-                        <input type="text" name="country" id="country" required>
+                        <label for="employee_country">País</label>
+                        <input type="text" name="employee_country" id="employee_country" required>
                     </div>
                     <div class="form-item form-button">
                         <button type="submit">Cadastrar</button>

@@ -5,48 +5,51 @@ CREATE TABLE IF NOT EXISTS tb_usuarios(
 	id_usuario INT NOT NULL AUTO_INCREMENT,
 	nome VARCHAR(40) NOT NULL,
 	login VARCHAR(40) NOT NULL,
-	CONSTRAINT pk_usuarios PRIMARY KEY(id_usuario)
+	senha VARCHAR(40) NOT NULL,
+	CONSTRAINT pk_usuarios PRIMARY KEY(id_usuario),
+	UNIQUE(login)
 );
 
-insert into tb_usuarios(nome, login) values('admin', 'admin');
+insert into tb_usuarios(login, senha) values('admin', 'admin');
 
 CREATE TABLE IF NOT EXISTS tb_funcionarios(
 	id_funcionario INT NOT NULL AUTO_INCREMENT,
-	nome VARCHAR(40) NOT NULL,
-	cpf_funcioario VARCHAR(11) NOT NULL,
-	rg VARCHAR(10) NOT NULL,
+	foto_funcionario BLOB NOT NULL,
+	nome_funcionario VARCHAR(40) NOT NULL,
+	cpf_funcionario VARCHAR(40) NOT NULL,
+	rg_funcionario VARCHAR(40) NOT NULL,
 	data_nascimento DATE NOT NULL,
-	sexo CHAR(1) NOT NULL,
-	telefone VARCHAR(11) NOT NULL,
-	email VARCHAR(40) NOT NULL,
-	foto BLOB NOT NULL,
-	endereco VARCHAR(40) NOT NULL,
-	cep VARCHAR(8) NOT NULL,
-	cidade VARCHAR(40) NOT NULL,
-	estado VARCHAR(2) NOT NULL,
-	pais VARCHAR(40) NOT NULL,
-	salario DECIMAL(10,2) NOT NULL,
-	cargo VARCHAR(40) NOT NULL,
+	sexo_funcionario CHAR(1) NOT NULL,
+	cargo_funcionario VARCHAR(40) NOT NULL,
+	email_funcionario VARCHAR(40) NOT NULL,
+	telefone_funcionario VARCHAR(40) NOT NULL,
+	endereco_funcionario VARCHAR(100) NOT NULL,
+	cidade_funcionario VARCHAR(40) NOT NULL,
+	estado_funcionario VARCHAR(40) NOT NULL,
+	cep_funcionario VARCHAR(40) NOT NULL,
+	pais_funcionario VARCHAR(40) NOT NULL,
 	id_usuario INT NOT NULL,
 	CONSTRAINT pk_funcionarios PRIMARY KEY(id_funcionario),
-	CONSTRAINT fk_funcionarios_usuarios FOREIGN KEY(id_usuario) REFERENCES tb_usuarios(id_usuario)
+	CONSTRAINT fk_funcionarios_usuarios FOREIGN KEY(id_usuario) REFERENCES tb_usuarios(id_usuario),
+	UNIQUE(cpf_funcionario)
 );
 
 CREATE TABLE IF NOT EXISTS tb_clientes(
 	id_cliente INT NOT NULL AUTO_INCREMENT,
 	nome_cliente VARCHAR(40) NOT NULL,
-	cpf_cliente VARCHAR(11) NOT NULL,
-	rg_cliente VARCHAR(10) NOT NULL,
+	cpf_cliente VARCHAR(40) NOT NULL,
+	rg_cliente VARCHAR(40) NOT NULL,
 	data_nascimento DATE NOT NULL,
 	sexo_cliente CHAR(1) NOT NULL,
-	telefone_cliente VARCHAR(11) NOT NULL,
+	telefone_cliente VARCHAR(40) NOT NULL,
 	email_cliente VARCHAR(40) NOT NULL,
 	endereco_cliente VARCHAR(40) NOT NULL,
-	cep_cliente VARCHAR(8) NOT NULL,
+	cep_cliente VARCHAR(40) NOT NULL,
 	cidade_cliente VARCHAR(40) NOT NULL,
-	estado_cliente VARCHAR(2) NOT NULL,
+	estado_cliente VARCHAR(40) NOT NULL,
 	pais_cliente VARCHAR(40) NOT NULL,
-	CONSTRAINT pk_clientes PRIMARY KEY(id_cliente)
+	CONSTRAINT pk_clientes PRIMARY KEY(id_cliente),
+	UNIQUE(cpf_cliente)
 );
 
 CREATE TABLE IF NOT EXISTS tb_atendimento(
@@ -60,11 +63,6 @@ CREATE TABLE IF NOT EXISTS tb_atendimento(
 	CONSTRAINT fk_atendimento_clientes FOREIGN KEY(id_cliente) REFERENCES tb_clientes(id_cliente)
 );
 
---CREATE TABLE IF NOT EXISTS tb_categorias(
---	id_categoria INT NOT NULL AUTO_INCREMENT,
---	tipo_veiculo VARCHAR(40) NOT NULL,
---	CONSTRAINT pk_categorias PRIMARY KEY(id_categoria)
---);
 
 CREATE TABLE IF NOT EXISTS tb_veiculos(
 	id_veiculo INT NOT NULL AUTO_INCREMENT,
@@ -73,17 +71,19 @@ CREATE TABLE IF NOT EXISTS tb_veiculos(
 	ano_fabricacao INT NOT NULL,
 	ano_modelo INT NOT NULL,
 	cor VARCHAR(40) NOT NULL,
-	placa VARCHAR(8) NOT NULL,
-	chassi VARCHAR(17) NOT NULL,
-	renavam VARCHAR(11) NOT NULL,
+	motor_veiculo VARCHAR(40) NOT NULL,
+	placa VARCHAR(40) NOT NULL,
+	chassi VARCHAR(40) NOT NULL,
+	renavam VARCHAR(40) NOT NULL,
 	km_rodado INT NOT NULL,
 	valor_compra DECIMAL(10,2) NOT NULL,
 	valor_venda DECIMAL(10,2) NOT NULL,
 	condicao VARCHAR(40) NOT NULL,
 	categoria VARCHAR(40) NOT NULL,
-	--id_categoria INT NOT NULL,
 	CONSTRAINT pk_veiculos PRIMARY KEY(id_veiculo),
-	--CONSTRAINT fk_veiculos_categorias FOREIGN KEY(id_categoria) REFERENCES tb_categorias(id_categoria)
+	UNIQUE(placa),
+	UNIQUE(chassi),
+	UNIQUE(renavam)
 );
 
 CREATE TABLE IF NOT EXISTS tb_compra(

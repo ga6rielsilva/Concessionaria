@@ -85,6 +85,21 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // Máscara de RG
+    const rg = document.getElementById("rg");
+
+    if (rg) {
+        rg.addEventListener("input", function (event) {
+            let rg = event.target.value;
+
+            rg = rg.replace(/\D/g, "")
+                .replace(/(\d{1})(\d{3})(\d{3})/, "$1.$2.$3");
+
+            event.target.value = rg;
+        });
+    }
+
+
     // Máscara de telefone
     const telefone = document.getElementById("phone");
 
