@@ -300,6 +300,10 @@ def sales_reports():
 def stock_reports():
     return render_template('stock_reports.html')
 
+@app.route('/Login/login_index')
+def login_index():
+    return render_template('Login/login_index.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
