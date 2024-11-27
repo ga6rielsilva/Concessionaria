@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS tb_usuarios(
 	UNIQUE(login)
 );
 
-insert into tb_usuarios(login, senha) values('admin', 'admin');
+insert into tb_usuarios(nome, login, senha) values('Admin', 'admin', 'admin');
 
 CREATE TABLE IF NOT EXISTS tb_funcionarios(
 	id_funcionario INT NOT NULL AUTO_INCREMENT,

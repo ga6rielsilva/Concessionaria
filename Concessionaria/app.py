@@ -5,7 +5,7 @@ import random
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/home')
 def index():
     return render_template('index.html')
 
@@ -136,7 +136,8 @@ def customer_register():
                 %s
             )
         """
-        values = (nameCustomer, cpfCustomer, rgCustomer, birthCustomer, customerSex, phoneCustomer, emailCustomer, addressCustomer, zipCustomer, cityCustomer, stateCustomer, countryCustomer)
+        values = (nameCustomer, cpfCustomer, rgCustomer, birthCustomer, customerSex, phoneCustomer,
+                  emailCustomer, addressCustomer, zipCustomer, cityCustomer, stateCustomer, countryCustomer)
 
         try:
             cursor.execute(query, values)
@@ -151,7 +152,6 @@ def customer_register():
 
         return render_template('customer_register.html')
     return render_template('customer_register.html')
-
 
 
 @app.route('/employee_register', methods=['GET', 'POST'])
@@ -188,7 +188,8 @@ def employee_register():
         userLogin = base_login
         counter = 1
         while True:
-            cursor.execute("SELECT COUNT(*) FROM tb_usuarios WHERE login = %s", (userLogin,))
+            cursor.execute(
+                "SELECT COUNT(*) FROM tb_usuarios WHERE login = %s", (userLogin,))
             if cursor.fetchone()[0] == 0:
                 break  # Login é único
             userLogin = f"{base_login}{counter}"  # Incrementar contador
@@ -209,7 +210,7 @@ def employee_register():
             """
             user_values = (nameEmployee, userLogin, userPassword)
             cursor.execute(user_query, user_values)
-            
+
             # Recuperar o ID do usuário recém-criado
             userId = cursor.lastrowid
 
@@ -235,17 +236,18 @@ def employee_register():
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """
             employee_values = (
-                photoEmployee, nameEmployee, cpfEmployee, rgEmployee, birthEmployee, 
-                sexEmployee, employeePosition, emailEmployee, phoneEmployee, 
-                addressEmployee, cityEmployee, stateEmployee, zipEmployee, 
+                photoEmployee, nameEmployee, cpfEmployee, rgEmployee, birthEmployee,
+                sexEmployee, employeePosition, emailEmployee, phoneEmployee,
+                addressEmployee, cityEmployee, stateEmployee, zipEmployee,
                 countryEmployee, userId
             )
             cursor.execute(employee_query, employee_values)
-            
+
             # Confirmar a transação
             conn.commit()
             print("Funcionário e usuário cadastrados com sucesso!")
-            print(f"Login: {userLogin}, Senha: {userPassword}")  # Para ver os dados gerados no console
+            # Para ver os dados gerados no console
+            print(f"Login: {userLogin}, Senha: {userPassword}")
         except Exception as e:
             # Reverter a transação em caso de erro
             conn.rollback()
@@ -253,18 +255,20 @@ def employee_register():
         finally:
             cursor.close()
             conn.close()
-            
+
     return render_template('employee_register.html')
 
 
 @app.route('/vehicle_search', methods=['GET'])
 def vehicle_search():
-    plate_vehicle = request.args.get('plate_vehicle')  # Captura a placa enviada pelo formulário
+    # Captura a placa enviada pelo formulário
+    plate_vehicle = request.args.get('plate_vehicle')
     vehicle_data = None
 
     if plate_vehicle:
         conn = getDatabaseConnection()
-        cursor = conn.cursor(dictionary=True)  # Retornar resultados como dicionário
+        # Retornar resultados como dicionário
+        cursor = conn.cursor(dictionary=True)
         query = """
             SELECT marca, modelo, motor_veiculo, ano_fabricacao, ano_modelo, cor, placa, chassi, km_rodado, valor_venda, condicao
             FROM tb_veiculos
@@ -278,7 +282,6 @@ def vehicle_search():
 
     # Renderizar o HTML com os resultados
     return render_template('vehicle_search.html', vehicle=vehicle_data)
-
 
 
 @app.route('/customer_search')
@@ -300,10 +303,36 @@ def sales_reports():
 def stock_reports():
     return render_template('stock_reports.html')
 
-@app.route('/Login/login_index')
+
+def is_logged():
+    login = request.cookies.get('login')
+    password = request.cookies.get('password')
+    conn = getDatabaseConnection()
+    cursor = conn.cursor()
+    query = """
+        SELECT * FROM tb_usuarios
+        WHERE login = %s AND senha = %s
+    """
+    cursor.execute(query, (login, password))
+    user = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return user is not None
+    
+
+
+@app.route('/')
 def login_index():
-    return render_template('Login/login_index.html')
+    if (is_logged()):
+        return render_template('index.html')
+    else:
+        return render_template('login_index.html')
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+
+    try:
+        conn = getDatabaseConnection()
+        conn.close()
+    finally:
+        app.run(debug=True)

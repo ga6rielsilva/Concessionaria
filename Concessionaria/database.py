@@ -2,7 +2,6 @@ import mysql.connector
 from mysql.connector import errorcode
 
 def execute_sql_file(cursor, sql_file_path):
-    """Lê e executa um arquivo SQL linha por linha."""
     with open(sql_file_path, 'r', encoding='utf-8') as file:
         sql_commands = file.read().split(';')  # Divide os comandos pelo delimitador ";"
         for command in sql_commands:
