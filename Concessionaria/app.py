@@ -50,22 +50,7 @@ def vehicle_register():
              categoria         
             )
 
-            VALUES (
-                %s, 
-                %s, 
-                %s, 
-                %s, 
-                %s, 
-                %s, 
-                %s, 
-                %s, 
-                %s, 
-                %s, 
-                %s, 
-                %s, 
-                %s,
-                %s
-            )
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
 
         values = (brandVehicle, modelVehicle, yearVehicle, yearModel, colorVehicle, engineVehicle, plateVehicle,
@@ -121,20 +106,8 @@ def customer_register():
                 estado_cliente,
                 pais_cliente
             )
-            VALUES (
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s,
-                %s
-            )
+            
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
         values = (nameCustomer, cpfCustomer, rgCustomer, birthCustomer, customerSex, phoneCustomer,
                   emailCustomer, addressCustomer, zipCustomer, cityCustomer, stateCustomer, countryCustomer)

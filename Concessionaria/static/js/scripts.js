@@ -1,10 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    // Codigo Ydate Footer
-    const Ydate = document.getElementById("Ydate");
-        if (Ydate) {
+    // Traduzindo placeholder {Ydate}
+    const YdatePlaceholder = document.getElementById("Ydate");
+        if (YdatePlaceholder) {
             const date = new Date();
-            Ydate.innerHTML ="&nbsp;" + date.getFullYear() + "&nbsp;";
+            YdatePlaceholder.innerHTML ="&nbsp;" + date.getFullYear() + "&nbsp;";
+        }
+        
+    // Traduzindo placeholder {username}
+    const usernamePlaceholder = document.getElementById("username");
+        if (usernamePlaceholder) {
+            const date = new Date();
+            usernamePlaceholder.innerHTML ="&nbsp;" + date.getFullYear() + "&nbsp;";
         }
 
     // Código do submenu do usuário
