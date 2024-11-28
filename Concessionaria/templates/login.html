@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{url_for('static', filename='css/login_style.css')}}">
-    <title>Acessar sua conta</title>
+    <title>Nome Empresa</title>
     
 </head>
 
 <body>
     <div class="page">
-        <form>
+        <form method="POST" action="{{ url_for('login') }}">
             <h1>GLW Sistemas</h1>
             <label for="user">Usuário</label>
             <input type="user" name="login" placeholder="Digite seu Usuário" required>
@@ -18,7 +18,10 @@
             <label for="password">Senha</label>
             <input type="password" name="password" placeholder="Digite sua senha" required>
 
-            <input class="button" type="submit" value="ACESSAR CONTA">
+            <button class="button">Acessar Conta</button>
+            {% if error %}
+            <p style="color: red;">{{ error }}</p>
+            {% endif %}
         </form>
     </div>
 

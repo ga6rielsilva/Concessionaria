@@ -1,8 +1,68 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, make_response
 from database import getDatabaseConnection
 import random
 
 app = Flask(__name__)
+
+@app.before_request
+def restrict_access():
+    if request.endpoint not in ['login', 'static'] and not is_logged():
+        return redirect(url_for('login'))
+
+def is_logged():
+    login = request.cookies.get('login')
+    password = request.cookies.get('password')
+    if not login or not password:
+        return False
+
+    conn = getDatabaseConnection()
+    cursor = conn.cursor()
+    query = """
+        SELECT * FROM tb_usuarios
+        WHERE login = %s AND senha = %s
+    """
+    cursor.execute(query, (login, password))
+    user = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return user is not None
+
+
+@app.route('/', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        login = request.form['login']
+        password = request.form['password']
+
+        conn = getDatabaseConnection()
+        cursor = conn.cursor()
+        query = """
+            SELECT * FROM tb_usuarios
+            WHERE login = %s AND senha = %s
+        """
+
+        cursor.execute(query, (login, password))
+        user = cursor.fetchone()
+        cursor.close()
+        conn.close()
+
+        if user:
+            response = make_response(redirect(url_for('index')))
+            response.set_cookie('login', login)
+            response.set_cookie('password', password)
+            return response
+        else:
+            return render_template('login.html', error='Login ou senha inválidos')
+
+    return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    # Remove os cookies de login e senha
+    response = make_response(redirect(url_for('login')))
+    response.set_cookie('login', '', expires=0)
+    response.set_cookie('password', '', expires=0)
+    return response
 
 
 @app.route('/home')
@@ -275,31 +335,6 @@ def sales_reports():
 @app.route('/stock_reports')
 def stock_reports():
     return render_template('stock_reports.html')
-
-
-def is_logged():
-    login = request.cookies.get('login')
-    password = request.cookies.get('password')
-    conn = getDatabaseConnection()
-    cursor = conn.cursor()
-    query = """
-        SELECT * FROM tb_usuarios
-        WHERE login = %s AND senha = %s
-    """
-    cursor.execute(query, (login, password))
-    user = cursor.fetchone()
-    cursor.close()
-    conn.close()
-    return user is not None
-    
-
-
-@app.route('/')
-def login_index():
-    if (is_logged()):
-        return render_template('index.html')
-    else:
-        return render_template('login_index.html')
 
 
 if __name__ == '__main__':

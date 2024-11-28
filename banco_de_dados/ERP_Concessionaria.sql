@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS tb_usuarios(
 	id_usuario INT NOT NULL AUTO_INCREMENT,
 	nome VARCHAR(40) NOT NULL,
 	login VARCHAR(40) NOT NULL,
-	senha VARCHAR(40) NOT NULL,
+	senha VARCHAR(255) NOT NULL,
 	CONSTRAINT pk_usuarios PRIMARY KEY(id_usuario),
 	UNIQUE(login)
 );
