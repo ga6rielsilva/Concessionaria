@@ -47,7 +47,7 @@
 
             <div class="user-container">
                 <a class="user" id="user-icon" href="#">
-                    <p>{username}</p>
+                    <p>{{username}}</p>
                     <i class="material-symbols-outlined user-icon">account_circle</i>
                 </a>
                 <div id="user-submenu" class="user-submenu">
@@ -65,14 +65,22 @@
             <div class="main-content">
                 <h1>Cadastro de Funcionários </h1>
             </div>
+
+            {% if message %}
+            <p style="color: green;">{{ message|safe }}</p>
+            {% endif %}
+
+            {% if error %}
+            <p style="color: red;">{{ error }}</p>
+            {% endif %}
+
             <form action="" method="POST">
                 <div class="form-container">
                     <div class="form-item">
                         <label for="profilePhoto">Foto de Perfil</label>
                         <img id="preview" src="#" alt="Pré-visualização"
                             style="display: none; margin-top: 10px; max-width: 150px; max-height: 200px;">
-                        <input type="file" id="profilePhoto" name="profilePhoto" accept="image/*"
-                            onchange="previewImage(event)">
+                        <input type="file" id="profilePhoto" name="profilePhoto" accept="image/*">
                     </div>
                     <div class="form-item">
                         <label for="name">Nome</label>

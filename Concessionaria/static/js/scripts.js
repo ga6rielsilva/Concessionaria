@@ -2,17 +2,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Traduzindo placeholder {Ydate}
     const YdatePlaceholder = document.getElementById("Ydate");
-        if (YdatePlaceholder) {
-            const date = new Date();
-            YdatePlaceholder.innerHTML ="&nbsp;" + date.getFullYear() + "&nbsp;";
-        }
-        
-    // Traduzindo placeholder {username}
-    const usernamePlaceholder = document.getElementById("username");
-        if (usernamePlaceholder) {
-            const date = new Date();
-            usernamePlaceholder.innerHTML ="&nbsp;" + date.getFullYear() + "&nbsp;";
-        }
+    if (YdatePlaceholder) {
+        const date = new Date();
+        YdatePlaceholder.innerHTML = "&nbsp;" + date.getFullYear() + "&nbsp;";
+    }
+
 
     // Código do submenu do usuário
     const userIcon = document.getElementById("user-icon");
@@ -190,13 +184,24 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Carregamento de foto do formulário de cadastro
-    const photoInput = document.getElementById("profilePhoto" || "vehiclePhoto");
+    const photoInput = document.getElementById("profilePhoto");
 
     if (photoInput) {
         photoInput.addEventListener("change", function (event) {
+            console.log("Foto enviada");
             const preview = document.getElementById("preview");
-            preview.src = URL.createObjectURL(event.target.files[0]);
-            preview.style.display = "block";
+            if (preview) {
+                preview.src = URL.createObjectURL(event.target.files[0]);
+                preview.style.display = "block"; // Exibe a imagem de pré-visualização
+            }
         });
+
+        const preview = document.getElementById("preview");
+        if (preview) {
+            preview.addEventListener("click", function () {
+                photoInput.click(); // Permite clicar na imagem para escolher novamente
+            });
+        }
     }
+
 });

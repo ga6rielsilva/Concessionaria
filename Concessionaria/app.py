@@ -4,10 +4,12 @@ import random
 
 app = Flask(__name__)
 
+
 @app.before_request
 def restrict_access():
     if request.endpoint not in ['login', 'static'] and not is_logged():
         return redirect(url_for('login'))
+
 
 def is_logged():
     login = request.cookies.get('login')
@@ -50,11 +52,13 @@ def login():
             response = make_response(redirect(url_for('index')))
             response.set_cookie('login', login)
             response.set_cookie('password', password)
+            response.set_cookie('username', user[1])
             return response
         else:
             return render_template('login.html', error='Login ou senha inválidos')
 
     return render_template('login.html')
+
 
 @app.route('/logout')
 def logout():
@@ -62,12 +66,13 @@ def logout():
     response = make_response(redirect(url_for('login')))
     response.set_cookie('login', '', expires=0)
     response.set_cookie('password', '', expires=0)
+    response.set_cookie('username', '', expires=0)
     return response
 
 
 @app.route('/home')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', username=request.cookies.get('username'))
 
 
 @app.route('/vehicle_register',  methods=['GET', 'POST'])
@@ -95,19 +100,19 @@ def vehicle_register():
         query = """
             INSERT INTO tb_veiculos (
              marca,
-             modelo, 
-             ano_fabricacao, 
-             ano_modelo, 
+             modelo,
+             ano_fabricacao,
+             ano_modelo,
              cor,
              motor_veiculo,
-             placa, 
-             chassi, 
-             renavam, 
-             km_rodado, 
-             valor_compra, 
+             placa,
+             chassi,
+             renavam,
+             km_rodado,
+             valor_compra,
              valor_venda,
              condicao,
-             categoria         
+             categoria
             )
 
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -127,8 +132,7 @@ def vehicle_register():
             cursor.close()
             conn.close()
 
-        return render_template('vehicle_register.html')
-    return render_template('vehicle_register.html')
+    return render_template('vehicle_register.html', username=request.cookies.get('username'))
 
 
 @app.route('/customer_register',  methods=['GET', 'POST'])
@@ -166,7 +170,7 @@ def customer_register():
                 estado_cliente,
                 pais_cliente
             )
-            
+
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
         values = (nameCustomer, cpfCustomer, rgCustomer, birthCustomer, customerSex, phoneCustomer,
@@ -183,12 +187,14 @@ def customer_register():
             cursor.close()
             conn.close()
 
-        return render_template('customer_register.html')
-    return render_template('customer_register.html')
+    return render_template('customer_register.html', username=request.cookies.get('username'))
 
 
 @app.route('/employee_register', methods=['GET', 'POST'])
 def employee_register():
+    message = None
+    error = None
+
     if request.method == "POST":
         # Dados do funcionário
         photoEmployee = request.form['profilePhoto']
@@ -278,18 +284,15 @@ def employee_register():
 
             # Confirmar a transação
             conn.commit()
-            print("Funcionário e usuário cadastrados com sucesso!")
-            # Para ver os dados gerados no console
-            print(f"Login: {userLogin}, Senha: {userPassword}")
+            message = f"Funcionário e usuário cadastrados com sucesso!<br> Login: {userLogin}<br> Senha: {userPassword}"
         except Exception as e:
-            # Reverter a transação em caso de erro
             conn.rollback()
-            print("\n\nErro ao cadastrar funcionário e usuário: " + str(e) + "\n\n")
+            error = f"Erro ao cadastrar funcionário e usuário: {str(e)}"
         finally:
             cursor.close()
             conn.close()
 
-    return render_template('employee_register.html')
+    return render_template('employee_register.html',username=request.cookies.get('username'), message=message, error=error)
 
 
 @app.route('/vehicle_search', methods=['GET'])
@@ -314,27 +317,17 @@ def vehicle_search():
         conn.close()
 
     # Renderizar o HTML com os resultados
-    return render_template('vehicle_search.html', vehicle=vehicle_data)
+    return render_template('vehicle_search.html', vehicle=vehicle_data , username=request.cookies.get('username'))
 
 
 @app.route('/customer_search')
 def customer_search():
-    return render_template('customer_search.html')
+    return render_template('customer_search.html' , username=request.cookies.get('username'))
 
 
 @app.route('/reports')
 def reports():
-    return render_template('reports.html')
-
-
-@app.route('/sales_reports')
-def sales_reports():
-    return render_template('sales_reports.html')
-
-
-@app.route('/stock_reports')
-def stock_reports():
-    return render_template('stock_reports.html')
+    return render_template('reports.html' , username=request.cookies.get('username'))
 
 
 if __name__ == '__main__':
