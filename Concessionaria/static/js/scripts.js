@@ -165,7 +165,18 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Mascara pra Preço do veículo
-    const price = document.getElementById("price_vehicle");
+    const priceFormatterElements = document.getElementsByClassName("price_formatter");
+
+    if (priceFormatterElements.length > 0) {
+        Array.from(priceFormatterElements).forEach((element) => {
+            element.addEventListener("input", function (event) {
+                let value = event.target.value;
+                value = value.replace(/\D/g, "");
+                value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                event.target.value = "R$ " + value;
+            });
+        });
+    }
 
     if (price) {
         price.addEventListener("input", function (event) {
