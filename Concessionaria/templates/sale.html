@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@600" />
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    <title>Venda de Veículos</title>
+</head>
+
+<body>
+    
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='img/imagemteste.png')}}" alt="logo-empresa">
+            </div>
+            <nav class="nav ">
+                <div class="nav-item">
+                    <a href="{{ url_for('index')}}">Home</a>
+                </div>
+                <div class="nav-item">
+                    <a href="#">Cadastro</a>
+                    <div class="submenu">
+                        <a href="{{ url_for('vehicle_register') }}">Veículos</a>
+                        <a href="{{ url_for('customer_register') }}">Clientes</a>
+                        <a href="{{ url_for('employee_register') }}">Funcionários</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="#">Consulta</a>
+                    <div class="submenu">
+                        <a href="{{ url_for('vehicle_search') }}">Veículos</a>
+                        <a href="{{ url_for('customer_search') }}">Clientes</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="#">Relatórios</a>
+                    <div class="submenu">
+                        <a href="#">Vendas</a>
+                        <a href="#">Estoque</a>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="user-container">
+                <a class="user" id="user-icon" href="#">
+                    <p id="username">{{username}}</p>
+                    <i class="material-symbols-outlined user-icon">account_circle</i>
+                </a>
+                <div id="user-submenu" class="user-submenu">
+                    <a href="#">Perfil</a>
+                    <a href="#">Configurações</a>
+                    <a href="{{ url_for('logout') }}">Sair</a>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <main>
+        <div class="main-container">
+            <div class="main-content">
+                <h1>Vendas</h1>
+            </div>
+            <form action="" method="POST">
+
+                <div class="form-container"> 
+                    
+                    <div class="form-item">
+                        <label for="name">Nome do cliente</label>
+                        <input type="text">
+                    </div>
+                    <div class="form-item">
+                        <label for="name">CPF do cliente</label>
+                        <input type="text">
+                    </div>
+                    <div class="form-item">
+                        <label for="name">Entrega?</label>
+                        <select name="customer">
+                            <option value="" selected disabled>Selecione</option>
+                            <option value="Sim">Sim</option>
+                            <option value="Não">Não</option>
+                        </select required>
+                    </div>
+                    <div class="form-item">
+                        <label for="name">Endereço de entrega</label>
+                        <input type="text">
+                    </div>
+                    <div class="form-item">
+                        <label for="name">Forma de pagamento</label>
+                        <select name="customer">
+                            <option value="" selected disabled>Selecione</option>
+                            <option value="Cartão de crédito">Cartão de crédito</option>
+                            <option value="Cartão de débito">Cartão de débito</option>
+                            <option value="Dinheiro">Dinheiro</option>
+                            <option value="Pix">Pix</option>
+                            <option value="Boleto">Boleto</option>
+                        </select required>
+                    </div>
+                    <div class="form-item">
+                        <label for="name">Parcela</label>
+                        <select name="customer">
+                            <option value="" selected disabled>Selecione</option>
+                            <option value="10">10</option>
+                            <option value="12">12</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                            <option value="25">25</option>
+                            <option value="30">30</option>
+                        </select required>
+                    </div>
+                    <div class="form-item">
+                        <label for="name">Valor</label>
+                        <input type="text">
+                    </div>
+                    <div class="form-item">
+                        <label for="name">Valor da parcela</label>
+                        <input type="text">
+                    </div>
+                    
+                </div>
+            </form>
+        </div>   
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <p>©<span id="Ydate"></span> - GLW Sistemas - Todos os direitos reservados</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>
