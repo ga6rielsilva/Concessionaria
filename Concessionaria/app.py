@@ -29,6 +29,20 @@ def is_logged():
     conn.close()
     return user is not None
 
+# Função para atualizar a senha
+
+
+def update_user_password(username, new_password):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "UPDATE users SET password = %s WHERE username = %s",
+        (generate_password_hash(new_password), username)
+    )
+    conn.commit()
+    cursor.close()
+    conn.close()
+
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
@@ -364,10 +378,17 @@ def customer_search():
 def reports():
     return render_template('reports.html', username=request.cookies.get('username'))
 
+    return render_template('reports.html', username=request.cookies.get('username'))
+
 
 @app.route('/sale')
 def sale():
     return render_template('sale.html', username=request.cookies.get('username'))
+
+
+@app.route('/settings')
+def change_password():
+    return render_template('settings.html', error=error, message=message, username=request.cookies.get('username'))
 
 
 if __name__ == '__main__':
