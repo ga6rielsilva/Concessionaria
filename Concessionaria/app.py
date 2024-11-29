@@ -299,6 +299,7 @@ def employee_register():
             # Confirmar a transação
             conn.commit()
             message = f"Funcionário e usuário cadastrados com sucesso!<br> Login: {
+                
                 userLogin}<br> Senha: {userPassword}"
         except Exception as e:
             conn.rollback()
@@ -307,37 +308,71 @@ def employee_register():
             cursor.close()
             conn.close()
 
-    return render_template('employee_register.html', username=request.cookies.get('username'), message=message, error=error)
+    return render_template('employee_register.html',  username=request.cookies.get('username'), message=message, error=error)
 
 
-@app.route('/vehicle_search', methods=['GET'])
+@app.route('/vehicle_search', methods=['GET', 'POST'])
 def vehicle_search():
-    # Captura a placa enviada pelo formulário
-    plate_vehicle = request.args.get('plate_vehicle')
     vehicle_data = None
+    error = None
+    if request.method == 'POST':
+        plate = request.form['plate_vehicle']
 
-    if plate_vehicle:
         conn = getDatabaseConnection()
-        # Retornar resultados como dicionário
         cursor = conn.cursor(dictionary=True)
         query = """
-            SELECT marca, modelo, motor_veiculo, ano_fabricacao, ano_modelo, cor, placa, chassi, km_rodado, valor_venda, condicao
-            FROM tb_veiculos
-            WHERE placa = %s
-        """
-        cursor.execute(query, (plate_vehicle,))
-        vehicle_data = cursor.fetchone()  # Busca o primeiro resultado correspondente
+                SELECT * FROM tb_veiculos
+                WHERE placa = %s
+            """
+        
+        value = (plate,)
+        
+        try:
+            cursor.execute(query, value)
+            vehicle_data = cursor.fetchone()
+            print(vehicle_data)
+            if vehicle_data is None:
+                error = "Veículo não encontrado"
+        except Exception as e:
+            print(f"Erro ao buscar veículo: {str(e)}")
+            error = f"Erro ao buscar veículo: {str(e)}"
+        finally:
+            cursor.close()
+            conn.close()
 
-        cursor.close()
-        conn.close()
-
-    # Renderizar o HTML com os resultados
-    return render_template('vehicle_search.html', vehicle=vehicle_data, username=request.cookies.get('username'))
+    return render_template('vehicle_search.html', vehicle=vehicle_data, error=error, username=request.cookies.get('username'))
 
 
-@app.route('/customer_search')
+@app.route('/customer_search' , methods=['GET', 'POST'])
 def customer_search():
-    return render_template('customer_search.html', username=request.cookies.get('username'))
+    customer_data = None
+    error = None
+    if request.method == 'POST':
+        cpf = request.form['cpf_customer']
+
+        conn = getDatabaseConnection()
+        cursor = conn.cursor(dictionary=True)
+        query = """
+                SELECT * FROM tb_clientes
+                WHERE cpf_cliente = %s
+            """
+        
+        value = (cpf,)
+        
+        try:
+            cursor.execute(query, value)
+            customer_data = cursor.fetchone()
+            print(customer_data)
+            if customer_data is None:
+                error = "Cliente não encontrado"
+        except Exception as e:
+            print(f"Erro ao buscar cliente: {str(e)}")
+            error = f"Erro ao buscar cliente: {str(e)}"
+        finally:
+            cursor.close()
+            conn.close()
+
+    return render_template('customer_search.html', username=request.cookies.get('username'), customers=customer_data, error=error)
 
 
 @app.route('/reports')
@@ -345,9 +380,32 @@ def reports():
     return render_template('reports.html', username=request.cookies.get('username'))
 
 
-@app.route('/sale')
-def sale():
-    return render_template('sale.html', username=request.cookies.get('username'))
+@app.route('/sales')
+def sales():
+    conn = getDatabaseConnection()
+    cursor = conn.cursor(dictionary=True)
+
+    vehicleSaleSelector = []
+    message = None
+    
+    try:
+        cursor.execute("SELECT id_veiculo, marca, modelo, placa FROM tb_veiculos")
+        vehicleSaleSelector = cursor.fetchall()
+    except Exception as e:
+        print("\n\nErro ao buscar veículos: " + str(e) + "\n\n")
+    finally:
+        cursor.close()
+        conn.close()
+
+    if not vehicleSaleSelector:
+        message = message or "Nenhum veículo disponível no momento."
+
+    return render_template('sales.html', vehicleSaleSelector=vehicleSaleSelector, username=request.cookies.get('username'))
+
+
+@app.route('/settings')
+def change_password():
+    return render_template('settings.html', error=error, message=message, username=request.cookies.get('username'))
 
 
 @app.route('/settings')
