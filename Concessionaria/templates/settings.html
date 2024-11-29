@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@600" />
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    <title>Configurações</title>
+
+</head>
+
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='img/imagemteste.png')}}" alt="logo-empresa">
+            </div>
+            <nav class="nav ">
+                <div class="nav-item">
+                    <a href="{{ url_for('index')}}">Home</a>
+                </div>
+                <div class="nav-item">
+                    <a href="#">Cadastro</a>
+                    <div class="submenu">
+                        <a href="{{ url_for('vehicle_register') }}">Veículos</a>
+                        <a href="{{ url_for('customer_register') }}">Clientes</a>
+                        <a href="{{ url_for('employee_register') }}">Funcionários</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="#">Consulta</a>
+                    <div class="submenu">
+                        <a href="{{ url_for('vehicle_search') }}">Veículos</a>
+                        <a href="{{ url_for('customer_search') }}">Clientes</a>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <a href="#">Relatórios</a>
+                    <div class="submenu">
+                        <a href="#">Vendas</a>
+                        <a href="#">Estoque</a>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="user-container">
+                <a class="user" id="user-icon" href="#">
+                    <p id="username">{{username}}</p>
+                    <i class="material-symbols-outlined user-icon">account_circle</i>
+                </a>
+                <div id="user-submenu" class="user-submenu">
+                    <a href="#">Perfil</a>
+                    <a href="{{ url_for('settings')}}">Configurações</a>
+                    <a href="{{ url_for('logout') }}">Sair</a>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <main>
+
+        <div class="main-container">
+            <div class="main-content">
+                <h1>Configurações</h1>
+            </div>
+
+            {% if message %}
+            <p style="color: green;">{{ message|safe }}</p>
+            {% endif %}
+
+            {% if error %}
+            <p style="color: red;">{{ error }}</p>
+            {% endif %}
+
+            <form action="" method="POST">
+                <div class="form-container">
+                    <div class="form-item">
+                        <label for="photo">Foto</label>
+                        <img src="{{ url_for('static', filename='img/photo.jpg')}}" alt="user-photo">
+                    </div>
+                    <div class="form-item">
+                        <label for="password">Senha atual</label>
+                        <input type="password" name="password" id="password" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="username">Nome do usuário</label>
+                        <p class="form-item-user" id="username">{{ username }}</p>
+                    </div>
+                    <div class="form-item">
+                        <label for="password">Nova senha</label>
+                        <input type="password" name="new-password" id="new-password" required>
+                    </div>
+                    <div class="form-item">
+
+                    </div>
+                    <div class="form-item">
+                        <label for="password">Confirmar nova senha</label>
+                        <input type="password" name="confirm-password" id="confirm-password" required>
+                    </div>
+                    
+
+                    <div class="form-item-logout form-button-vehicle-register">
+                        <a href="{{ url_for('logout') }}">
+                            <button type="submit">sair</button>
+                        </a>
+                    </div>
+                    <div class="form-item form-button-vehicle-register">
+                        <button type="submit">Confirmar</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="footer-container register-footer">
+            <p>© <span id="Ydate"></span> - GLW Sistemas - Todos os direitos reservados</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

@@ -405,6 +405,24 @@ form {
     flex-direction: column;
 }
 
+.form-item-user{
+    display: flex;
+    flex-direction: column;
+    background-color: #f1f1f1;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border: 1px solid #ccc;
+}
+
+.form-item-logout{
+    width: 300px; /* Largura da div */
+    margin: 0 auto; /* Margens automáticas para centralizar horizontalmente */  
+    margin-right: 11.4px;
+    text-align: center; 
+}
+
 .form-button {
     margin-top: 40px;
     display: flex;
