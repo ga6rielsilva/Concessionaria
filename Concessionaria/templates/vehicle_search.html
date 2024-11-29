@@ -69,36 +69,35 @@
                 <h1>Consulta de Veiculos </h1>
             </div>
             <div class="search-container search-item">
-                <form action="/search_vehicle" method="GET" id="search-form">
+                <form action="" method="POST" id="search-form">
                     <label for="plate_vehicle">Placa</label>
                     <input type="text" name="plate_vehicle" id="plate_vehicle" placeholder="Digite a Placa do Veículo"
                         required>
                     <button type="submit">Buscar</button>
                 </form>
-            </div>
-            {% if vehicle %}
-            <div id="result-container">
-                <h2>Resultado da Busca</h2>
-                <div id="vehicle-details">
-                    <p><strong>Marca:</strong> {{ vehicle['marca'] }}</p>
-                    <p><strong>Modelo:</strong> {{ vehicle['modelo'] }}</p>
-                    <p><strong>Motor:</strong> {{ vehicle['motor_veiculo'] }}</p>
-                    <p><strong>Ano de Fabricação:</strong> {{ vehicle['ano_fabricacao'] }}</p>
-                    <p><strong>Ano do Modelo:</strong> {{ vehicle['ano_modelo'] }}</p>
-                    <p><strong>Cor:</strong> {{ vehicle['cor'] }}</p>
-                    <p><strong>Placa:</strong> {{ vehicle['placa'] }}</p>
-                    <p><strong>Chassi:</strong> {{ vehicle['chassi'] }}</p>
-                    <p><strong>Quilometragem:</strong> {{ vehicle['km_rodado'] }} km</p>
-                    <p><strong>Preço:</strong> R$ {{ vehicle['valor_venda'] }}</p>
-                    <p><strong>Condição:</strong> {{ vehicle['condicao'] }}</p>
+                {% if vehicle %}
+                <div id="result-container">
+                    <h2>Resultado da Busca</h2>
+                    <div id="vehicle-details">
+                        <p><strong>Marca:</strong> {{ vehicle['marca'] }}</p>
+                        <p><strong>Modelo:</strong> {{ vehicle['modelo'] }}</p>
+                        <p><strong>Motor:</strong> {{ vehicle['motor_veiculo'] }}</p>
+                        <p><strong>Ano de Fabricação:</strong> {{ vehicle['ano_fabricacao'] }}</p>
+                        <p><strong>Ano do Modelo:</strong> {{ vehicle['ano_modelo'] }}</p>
+                        <p><strong>Cor:</strong> {{ vehicle['cor'] }}</p>
+                        <p><strong>Placa:</strong> {{ vehicle['placa'] }}</p>
+                        <p><strong>Chassi:</strong> {{ vehicle['chassi'] }}</p>
+                        <p><strong>Quilometragem:</strong> {{ vehicle['km_rodado'] }} km</p>
+                        <p><strong>Preço:</strong> R$ {{ vehicle['valor_venda'] }}</p>
+                        <p><strong>Condição:</strong> {{ vehicle['condicao'] }}</p>
+                    </div>
                 </div>
+                {% endif %}
+
+                {% if error %}
+                <p style="color: red;">{{ error }}</p>
+                {% endif %}
             </div>
-            {% else %}
-            <!-- Se nenhum veículo foi encontrado, exibir mensagem -->
-            <div id="result-container">
-                <p>Nenhum veículo encontrado para a placa informada.</p>
-            </div>
-            {% endif %}
 
         </div>
     </main>
