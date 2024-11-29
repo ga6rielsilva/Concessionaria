@@ -67,35 +67,37 @@
                 <p>Escolha uma das opções no menu abaixo para começar.</p>
             </div>
             <div class="main-menu">
+                <a href="{{ url_for('sale') }}" class="menu-item">
+                    <p>Realizar Venda</p>
+                    <i class="material-symbols-outlined menu-icon">attach_money</i>
+                </a>
                 <a href="{{ url_for('vehicle_register') }}" class="menu-item">
-                    <p>Cadastro <br> Veiculos</p>
-                    <i class="material-symbols-outlined">directions_car</i>
+                    <p>Cadastro Veiculos</p>
+                    <i class="material-symbols-outlined menu-icon">directions_car</i>
                 </a>
                 <a href="{{ url_for('customer_register') }}" class="menu-item">
-                    <p>Cadastro <br> Clientes</p>
+                    <p>Cadastro Clientes</p>
                     <i class="material-symbols-outlined menu-icon">person_add</i>
                 </a>
                 <a href="{{ url_for('employee_register') }}" class="menu-item">
-                    <p>Cadastro <br>Funcionário</p>
-                    <i class="material-symbols-outlined">group_add</i>
+                    <p>Cadastro Funcionário</p>
+                    <i class="material-symbols-outlined menu-icon">group_add</i>
                 </a>
                 <a href="{{ url_for('vehicle_search') }}" class="menu-item">
-                    <p>Consulta <br> Veiculos</p>
+                    <p>Consulta Veiculos</p>
                     <i class="material-symbols-outlined menu-icon">traffic_jam</i>
                 </a>
                 <a href="{{ url_for('customer_search') }}" class="menu-item">
-                    <p>Consulta <br> Clientes</p>
+                    <p>Consulta Clientes</p>
                     <i class="material-symbols-outlined menu-icon">person_search</i>
                 </a>
                 <a href="{{ url_for('reports') }}" class="menu-item">
                     <p>Relatórios</p>
                     <i class="material-symbols-outlined menu-icon">assignment</i>
                 </a>
-                <a href="{{ url_for('sale') }}" class="menu-item">
-                    <p>Vendas</p>
-                </a>
-                <a class="menu-item">
-                    <p>Sair</p>
+                <a href="{{ url_for('logout') }}" class="menu-item">
+                    <p>Encerar Sessão</p>
+                    <i class="material-symbols-outlined menu-icon">logout</i>
                 </a>
             </div>
     </main>
