@@ -69,7 +69,7 @@
             </div>
 
             {% if message %}
-            <p style="color: green;">{{ message|safe }}</p>
+            <p style="color: green;">{{ message }}</p>
             {% endif %}
 
             {% if error %}
@@ -84,7 +84,7 @@
                     </div>
                     <div class="form-item">
                         <label for="password">Senha atual</label>
-                        <input type="password" name="password" id="password" required>
+                        <input type="password" name="current_password" id="password" required>
                     </div>
                     <div class="form-item">
                         <label for="username">Nome do usuário</label>
@@ -92,14 +92,14 @@
                     </div>
                     <div class="form-item">
                         <label for="password">Nova senha</label>
-                        <input type="password" name="new-password" id="new-password" required>
+                        <input type="password" name="new_password" id="new-password" required>
                     </div>
                     <div class="form-item">
 
                     </div>
                     <div class="form-item">
                         <label for="password">Confirmar nova senha</label>
-                        <input type="password" name="confirm-password" id="confirm-password" required>
+                        <input type="password" name="confirm_password" id="confirm-password" required>
                     </div>
                     
 

@@ -29,8 +29,6 @@ def is_logged():
     conn.close()
     return user is not None
 
-# Função para atualizar a senha
-
 
 def update_user_password(username, new_password):
     conn = get_db_connection()
@@ -299,7 +297,7 @@ def employee_register():
             # Confirmar a transação
             conn.commit()
             message = f"Funcionário e usuário cadastrados com sucesso!<br> Login: {
-                
+
                 userLogin}<br> Senha: {userPassword}"
         except Exception as e:
             conn.rollback()
@@ -324,9 +322,9 @@ def vehicle_search():
                 SELECT * FROM tb_veiculos
                 WHERE placa = %s
             """
-        
+
         value = (plate,)
-        
+
         try:
             cursor.execute(query, value)
             vehicle_data = cursor.fetchone()
@@ -343,7 +341,7 @@ def vehicle_search():
     return render_template('vehicle_search.html', vehicle=vehicle_data, error=error, username=request.cookies.get('username'))
 
 
-@app.route('/customer_search' , methods=['GET', 'POST'])
+@app.route('/customer_search', methods=['GET', 'POST'])
 def customer_search():
     customer_data = None
     error = None
@@ -356,9 +354,9 @@ def customer_search():
                 SELECT * FROM tb_clientes
                 WHERE cpf_cliente = %s
             """
-        
+
         value = (cpf,)
-        
+
         try:
             cursor.execute(query, value)
             customer_data = cursor.fetchone()
@@ -387,9 +385,10 @@ def sales():
 
     vehicleSaleSelector = []
     message = None
-    
+
     try:
-        cursor.execute("SELECT id_veiculo, marca, modelo, placa FROM tb_veiculos")
+        cursor.execute(
+            "SELECT id_veiculo, marca, modelo, placa FROM tb_veiculos")
         vehicleSaleSelector = cursor.fetchall()
     except Exception as e:
         print("\n\nErro ao buscar veículos: " + str(e) + "\n\n")
@@ -403,13 +402,39 @@ def sales():
     return render_template('sales.html', vehicleSaleSelector=vehicleSaleSelector, username=request.cookies.get('username'))
 
 
-@app.route('/settings')
-def change_password():
-    return render_template('settings.html', error=error, message=message, username=request.cookies.get('username'))
+@app.route('/settings' , methods=['GET', 'POST'])
+def settings():
+    error = None
+    message = None
+
+    if request.method == 'POST':
+        current_password = request.form['current_password']
+        new_password = request.form['new_password']
+        confirm_password = request.form['confirm_password']
 
 
-@app.route('/settings')
-def change_password():
+        if new_password != confirm_password:
+            error = "As senhas não coincidem"
+        else:
+            conn = getDatabaseConnection()
+            cursor = conn.cursor(dictionary=True)
+            cursor.execute(
+                "SELECT senha FROM tb_usuarios WHERE nome = %s", (request.cookies.get(
+                    'username'),)
+            )
+            current_password_db = cursor.fetchone()
+            if current_password_db:
+                current_password_db = current_password_db['senha']
+            else:
+                error = "Usuário não encontrado"
+            if current_password_db != current_password:
+                error = "Senha atual incorreta"
+            else:
+                cursor.execute(
+                    "UPDATE tb_usuarios SET senha = %s WHERE nome = %s", (new_password, request.cookies.get('username'))
+                )
+                conn.commit()
+                message = "Senha atualizada com sucesso"
     return render_template('settings.html', error=error, message=message, username=request.cookies.get('username'))
 
 
