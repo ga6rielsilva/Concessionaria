@@ -29,6 +29,20 @@ def is_logged():
     conn.close()
     return user is not None
 
+# Função para atualizar a senha
+
+
+def update_user_password(username, new_password):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "UPDATE users SET password = %s WHERE username = %s",
+        (generate_password_hash(new_password), username)
+    )
+    conn.commit()
+    cursor.close()
+    conn.close()
+
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
@@ -284,7 +298,8 @@ def employee_register():
 
             # Confirmar a transação
             conn.commit()
-            message = f"Funcionário e usuário cadastrados com sucesso!<br> Login: {userLogin}<br> Senha: {userPassword}"
+            message = f"Funcionário e usuário cadastrados com sucesso!<br> Login: {
+                userLogin}<br> Senha: {userPassword}"
         except Exception as e:
             conn.rollback()
             error = f"Erro ao cadastrar funcionário e usuário: {str(e)}"
@@ -292,7 +307,7 @@ def employee_register():
             cursor.close()
             conn.close()
 
-    return render_template('employee_register.html',username=request.cookies.get('username'), message=message, error=error)
+    return render_template('employee_register.html', username=request.cookies.get('username'), message=message, error=error)
 
 
 @app.route('/vehicle_search', methods=['GET'])
@@ -317,21 +332,27 @@ def vehicle_search():
         conn.close()
 
     # Renderizar o HTML com os resultados
-    return render_template('vehicle_search.html', vehicle=vehicle_data , username=request.cookies.get('username'))
+    return render_template('vehicle_search.html', vehicle=vehicle_data, username=request.cookies.get('username'))
 
 
 @app.route('/customer_search')
 def customer_search():
-    return render_template('customer_search.html' , username=request.cookies.get('username'))
+    return render_template('customer_search.html', username=request.cookies.get('username'))
 
 
 @app.route('/reports')
 def reports():
-    return render_template('reports.html' , username=request.cookies.get('username'))
+    return render_template('reports.html', username=request.cookies.get('username'))
+
 
 @app.route('/sale')
 def sale():
     return render_template('sale.html', username=request.cookies.get('username'))
+
+
+@app.route('/settings')
+def change_password():
+    return render_template('settings.html', error=error, message=message, username=request.cookies.get('username'))
 
 
 if __name__ == '__main__':
@@ -341,4 +362,3 @@ if __name__ == '__main__':
         conn.close()
     finally:
         app.run(debug=True)
-
