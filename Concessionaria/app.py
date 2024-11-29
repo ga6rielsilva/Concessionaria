@@ -284,7 +284,8 @@ def employee_register():
 
             # Confirmar a transação
             conn.commit()
-            message = f"Funcionário e usuário cadastrados com sucesso!<br> Login: {userLogin}<br> Senha: {userPassword}"
+            message = f"Funcionário e usuário cadastrados com sucesso!<br> Login: {
+                userLogin}<br> Senha: {userPassword}"
         except Exception as e:
             conn.rollback()
             error = f"Erro ao cadastrar funcionário e usuário: {str(e)}"
@@ -292,7 +293,7 @@ def employee_register():
             cursor.close()
             conn.close()
 
-    return render_template('employee_register.html',username=request.cookies.get('username'), message=message, error=error)
+    return render_template('employee_register.html', username=request.cookies.get('username'), message=message, error=error)
 
 
 @app.route('/vehicle_search', methods=['GET'])
@@ -317,21 +318,40 @@ def vehicle_search():
         conn.close()
 
     # Renderizar o HTML com os resultados
-    return render_template('vehicle_search.html', vehicle=vehicle_data , username=request.cookies.get('username'))
+    return render_template('vehicle_search.html', vehicle=vehicle_data, username=request.cookies.get('username'))
 
 
 @app.route('/customer_search')
 def customer_search():
-    return render_template('customer_search.html' , username=request.cookies.get('username'))
+    return render_template('customer_search.html', username=request.cookies.get('username'))
 
 
 @app.route('/reports')
 def reports():
-    return render_template('reports.html' , username=request.cookies.get('username'))
+    return render_template('reports.html', username=request.cookies.get('username'))
 
-@app.route('/sale')
-def sale():
-    return render_template('sale.html', username=request.cookies.get('username'))
+
+@app.route('/sales')
+def sales():
+    conn = getDatabaseConnection()
+    cursor = conn.cursor(dictionary=True)
+
+    vehicleSaleSelector = []
+    message = None
+    
+    try:
+        cursor.execute("SELECT id_veiculo, marca, modelo, placa FROM tb_veiculos")
+        vehicleSaleSelector = cursor.fetchall()
+    except Exception as e:
+        print("\n\nErro ao buscar veículos: " + str(e) + "\n\n")
+    finally:
+        cursor.close()
+        conn.close()
+
+    if not vehicleSaleSelector:
+        message = message or "Nenhum veículo disponível no momento."
+
+    return render_template('sales.html', vehicleSaleSelector=vehicleSaleSelector, username=request.cookies.get('username'))
 
 
 if __name__ == '__main__':
@@ -341,4 +361,3 @@ if __name__ == '__main__':
         conn.close()
     finally:
         app.run(debug=True)
-

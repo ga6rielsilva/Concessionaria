@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
         YdatePlaceholder.innerHTML = "&nbsp;" + date.getFullYear() + "&nbsp;";
     }
 
-
     // Código do submenu do usuário
     const userIcon = document.getElementById("user-icon");
     const userSubmenu = document.getElementById("user-submenu");
@@ -158,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Mascara pra Preço do veículo
+    // Mascara para formatar o preenchimento do preço
     const priceFormatterElements = document.getElementsByClassName("price_formatter");
 
     if (priceFormatterElements.length > 0) {
@@ -204,4 +203,35 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Desabilita o campo de endereço de entrega caso a opção de entrega seja "Não"
+    document.getElementById("entregaSelect").addEventListener("change", function () {
+        const selectValue = this.value;
+        const enderecoInput = document.getElementById("deliveryAdress");
+
+        if (selectValue === "Não") {
+            enderecoInput.disabled = true;
+            enderecoInput.value = "Você selecionou a opção de retirada na loja";
+        } else if (selectValue === "Sim") {
+            enderecoInput.disabled = false;
+            enderecoInput.value = "";
+        }
+    });
+
+    // Desabilita o campo de parcelas caso a opção de pagamento seja diferente de "Cartão de crédito"
+    document.getElementById("paymentSelect").addEventListener("change", function () {
+        const selectValue = this.value;
+        const parcelasInput = document.getElementById("parcelasAmount");
+
+        // Verifica se a opção escolhida é "Cartão de Crédito"
+        if (selectValue === "cartão de crédito") {
+            parcelasInput.disabled = false;
+            parcelasInput.selectedIndex = -1;
+        } else {
+            parcelasInput.disabled = true;
+            parcelasInput.selectedIndex = 0;
+        }
+    });
 });

@@ -6,11 +6,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@600" />
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
-    <title>Venda de Veículos</title>
+
+    <title>ERP Concessionaria</title>
 </head>
 
 <body>
-    
     <header>
         <div class="header-container">
             <div class="logo">
@@ -18,7 +18,10 @@
             </div>
             <nav class="nav ">
                 <div class="nav-item">
-                    <a href="{{ url_for('index')}}">Home</a>
+                    <a href="{{ url_for('index')}}">Inicio</a>
+                </div>
+                <div class="nav-item">
+                    <a href="{{ url_for('sales')}}">Venda</a>
                 </div>
                 <div class="nav-item">
                     <a href="#">Cadastro</a>
@@ -66,53 +69,63 @@
             </div>
             <form action="" method="POST">
 
-                <div class="form-container"> 
-                    
+                <div class="form-container">
+                    <div class="form-item">
+                        <label for="vehicle">Selecione o veículo</label>
+                        <select name="vehicle" required>
+                            <option value="" selected disabled>Selecione o veículo</option>
+                            {% for vehicle in vehicleSaleSelector %}
+                                <option value="{{ vehicle['id_veiculo'] }}">
+                                    {{ vehicle['marca'] }} {{ vehicle['modelo'] }} - {{ vehicle['placa'] }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
                     <div class="form-item">
                         <label for="name">Nome do cliente</label>
                         <input type="text">
                     </div>
                     <div class="form-item">
                         <label for="name">CPF do cliente</label>
-                        <input type="text">
+                        <input type="text" id="cpf">
                     </div>
                     <div class="form-item">
-                        <label for="name">Entrega?</label>
-                        <select name="customer">
-                            <option value="" selected disabled>Selecione</option>
-                            <option value="Sim">Sim</option>
-                            <option value="Não">Não</option>
-                        </select required>
+                        <label for="name">Opção de entrega</label>
+                        <select name="customer" id="entregaSelect">
+                            <option value="" selected disabled>Selecione a opção de entrega</option>
+                            <option value="Sim">Enviar para o cliente</option>
+                            <option value="Não">Retirada na loja</option>
+                        </select>
                     </div>
                     <div class="form-item">
                         <label for="name">Endereço de entrega</label>
-                        <input type="text">
+                        <input type="text" value="Selecione a opção de entrega" id="deliveryAdress" disabled>
                     </div>
                     <div class="form-item">
-                        <label for="name">Forma de pagamento</label>
-                        <select name="customer">
-                            <option value="" selected disabled>Selecione</option>
-                            <option value="Cartão de crédito">Cartão de crédito</option>
-                            <option value="Cartão de débito">Cartão de débito</option>
-                            <option value="Dinheiro">Dinheiro</option>
-                            <option value="Pix">Pix</option>
-                            <option value="Boleto">Boleto</option>
-                        </select required>
+                        <label for="name">Método de pagamento</label>
+                        <select name="customer" id="paymentSelect" required>
+                            <option selected disabled>Selecione o método de pagamento</option>
+                            <option value="cartão de crédito">Cartão de Crédito</option>
+                            <option value="cartão de débito">Cartão de Débito</option>
+                            <option value="dinheiro">Dinheiro</option>
+                            <option value="pix">PIX</option>
+                            <option value="boleto">Boleto</option>
+                        </select>
                     </div>
                     <div class="form-item">
-                        <label for="name">Parcela</label>
-                        <select name="customer">
-                            <option value="" selected disabled>Selecione</option>
-                            <option value="10">10</option>
-                            <option value="12">12</option>
-                            <option value="15">15</option>
-                            <option value="20">20</option>
-                            <option value="25">25</option>
-                            <option value="30">30</option>
-                        </select required>
+                        <label for="name">Número de parcelas</label>
+                        <select name="customer" id="parcelasAmount" disabled required>
+                            <option selected disabled>Selecione uma opção que permita parcelamento</option>
+                            <option value="1">1x parcela de {price}</option>
+                            <option value="24">24x parcela de {price}</option>
+                            <option value="36">36x parcela de {price}</option>
+                            <option value="48">48x parcela de {price}</option>
+                            <option value="60">60x parcela de {price}</option>
+                            <option value="72">72x parcela de {price}</option>
+                        </select>
                     </div>
                     <div class="form-item">
-                        <label for="name">Valor</label>
+                        <label for="name">Valor total</label>
                         <input type="text">
                     </div>
                     <div class="form-item">
