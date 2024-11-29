@@ -329,6 +329,10 @@ def customer_search():
 def reports():
     return render_template('reports.html' , username=request.cookies.get('username'))
 
+@app.route('/sale')
+def sale():
+    return render_template('sale.html', username=request.cookies.get('username'))
+
 
 if __name__ == '__main__':
 
@@ -337,3 +341,4 @@ if __name__ == '__main__':
         conn.close()
     finally:
         app.run(debug=True)
+
