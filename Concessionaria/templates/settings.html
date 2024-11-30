@@ -76,11 +76,24 @@
             <p style="color: red;">{{ error }}</p>
             {% endif %}
 
-            <form action="" method="POST">
+            <form action="" method="POST" enctype="multipart/form-data">
                 <div class="form-container">
                     <div class="form-item">
                         <label for="photo">Foto</label>
-                        <img src="{{ url_for('static', filename='img/photo.jpg')}}" alt="user-photo">
+
+                        {% if img_base64 %}
+                        <img src="{{ img_base64 }}" alt="user-photo" style="max-width: 250px;">
+                        {% else %}
+                        <i class="material-symbols-outlined user-icon">account_circle</i>
+                        {% endif %}
+
+                        <div style="display:flex; justify-content: space-between;">
+                            <input type="file" style="max-width: 93%;" name="profilePhoto" id="profilePhoto"
+                                accept="image/*">
+                            <button type="submit" style="width: auto; height: 55px; margin-top: 10px;"
+                                onclick="submitPhotoForm()">Enviar</button>
+                        </div>
+
                     </div>
                     <div class="form-item">
                         <label for="password">Senha atual</label>
@@ -101,13 +114,7 @@
                         <label for="password">Confirmar nova senha</label>
                         <input type="password" name="confirm_password" id="confirm-password" required>
                     </div>
-                    
 
-                    <div class="form-item-logout form-button-vehicle-register">
-                        <a href="{{ url_for('logout') }}">
-                            <button type="submit">sair</button>
-                        </a>
-                    </div>
                     <div class="form-item form-button-vehicle-register">
                         <button type="submit">Confirmar</button>
                     </div>

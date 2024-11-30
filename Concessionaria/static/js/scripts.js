@@ -274,6 +274,51 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // Formulário de envio de foto tela de configurações
+    function submitPhotoForm() {
+        var fileInput = document.getElementById("profilePhoto");
+        
+        // Verifica se um arquivo foi selecionado
+        if (fileInput.files.length > 0) {
+            var formData = new FormData();
+            formData.append("profilePhoto", fileInput.files[0]);
+
+            fetch("", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Foto de perfil atualizada com sucesso!");
+                    // Atualiza a imagem exibida na tela após o upload, se necessário
+                    const preview = document.getElementById("preview");
+                    if (preview) {
+                        preview.src = URL.createObjectURL(fileInput.files[0]);
+                    }
+                } else {
+                    alert("Erro ao atualizar a foto.");
+                }
+            })
+            .catch(error => {
+                console.error("Erro:", error);
+                alert("Erro ao enviar a foto.");
+            });
+        } else {
+            alert("Por favor, selecione uma foto.");
+        }
+    }
+
+    // Adiciona o ouvinte de evento para o botão "Enviar"
+    const submitButton = document.querySelector("button[onclick='submitPhotoForm()']");
+    if (submitButton) {
+        submitButton.addEventListener("click", function (event) {
+            event.preventDefault();  // Impede o envio do formulário completo
+            submitPhotoForm();  // Chama a função para enviar apenas a foto
+        });
+    }
+
+       
     // Console log para verificar o carregamento do arquivo JavaScript
     console.log("JavaScript carregado e DOM pronto!");
 });

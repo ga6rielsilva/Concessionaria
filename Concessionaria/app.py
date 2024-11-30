@@ -1,4 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for, make_response
+from flask import Flask, render_template, request, redirect, url_for, make_response, jsonify
+import base64
+import io
+from PIL import Image
 from database import getDatabaseConnection
 import random
 
@@ -202,8 +205,24 @@ def employee_register():
     error = None
 
     if request.method == "POST":
-        # Dados do funcionário
-        photoEmployee = request.form['profilePhoto']
+        
+        photo_file = request.files['profilePhoto']
+        img_data = photo_file.read()
+
+        try:
+            image = Image.open(io.BytesIO(img_data))
+            img_type = image.format.lower()
+            if img_type != "png":
+                img_converted = io.BytesIO()
+                image.save(img_converted, format="PNG")
+                img_data = img_converted.getvalue()
+                img_type = "png"
+        except Exception as e:
+            error = f"Erro ao processar a imagem: {e}"
+            img_data = None
+            img_type = None
+            
+
         nameEmployee = request.form['employee_name']
         cpfEmployee = request.form['employee_cpf']
         rgEmployee = request.form['employee_rg']
@@ -281,7 +300,7 @@ def employee_register():
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """
             employee_values = (
-                photoEmployee, nameEmployee, cpfEmployee, rgEmployee, birthEmployee,
+                img_data, nameEmployee, cpfEmployee, rgEmployee, birthEmployee,
                 sexEmployee, employeePosition, emailEmployee, phoneEmployee,
                 addressEmployee, cityEmployee, stateEmployee, zipEmployee,
                 countryEmployee, userId
@@ -431,6 +450,7 @@ def sales():
 def settings():
     error = None
     message = None
+    img_base64 = None
 
     if request.method == 'POST':
         current_password = request.form['current_password']
@@ -460,7 +480,80 @@ def settings():
                 )
                 conn.commit()
                 message = "Senha atualizada com sucesso"
-    return render_template('settings.html', error=error, message=message, username=request.cookies.get('username'))
+    
+    login = request.cookies.get('login')
+    
+    if login:
+        conn = getDatabaseConnection()
+        cursor = conn.cursor(dictionary=True)
+        
+        # Obter ID do usuário
+        query = """
+            SELECT id_usuario FROM tb_usuarios
+            WHERE login = %s
+        """
+        cursor.execute(query, (login,))
+        user = cursor.fetchone()
+
+        if user:
+            id_user = user['id_usuario']
+            
+            # Obter a foto do funcionário (campo BLOB)
+            query = """
+                SELECT foto_funcionario FROM tb_funcionarios
+                WHERE id_usuario = %s
+            """
+            cursor.execute(query, (id_user,))
+            photo = cursor.fetchone()
+            print("foto selecionada")
+            if photo and photo['foto_funcionario']:
+                # Converte o conteúdo binário da foto para base64
+                img_data = photo['foto_funcionario']
+                
+                # Detectar o formato da imagem com Pillow
+                img_type = None
+                try:
+                    image = Image.open(io.BytesIO(img_data))
+                    img_type = image.format.lower()  # Formato da imagem (jpeg, png, etc.)
+                except Exception as e:
+                    print(f"Erro ao detectar o tipo de imagem: {e}")
+                
+                if img_type:
+                    img_base64 = f"data:image/{img_type};base64," + base64.b64encode(img_data).decode('utf-8')
+                else:
+                    img_base64 = None
+            else:
+                img_base64 = None
+    
+    # Processamento da foto
+    if 'profilePhoto' in request.files:
+        profilePhoto = request.files['profilePhoto']
+        if profilePhoto:
+            img_data = profilePhoto.read()
+            img_type = profilePhoto.content_type.split('/')[-1]
+            if img_type != "png":
+                img_converted = io.BytesIO()
+                image = Image.open(io.BytesIO(img_data))
+                image.save(img_converted, format="PNG")
+                img_data = img_converted.getvalue()
+                img_type = "png"
+
+            conn = getDatabaseConnection()
+            cursor = conn.cursor()
+            cursor.execute("""
+                UPDATE tb_funcionarios
+                SET foto_funcionario = %s
+                WHERE id_usuario = %s
+            """, (img_data, id_user))
+            conn.commit()
+            message = "Foto de perfil atualizada com sucesso"
+            cursor.close()
+            conn.close()
+
+            return jsonify({'success': True})
+
+
+    return render_template('settings.html', error=error, message=message, username=request.cookies.get('username'), img_base64=img_base64)
 
 
 if __name__ == '__main__':

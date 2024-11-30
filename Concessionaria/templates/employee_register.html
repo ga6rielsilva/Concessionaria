@@ -77,7 +77,7 @@
             <p style="color: red;">{{ error }}</p>
             {% endif %}
 
-            <form action="" method="POST">
+            <form action="" method="POST" enctype="multipart/form-data">
                 <div class="form-container">
                     <div class="form-item">
                         <label for="profilePhoto">Foto de Perfil</label>
@@ -103,7 +103,7 @@
                     </div>
                     <div class="form-item">
                         <label for="sex">Sexo</label>
-                        <select name="employee_sex">
+                        <select name="employee_sex" required>
                             <option value="" selected disabled>Selecione</option>
                             <option value="M">Masculino</option>
                             <option value="F">Feminino</option>
