@@ -290,9 +290,8 @@ def employee_register():
 
             # Confirmar a transação
             conn.commit()
-            message = f"Funcionário e usuário cadastrados com sucesso!<br> Login: {
+            message = f"Funcionário e usuário cadastrados com sucesso!<br> Login: {userLogin}<br> Senha: {userPassword}"
 
-                userLogin}<br> Senha: {userPassword}"
         except Exception as e:
             conn.rollback()
             error = f"Erro ao cadastrar funcionário e usuário: {str(e)}"
@@ -426,6 +425,24 @@ def sales():
         error=error
     )
 
+@app.route('/remove_vehicle/<int:id_veiculo>', methods=['POST'])
+def remove_vehicle(id_veiculo):
+    conn = getDatabaseConnection()
+    cursor = conn.cursor()
+
+    try:
+        # Exclui o veículo pelo ID
+        cursor.execute("DELETE FROM tb_veiculos WHERE id_veiculo = %s", (id_veiculo,))
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        print(f"Erro ao remover veículo: {str(e)}")
+    finally:
+        cursor.close()
+        conn.close()
+
+    # Redireciona para a página de vendas
+    return redirect(url_for('sales'))
 
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():

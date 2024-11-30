@@ -148,9 +148,17 @@
                         <label for="name">Valor total</label>
                         <input type="text">
                     </div>
-                    <div class="form-item form-button-vehicle-register">
-                        <button type="submit">Confirmar Venda</button>
-                    </div>
+                    {% if vehicleSaleSelector %}
+                    {% for vehicle in vehicleSaleSelector %}
+                        <div class="form-item form-button-vehicle-register">
+                            <form action="{{ url_for('remove_vehicle', id_veiculo=vehicle['id_veiculo']) }}" method="POST">
+                                <button type="submit">Confirmar venda</button>
+                            </form>
+                        </div>
+                    {% endfor %}
+                    {% else %}
+                        <p>Nenhum veículo disponível para venda.</p>
+                    {% endif %}
 
                 </div>
             </form>
