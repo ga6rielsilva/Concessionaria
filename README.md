@@ -13,7 +13,6 @@
 - [Contribuição](#contribuição)
 - [Licença](#licença)
 
-
 ---
 
 ## Descrição do Projeto
@@ -26,8 +25,10 @@ Este é um sistema de gerenciamento ERP para uma Concessionaria de veículos, on
 
 ### Pré-requisitos
 
-- Node.js (versão 14 ou superior)
-- Banco de dados PostgreSQL (ou outro banco de dados relacional)
+- Python (versão 3.10 ou superior)
+- Flask
+- mysql-connector
+- Banco de dados MySQL
 
 ### Passos
 
@@ -38,22 +39,31 @@ Este é um sistema de gerenciamento ERP para uma Concessionaria de veículos, on
    ```
 
 2. Instale as dependências:
+   
+   Crie um ambiente virtual para proteger seu sistema (Windows):
    ```bash
-   npm install
+   python -m venv venv
+   .\venv\Scripts\activate
+   ```
+   ```bash
+   pip install flask
+   ```
+   ```bash
+   pip install mysql-connector-python
    ```
 
-3. Configure as variáveis de ambiente no arquivo `.env` (exemplo abaixo):
+4. Configure as variáveis de ambiente no arquivo `.env` (exemplo abaixo):
    ```env
    DATABASE_URL=postgres://usuario:senha@localhost:5432/nome-do-banco
    PORT=3000
    ```
 
-4. Execute as migrações do banco de dados:
+5. Execute as migrações do banco de dados:
    ```bash
    npx sequelize-cli db:migrate
    ```
 
-5. Inicie o servidor:
+6. Inicie o servidor:
    ```bash
    npm start
    ```
