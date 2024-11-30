@@ -159,6 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Mascara para formatar o preenchimento do preço
     const priceFormatterElements = document.getElementsByClassName("price_formatter");
+    const price = document.getElementById("price");
 
     if (priceFormatterElements.length > 0) {
         Array.from(priceFormatterElements).forEach((element) => {
@@ -187,7 +188,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (photoInput) {
         photoInput.addEventListener("change", function (event) {
-            console.log("Foto enviada");
             const preview = document.getElementById("preview");
             if (preview) {
                 preview.src = URL.createObjectURL(event.target.files[0]);
@@ -203,35 +203,77 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-});
-
-document.addEventListener("DOMContentLoaded", function () {
     // Desabilita o campo de endereço de entrega caso a opção de entrega seja "Não"
-    document.getElementById("entregaSelect").addEventListener("change", function () {
-        const selectValue = this.value;
-        const enderecoInput = document.getElementById("deliveryAdress");
+    const entregaSelect = document.getElementById("entregaSelect");
 
-        if (selectValue === "Não") {
-            enderecoInput.disabled = true;
-            enderecoInput.value = "Você selecionou a opção de retirada na loja";
-        } else if (selectValue === "Sim") {
-            enderecoInput.disabled = false;
-            enderecoInput.value = "";
-        }
-    });
+    if (entregaSelect) {
+        entregaSelect.addEventListener("change", function () {
+            const selectValue = this.value;
+            const enderecoInput = document.getElementById("deliveryAdress");
+
+            if (selectValue === "Não") {
+                enderecoInput.disabled = true;
+                enderecoInput.value = "Você selecionou a opção de retirada na loja";
+            } else if (selectValue === "Sim") {
+                enderecoInput.disabled = false;
+                enderecoInput.value = "";
+            }
+        });
+    }
 
     // Desabilita o campo de parcelas caso a opção de pagamento seja diferente de "Cartão de crédito"
-    document.getElementById("paymentSelect").addEventListener("change", function () {
-        const selectValue = this.value;
-        const parcelasInput = document.getElementById("parcelasAmount");
+    const paymentSelect = document.getElementById("paymentSelect");
 
-        // Verifica se a opção escolhida é "Cartão de Crédito"
-        if (selectValue === "cartão de crédito") {
-            parcelasInput.disabled = false;
-            parcelasInput.selectedIndex = -1;
-        } else {
-            parcelasInput.disabled = true;
-            parcelasInput.selectedIndex = 0;
-        }
-    });
+    if (paymentSelect) {
+        paymentSelect.addEventListener("change", function () {
+            const selectValue = this.value;
+            const parcelasInput = document.getElementById("parcelasAmount");
+
+            if (selectValue === "cartão de crédito") {
+                parcelasInput.disabled = false;
+                parcelasInput.selectedIndex = -1;
+            } else {
+                parcelasInput.disabled = true;
+                parcelasInput.selectedIndex = 0;
+            }
+        });
+    }
+
+    // Mostra o valor original do veiculo e já calcula o valor final com as parcelas
+    const vehicleSelect = document.getElementById("vehicleSelect");
+    const OriginalPriceInput = document.getElementById("OriginalPrice");
+
+    if (vehicleSelect && OriginalPriceInput) {
+        // Atualiza o preço quando o veículo for selecionado
+        vehicleSelect.addEventListener("change", function () {
+            // Obtém a opção selecionada
+            const selectOption = vehicleSelect.options[vehicleSelect.selectedIndex];
+
+            // Obtém o preço do veículo (do atributo data-price)
+            const price = selectOption.getAttribute("data-price");
+
+            // Preenche o campo de valor original (OriginalPrice) com o preço
+            if (price) {
+                OriginalPriceInput.value = price;  // O preço já vem formatado, então podemos simplesmente atribuí-lo
+            }
+        });
+    }
+
+
+    // Formulario de delete de veículos
+    const deleteForms = document.querySelectorAll("form.delete-form");
+
+    if (deleteForms.length > 0) {
+        deleteForms.forEach((form) => {
+            form.addEventListener("submit", function (event) {
+                const confirmDelete = confirm("Tem certeza que deseja excluir este veículo?");
+                if (!confirmDelete) {
+                    event.preventDefault(); // Cancela a exclusão se o usuário cancelar
+                }
+            });
+        });
+    }
+
+    // Console log para verificar o carregamento do arquivo JavaScript
+    console.log("JavaScript carregado e DOM pronto!");
 });

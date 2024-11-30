@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -68,19 +69,28 @@
                 <h1>Vendas</h1>
             </div>
             <form action="" method="POST">
-
                 <div class="form-container">
                     <div class="form-item">
                         <label for="vehicle">Selecione o veículo</label>
                         <select name="vehicle" required>
                             <option value="" selected disabled>Selecione o veículo</option>
+
                             {% for vehicle in vehicleSaleSelector %}
-                                <option value="{{ vehicle['id_veiculo'] }}">
-                                    {{ vehicle['marca'] }} {{ vehicle['modelo'] }} - {{ vehicle['placa'] }}
-                                </option>
+                            <option value="{{ vehicle['id_veiculo'] }}" data-price="{{ vehicle['valor_venda'] }}">
+                                {{ vehicle['marca'] }} {{ vehicle['modelo'] }} - {{ vehicle['placa'] }}
+                            </option>
                             {% endfor %}
                         </select>
+                        {% if error %}
+                        <p style="color: red;margin: -15px 0"><strong>{{ error }}</strong></p>
+                        {% endif %}
+
+                        {% if message %}
+                        <p style="color: red;margin: -15px 0"><strong>{{ message }}</strong></p>
+                        {% endif%}
                     </div>
+
+
                     <div class="form-item">
                         <label for="name">Nome do cliente</label>
                         <input type="text">
@@ -125,20 +135,26 @@
                         </select>
                     </div>
                     <div class="form-item">
-                        <label for="name">Valor total</label>
-                        <input type="text">
+                        <label for="name">Valor original</label>
+                        <input type="text" readonly id="OriginalPrice"
+                            value="{{ vehicle['valor_venda'] if vehicle else 'R$ 0,00' }}">
                     </div>
+
                     <div class="form-item">
                         <label for="name">Valor da parcela</label>
+                        <input type="text" disabled id="ParcelasPrice">
+                    </div>
+                    <div class="form-item">
+                        <label for="name">Valor total</label>
                         <input type="text">
                     </div>
                     <div class="form-item form-button-vehicle-register">
                         <button type="submit">Confirmar Venda</button>
                     </div>
-                    
+
                 </div>
             </form>
-        </div>   
+        </div>
     </main>
 
     <footer>

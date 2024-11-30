@@ -12,8 +12,11 @@
 /**
  * Define o estilo padrão para o corpo da página.
  */
-body {
+html, body {
     font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     font-size: 14px;
     margin: 0;
     padding: 0;
@@ -23,6 +26,10 @@ body {
 
 body a {
     text-decoration: none !important;
+}
+
+main {
+    flex: 1;
 }
 
 .form {
@@ -35,8 +42,7 @@ body a {
 header {
     background-color: white;
     color: black;
-    padding: 10px;
-    min-height: 70px;
+    padding: 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -48,7 +54,6 @@ header {
     margin: 10px auto;
     align-items: center;
     display: flex;
-    height: 40%;
     justify-content: space-between;
 }
 
@@ -228,12 +233,10 @@ a {
  */
 
 .footer-container {
-    position: fixed;
     width: 100%;
     background-color: black;
     color: white;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
-    bottom: 0;
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -522,4 +525,23 @@ form {
     display: flex;
     justify-content: center;
     grid-column: 1 / -1;
+}
+
+.search-edit {
+    margin-top: 20px;
+    
+}
+
+.edit-delete-button {
+    display: flex;
+    justify-content: center;
+}
+
+.edit-button, .delete-button {
+    margin: 0px 5px 0px 5px;
+    width: auto !important;
+}
+
+.delete-button:hover {
+    background-color: #ff0000 !important;
 }

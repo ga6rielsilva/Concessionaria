@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@600" />
-    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}" defer></script>
 
     <title>ERP Concessionaria</title>
 </head>
@@ -74,10 +74,24 @@
                     <input type="text" name="plate_vehicle" id="plate_vehicle" placeholder="Digite a Placa do Veículo"
                         required>
                     <button type="submit">Buscar</button>
+                    {% if message %}
+                    <p style="color: green;"><strong>{{ message }}</strong></p>
+                    {% endif %}
                 </form>
+
                 {% if vehicle %}
                 <div id="result-container">
-                    <h2>Resultado da Busca</h2>
+                    <div class="search-edit">
+                        <h2>Resultado da Busca</h2>
+                        <div class="edit-delete-button">
+                            <button class="material-symbols-outlined edit-button" name="edit-button">edit</button>
+                            <form class="delete-form" action="{{ url_for('delete_vehicle', plate=vehicle['placa']) }}"
+                                method="POST">
+                                <button type="submit" class="material-symbols-outlined delete-button"
+                                    name="delete-button">delete</button>
+                            </form>
+                        </div>
+                    </div>
                     <div id="vehicle-details">
                         <p><strong>Marca:</strong> {{ vehicle['marca'] }}</p>
                         <p><strong>Modelo:</strong> {{ vehicle['modelo'] }}</p>
@@ -95,7 +109,7 @@
                 {% endif %}
 
                 {% if error %}
-                <p style="color: red;">{{ error }}</p>
+                <p style="color: red;"><strong>{{ error }}</strong></p>
                 {% endif %}
             </div>
 

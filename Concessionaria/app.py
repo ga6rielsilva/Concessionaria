@@ -30,18 +30,6 @@ def is_logged():
     return user is not None
 
 
-def update_user_password(username, new_password):
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute(
-        "UPDATE users SET password = %s WHERE username = %s",
-        (generate_password_hash(new_password), username)
-    )
-    conn.commit()
-    cursor.close()
-    conn.close()
-
-
 @app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -89,6 +77,9 @@ def index():
 
 @app.route('/vehicle_register',  methods=['GET', 'POST'])
 def vehicle_register():
+    error = None
+    message = None
+
     if request.method == 'POST':
         # Captura os dados do veículo
         brandVehicle = request.form['brand_vehicle']
@@ -136,19 +127,22 @@ def vehicle_register():
         try:
             cursor.execute(query, values)
             conn.commit()
-            print("Veículo cadastrado com sucesso!")
+            message = f"Veículo cadastrado com sucesso!"
         except Exception as e:
             conn.rollback()
-            print("\n\nErro ao cadastrar veículo: " + str(e) + "\n\n")
+            error = f"Erro ao cadastrar veículo: {str(e)}"
         finally:
             cursor.close()
             conn.close()
 
-    return render_template('vehicle_register.html', username=request.cookies.get('username'))
+    return render_template('vehicle_register.html', username=request.cookies.get('username'), error=error, message=message)
 
 
 @app.route('/customer_register',  methods=['GET', 'POST'])
 def customer_register():
+    error = None
+    message = None
+
     if request.method == "POST":
         # Captura os dados do cliente
         nameCustomer = request.form['customer_name']
@@ -191,15 +185,15 @@ def customer_register():
         try:
             cursor.execute(query, values)
             conn.commit()
-            print("Cliente cadastrado com sucesso!")
+            message = f"Cliente cadastrado com sucesso!"
         except Exception as e:
             conn.rollback()
-            print("\n\nErro ao cadastrar cliente: " + str(e) + "\n\n")
+            error = f"Erro ao cadastrar cliente: {str(e)}"
         finally:
             cursor.close()
             conn.close()
 
-    return render_template('customer_register.html', username=request.cookies.get('username'))
+    return render_template('customer_register.html', username=request.cookies.get('username'), error=error, message=message)
 
 
 @app.route('/employee_register', methods=['GET', 'POST'])
@@ -313,6 +307,8 @@ def employee_register():
 def vehicle_search():
     vehicle_data = None
     error = None
+    message = request.args.get('message')
+
     if request.method == 'POST':
         plate = request.form['plate_vehicle']
 
@@ -328,17 +324,39 @@ def vehicle_search():
         try:
             cursor.execute(query, value)
             vehicle_data = cursor.fetchone()
-            print(vehicle_data)
             if vehicle_data is None:
                 error = "Veículo não encontrado"
         except Exception as e:
-            print(f"Erro ao buscar veículo: {str(e)}")
             error = f"Erro ao buscar veículo: {str(e)}"
         finally:
             cursor.close()
             conn.close()
 
-    return render_template('vehicle_search.html', vehicle=vehicle_data, error=error, username=request.cookies.get('username'))
+    return render_template('vehicle_search.html', vehicle=vehicle_data, error=error, message=message, username=request.cookies.get('username'))
+
+
+@app.route('/delete-vehicle/<string:plate>', methods=['POST'])
+def delete_vehicle(plate):
+    conn = getDatabaseConnection()
+    cursor = conn.cursor()
+
+    query = """
+        DELETE FROM tb_veiculos
+        WHERE placa = %s
+    """
+    value = (plate,)
+
+    try:
+        cursor.execute(query, value)
+        conn.commit()
+        message = "Veículo excluído com sucesso"
+    except Exception as e:
+        message = f"Erro ao excluir veículo: {str(e)}"
+    finally:
+        cursor.close()
+        conn.close()
+
+    return redirect(url_for('vehicle_search', message=message))
 
 
 @app.route('/customer_search', methods=['GET', 'POST'])
@@ -360,11 +378,9 @@ def customer_search():
         try:
             cursor.execute(query, value)
             customer_data = cursor.fetchone()
-            print(customer_data)
             if customer_data is None:
                 error = "Cliente não encontrado"
         except Exception as e:
-            print(f"Erro ao buscar cliente: {str(e)}")
             error = f"Erro ao buscar cliente: {str(e)}"
         finally:
             cursor.close()
@@ -378,31 +394,40 @@ def reports():
     return render_template('reports.html', username=request.cookies.get('username'))
 
 
-@app.route('/sales')
+@app.route('/sales', methods=['GET', 'POST'])
 def sales():
     conn = getDatabaseConnection()
     cursor = conn.cursor(dictionary=True)
 
     vehicleSaleSelector = []
     message = None
+    error = None
 
     try:
         cursor.execute(
-            "SELECT id_veiculo, marca, modelo, placa FROM tb_veiculos")
-        vehicleSaleSelector = cursor.fetchall()
+            "SELECT id_veiculo, marca, modelo, valor_venda, placa FROM tb_veiculos")
+        vehicleSaleSelector = cursor.fetchall()  # Obtém todos os veículos
+
     except Exception as e:
-        print("\n\nErro ao buscar veículos: " + str(e) + "\n\n")
+        error = f"Erro ao buscar veículos: {str(e)}"
     finally:
         cursor.close()
         conn.close()
 
     if not vehicleSaleSelector:
-        message = message or "Nenhum veículo disponível no momento."
+        message = "Nenhum veículo disponível no momento."
 
-    return render_template('sales.html', vehicleSaleSelector=vehicleSaleSelector, username=request.cookies.get('username'))
+    return render_template(
+        'sales.html',
+        # Passando todos os veículos para o template
+        vehicleSaleSelector=vehicleSaleSelector,
+        username=request.cookies.get('username'),
+        message=message,
+        error=error
+    )
 
 
-@app.route('/settings' , methods=['GET', 'POST'])
+@app.route('/settings', methods=['GET', 'POST'])
 def settings():
     error = None
     message = None
@@ -411,7 +436,6 @@ def settings():
         current_password = request.form['current_password']
         new_password = request.form['new_password']
         confirm_password = request.form['confirm_password']
-
 
         if new_password != confirm_password:
             error = "As senhas não coincidem"
@@ -431,7 +455,8 @@ def settings():
                 error = "Senha atual incorreta"
             else:
                 cursor.execute(
-                    "UPDATE tb_usuarios SET senha = %s WHERE nome = %s", (new_password, request.cookies.get('username'))
+                    "UPDATE tb_usuarios SET senha = %s WHERE nome = %s", (
+                        new_password, request.cookies.get('username'))
                 )
                 conn.commit()
                 message = "Senha atualizada com sucesso"

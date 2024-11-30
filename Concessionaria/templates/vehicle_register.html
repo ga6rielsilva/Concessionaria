@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@600" />
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
-    
+
     <title>ERP Concessionaria</title>
 </head>
 
@@ -15,8 +15,7 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <img src="{{ url_for('static', filename='img/imagemteste.png')}}"
-                    alt="logo-empresa">
+                <img src="{{ url_for('static', filename='img/imagemteste.png')}}" alt="logo-empresa">
             </div>
             <nav class="nav ">
                 <div class="nav-item">
@@ -47,7 +46,7 @@
                         <a href="#">Estoque</a>
                     </div>
                 </div>
-            </nav>           
+            </nav>
 
             <div class="user-container">
                 <a class="user" id="user-icon" href="#">
@@ -70,6 +69,15 @@
                 <h1>Cadastro de Veículos </h1>
             </div>
             <form action="" method="POST">
+
+                {% if message %}
+                <p style="color: green;"><strong>{{ message }}</strong></p>
+                {% endif %}
+
+                {% if error %}
+                <p style="color: red;"><strong>{{ error }}</strong></p>
+                {% endif %}
+                
                 <div class="form-container">
                     <div class="form-item">
                         <label for="brand_vehicle">Marca</label>
@@ -135,11 +143,13 @@
                     </div>
                     <div class="form-item">
                         <label for="price_vehicle">Preço Compra</label>
-                        <input type="text" name="buyprice_vehicle" id="buyprice_vehicle" class="price_formatter" required>
+                        <input type="text" name="buyprice_vehicle" id="buyprice_vehicle" class="price_formatter"
+                            required>
                     </div>
                     <div class="form-item">
                         <label for="sellprice_vehicle">Preço Venda</label>
-                        <input type="text" name="sellprice_vehicle" id="sellprice_vehicle" class="price_formatter" required>
+                        <input type="text" name="sellprice_vehicle" id="sellprice_vehicle" class="price_formatter"
+                            required>
                     </div>
                     <div class="form-item form-button-vehicle-register">
                         <button type="submit">Cadastrar</button>
