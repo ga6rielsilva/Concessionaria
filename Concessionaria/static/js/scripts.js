@@ -235,36 +235,60 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
                 parcelasInput.disabled = true;
                 parcelasInput.selectedIndex = 0;
+                ParcelasPriceInput.value = "R$ 0,00";
+                valorTotal.value = vehicleSelector.options[vehicleSelector.selectedIndex].getAttribute("data-price").toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
             }
         });
     }
+
 
     // Mostra o valor original do veiculo e já calcula o valor final com as parcelas
-    const vehicleSelect = document.getElementById("vehicleSelect");
-    const OriginalPriceInput = document.getElementById("OriginalPrice");
+    const vehicleSelector = document.getElementById("vehicle-selector");
+    const originalPriceInput = document.getElementById("OriginalPrice");
 
-    if (vehicleSelect && OriginalPriceInput) {
-        // Atualiza o preço quando o veículo for selecionado
-        vehicleSelect.addEventListener("change", function () {
-            // Obtém a opção selecionada
-            const selectOption = vehicleSelect.options[vehicleSelect.selectedIndex];
+    // Atualizar o valor original ao selecionar um veículo
+    if (vehicleSelector && originalPriceInput) {
+        vehicleSelector.addEventListener("change", function () {
+            const selectedOption = vehicleSelector.options[vehicleSelector.selectedIndex];
+            const price = selectedOption.getAttribute("data-price");
 
-            // Obtém o preço do veículo (do atributo data-price)
-            const price = selectOption.getAttribute("data-price");
-
-            // Preenche o campo de valor original (OriginalPrice) com o preço
+            // Formatar e exibir o valor
             if (price) {
-                OriginalPriceInput.value = price;  // O preço já vem formatado, então podemos simplesmente atribuí-lo
+                originalPriceInput.value = price.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+            } else {
+                originalPriceInput.value = "R$ 0,00";
             }
         });
     }
 
+    // Atualizar o valor final ao selecionar o número de parcelas
+    const parcelasInput = document.getElementById("parcelasAmount");
+    const ParcelasPriceInput = document.getElementById("ParcelasPrice");
+    const valorTotal = document.getElementById("valorTotal");
+
+    if (parcelasInput && ParcelasPriceInput && originalPriceInput && valorTotal) {
+        parcelasInput.addEventListener("change", function () {
+            const selectedOption = parcelasInput.options[parcelasInput.selectedIndex];
+            const parcelas = selectedOption.value;
+
+
+            const price = originalPriceInput.value.replace(/\D/g, "");
+            const interestRate = 0.12;
+            const TotalPrice = price * Math.pow(1 + interestRate, parcelas / 12);
+            const ParcelasPrice = TotalPrice / parcelas;
+
+
+            // Formatar e exibir o valor
+            ParcelasPriceInput.value = ParcelasPrice.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+            valorTotal.value = TotalPrice.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+        });
+    }
 
     // Formulario de delete de veículos
-    const deleteForms = document.querySelectorAll("form.delete-form");
+    const deleteVehicleForms = document.querySelectorAll("form.delete-form");
 
-    if (deleteForms.length > 0) {
-        deleteForms.forEach((form) => {
+    if (deleteVehicleForms.length > 0) {
+        deleteVehicleForms.forEach((form) => {
             form.addEventListener("submit", function (event) {
                 const confirmDelete = confirm("Tem certeza que deseja excluir este veículo?");
                 if (!confirmDelete) {
@@ -274,51 +298,34 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Formulário de envio de foto tela de configurações
-    function submitPhotoForm() {
-        var fileInput = document.getElementById("profilePhoto");
-        
-        // Verifica se um arquivo foi selecionado
-        if (fileInput.files.length > 0) {
-            var formData = new FormData();
-            formData.append("profilePhoto", fileInput.files[0]);
+    // Formulario de delete de cliente
+    const deleteCustomersForms = document.querySelectorAll("form.delete-Customers-form");
 
-            fetch("", {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert("Foto de perfil atualizada com sucesso!");
-                    // Atualiza a imagem exibida na tela após o upload, se necessário
-                    const preview = document.getElementById("preview");
-                    if (preview) {
-                        preview.src = URL.createObjectURL(fileInput.files[0]);
-                    }
-                } else {
-                    alert("Erro ao atualizar a foto.");
+    if (deleteCustomersForms.length > 0) {
+        deleteCustomersForms.forEach((form) => {
+            form.addEventListener("submit", function (event) {
+                const confirmDelete = confirm("Tem certeza que deseja excluir este cliente?");
+                if (!confirmDelete) {
+                    event.preventDefault(); // Cancela a exclusão se o usuário cancelar
                 }
-            })
-            .catch(error => {
-                console.error("Erro:", error);
-                alert("Erro ao enviar a foto.");
             });
-        } else {
-            alert("Por favor, selecione uma foto.");
-        }
-    }
-
-    // Adiciona o ouvinte de evento para o botão "Enviar"
-    const submitButton = document.querySelector("button[onclick='submitPhotoForm()']");
-    if (submitButton) {
-        submitButton.addEventListener("click", function (event) {
-            event.preventDefault();  // Impede o envio do formulário completo
-            submitPhotoForm();  // Chama a função para enviar apenas a foto
         });
     }
 
-       
+    // confirmação de venda
+
+    const confirmSaleForms = document.getElementById("vehicle-selector");
+    const hiddenInput = document.getElementById("selectedVehicleId"); // O campo oculto para o ID do veículo
+
+    if (confirmSaleForms && hiddenInput) {
+        confirmSaleForms.addEventListener("change", function () {
+            const selectedVehicle = this.value; // Pegando o ID do veículo selecionado
+            hiddenInput.value = selectedVehicle; // Atualizando o campo oculto com o ID do veículo
+            console.log("Veículo selecionado: ", selectedVehicle);
+            
+        });
+    }
+
     // Console log para verificar o carregamento do arquivo JavaScript
     console.log("JavaScript carregado e DOM pronto!");
 });

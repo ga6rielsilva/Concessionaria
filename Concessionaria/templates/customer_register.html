@@ -19,7 +19,7 @@
             </div>
             <nav class="nav ">
                 <div class="nav-item">
-                    <a href="{{ url_for('index')}}">Inicio</a>
+                    <a href="{{ url_for('index')}}">Home</a>
                 </div>
                 <div class="nav-item">
                     <a href="{{ url_for('sales')}}">Venda</a>
@@ -70,11 +70,11 @@
             </div>
 
             {% if message %}
-            <p style="color: green; margin-top: -20px;" ><strong>{{ message }}</strong></p>
+            <p style="color: green; margin-top: -35px;" ><strong>{{ message }}</strong></p>
             {% endif %}
 
             {% if error %}
-            <p style="color: red; margin-top: -20px;"><strong>{{ error }}</strong></p>
+            <p style="color: red; margin-top: -35px;"><strong>{{ error }}</strong></p>
             {% endif %}
 
             <form action="" method="POST">

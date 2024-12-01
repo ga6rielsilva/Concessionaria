@@ -19,7 +19,7 @@
             </div>
             <nav class="nav ">
                 <div class="nav-item">
-                    <a href="{{ url_for('index')}}">Inicio</a>
+                    <a href="{{ url_for('index')}}">Home</a>
                 </div>
                 <div class="nav-item">
                     <a href="{{ url_for('sales')}}">Venda</a>
@@ -84,7 +84,7 @@
                     <div class="search-edit">
                         <h2>Resultado da Busca</h2>
                         <div class="edit-delete-button">
-                            <button class="material-symbols-outlined edit-button" name="edit-button">edit</button>
+                            <a href="{{ url_for('edit_vehicle', plate=vehicle['placa']) }}" class="material-symbols-outlined edit-button" name="edit-button">edit<a>
                             <form class="delete-form" action="{{ url_for('delete_vehicle', plate=vehicle['placa']) }}"
                                 method="POST">
                                 <button type="submit" class="material-symbols-outlined delete-button"
@@ -93,6 +93,7 @@
                         </div>
                     </div>
                     <div id="vehicle-details">
+                        <p><strong>Disponibilidade:</strong> {{ vehicle['disponibilidade']}}</p>
                         <p><strong>Marca:</strong> {{ vehicle['marca'] }}</p>
                         <p><strong>Modelo:</strong> {{ vehicle['modelo'] }}</p>
                         <p><strong>Motor:</strong> {{ vehicle['motor_veiculo'] }}</p>

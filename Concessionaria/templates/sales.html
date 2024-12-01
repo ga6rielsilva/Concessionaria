@@ -19,7 +19,7 @@
             </div>
             <nav class="nav ">
                 <div class="nav-item">
-                    <a href="{{ url_for('index')}}">Inicio</a>
+                    <a href="{{ url_for('index')}}">Home</a>
                 </div>
                 <div class="nav-item">
                     <a href="{{ url_for('sales')}}">Venda</a>
@@ -68,11 +68,20 @@
             <div class="main-content">
                 <h1>Vendas</h1>
             </div>
-            <form action="" method="POST">
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                    <p style="color: green; margin-top: -30px;"><strong>{{ message }}</strong></p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form action="{{ url_for('sale_register') }}" method="POST">
                 <div class="form-container">
                     <div class="form-item">
                         <label for="vehicle">Selecione o veículo</label>
-                        <select name="vehicle" required>
+                        <select id="vehicle-selector" name="vehicle" required>
                             <option value="" selected disabled>Selecione o veículo</option>
 
                             {% for vehicle in vehicleSaleSelector %}
@@ -85,9 +94,6 @@
                         <p style="color: red;margin: -15px 0"><strong>{{ error }}</strong></p>
                         {% endif %}
 
-                        {% if message %}
-                        <p style="color: red;margin: -15px 0"><strong>{{ message }}</strong></p>
-                        {% endif%}
                     </div>
 
 
@@ -136,8 +142,7 @@
                     </div>
                     <div class="form-item">
                         <label for="name">Valor original</label>
-                        <input type="text" readonly id="OriginalPrice"
-                            value="{{ vehicle['valor_venda'] if vehicle else 'R$ 0,00' }}">
+                        <input type="text" readonly id="OriginalPrice" value="R$ 0,00">
                     </div>
 
                     <div class="form-item">
@@ -145,21 +150,14 @@
                         <input type="text" disabled id="ParcelasPrice">
                     </div>
                     <div class="form-item">
-                        <label for="name">Valor total</label>
-                        <input type="text">
+                        <label for="name" id="interestRate">Valor total</label>
+                        <input type="text" id="valorTotal" readonly disabled>
                     </div>
-                    {% if vehicleSaleSelector %}
-                    {% for vehicle in vehicleSaleSelector %}
-                        <div class="form-item form-button-vehicle-register">
-                            <form action="{{ url_for('remove_vehicle', id_veiculo=vehicle['id_veiculo']) }}" method="POST">
-                                <button type="submit">Confirmar venda</button>
-                            </form>
-                        </div>
-                    {% endfor %}
-                    {% else %}
-                        <p>Nenhum veículo disponível para venda.</p>
-                    {% endif %}
-
+                    <div class="form-item form-button-vehicle-register">
+                        <!-- Campo oculto para passar o id do veículo selecionado -->
+                        <input type="hidden" name="id_veiculo" id="selectedVehicleId" value="">
+                        <button type="submit">Confirmar venda</button>
+                    </div>
                 </div>
             </form>
         </div>

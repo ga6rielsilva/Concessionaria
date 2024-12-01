@@ -534,12 +534,34 @@ form {
 
 .edit-delete-button {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    gap: 8px;
+    align-items: center;
+}
+
+.edit-delete-button form {
+    margin: 0px;
+    padding: 0px;
 }
 
 .edit-button, .delete-button {
     margin: 0px 5px 0px 5px;
     width: auto !important;
+}
+
+.edit-button {
+    padding: 6.5px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 24px !important;
+}
+
+.edit-button:hover {
+    background-color: #357ab9 !important;
 }
 
 .delete-button:hover {

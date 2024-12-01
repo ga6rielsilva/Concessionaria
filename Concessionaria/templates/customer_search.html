@@ -19,7 +19,7 @@
             </div>
             <nav class="nav ">
                 <div class="nav-item">
-                    <a href="{{ url_for('index')}}">Inicio</a>
+                    <a href="{{ url_for('index')}}">Home</a>
                 </div>
                 <div class="nav-item">
                     <a href="{{ url_for('sales')}}">Venda</a>
@@ -73,11 +73,22 @@
                     <label for="cpf">CPF:</label>
                     <input type="text" id="cpf" name="cpf_customer" placeholder="Digite o CPF" maxlength="14" required>
                     <button type="submit">Buscar</button>
+                    {% if message %}
+                    <p style="color: green;"><strong>{{ message }}</strong></p>
+                    {% endif %}
                 </form>
 
                 {% if customers %}
                 <div class="result-container">
                     <h2>Resultado da busca</h2>
+                    <div class="edit-delete-button">
+                        <a href="{{ url_for('edit_customer', cpf=customers['cpf_cliente']) }}" class="material-symbols-outlined edit-button ">edit</a>
+                        <form class="delete-Customers-form" action="{{ url_for('delete_customer', cpf=customers['cpf_cliente']) }}"
+                            method="POST">
+                            <button type="submit" class="material-symbols-outlined delete-button"
+                                name="delete-button">delete</button>
+                        </form>
+                    </div>
                     <div class="customer-details">
                         <p><strong>Nome:</strong> {{customers['nome_cliente']}}</p>
                         <p><strong>CPF:</strong> {{customers['cpf_cliente']}}</p>

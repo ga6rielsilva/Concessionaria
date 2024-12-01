@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, make_response, jsonify
+from flask import Flask, render_template, request, redirect, url_for, make_response, flash
 import base64
 import io
 from PIL import Image
@@ -6,6 +6,8 @@ from database import getDatabaseConnection
 import random
 
 app = Flask(__name__)
+
+app.secret_key = 'z/\x9c\x9bO\r\xcb\xec\xa5kSC\x890P(\xf0\xbd\xa2\\K\xf3\x13\xd4'
 
 
 @app.before_request
@@ -99,6 +101,7 @@ def vehicle_register():
         renavamVehicle = request.form['renavam_vehicle']
         buypriceVehicle = request.form['buyprice_vehicle']
         sellpriceVehicle = request.form['sellprice_vehicle']
+        disponibilityVehicle = "Disponível"
 
         # Inserir os dados coletados no banco de dados
         conn = getDatabaseConnection()
@@ -118,14 +121,15 @@ def vehicle_register():
              valor_compra,
              valor_venda,
              condicao,
-             categoria
+             categoria,
+             disponibilidade
             )
 
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
 
         values = (brandVehicle, modelVehicle, yearVehicle, yearModel, colorVehicle, engineVehicle, plateVehicle,
-                  chassiVehicle, renavamVehicle, kmsVehicle, buypriceVehicle, sellpriceVehicle, conditionVehicle, typeVehicle)
+                  chassiVehicle, renavamVehicle, kmsVehicle, buypriceVehicle, sellpriceVehicle, conditionVehicle, typeVehicle, disponibilityVehicle)
 
         try:
             cursor.execute(query, values)
@@ -205,23 +209,23 @@ def employee_register():
     error = None
 
     if request.method == "POST":
-        
-        photo_file = request.files['profilePhoto']
-        img_data = photo_file.read()
 
-        try:
-            image = Image.open(io.BytesIO(img_data))
-            img_type = image.format.lower()
-            if img_type != "png":
-                img_converted = io.BytesIO()
-                image.save(img_converted, format="PNG")
-                img_data = img_converted.getvalue()
-                img_type = "png"
-        except Exception as e:
-            error = f"Erro ao processar a imagem: {e}"
-            img_data = None
-            img_type = None
-            
+        photo_file = request.files.get('profilePhoto')
+        img_data = None
+
+        if photo_file and photo_file.filename:
+            try:
+                img_data = photo_file.read()
+                image = Image.open(io.BytesIO(img_data))
+                img_type = image.format.lower()
+
+                if img_type != "png":
+                    img_converted = io.BytesIO()
+                    image.save(img_converted, format="PNG")
+                    img_data = img_converted.getvalue()
+            except Exception as e:
+                error = f"Erro ao processar a imagem: {e}"
+                img_data = None
 
         nameEmployee = request.form['employee_name']
         cpfEmployee = request.form['employee_cpf']
@@ -309,7 +313,8 @@ def employee_register():
 
             # Confirmar a transação
             conn.commit()
-            message = f"Funcionário e usuário cadastrados com sucesso!<br> Login: {userLogin}<br> Senha: {userPassword}"
+            message = f"Funcionário e usuário cadastrados com sucesso!<br> Login: {
+                userLogin}<br> Senha: {userPassword}"
 
         except Exception as e:
             conn.rollback()
@@ -353,7 +358,7 @@ def vehicle_search():
     return render_template('vehicle_search.html', vehicle=vehicle_data, error=error, message=message, username=request.cookies.get('username'))
 
 
-@app.route('/delete-vehicle/<string:plate>', methods=['POST'])
+@app.route('/delete_vehicle/<string:plate>', methods=['POST'])
 def delete_vehicle(plate):
     conn = getDatabaseConnection()
     cursor = conn.cursor()
@@ -377,10 +382,75 @@ def delete_vehicle(plate):
     return redirect(url_for('vehicle_search', message=message))
 
 
+@app.route('/edit_vehicle/<string:plate>', methods=['GET', 'POST'])
+def edit_vehicle(plate):
+    conn = getDatabaseConnection()
+    cursor = conn.cursor(dictionary=True)
+
+    vehicle_data = None
+    error = None
+    message = None
+
+    if request.method == 'GET':
+
+        try:
+            query = """SELECT * FROM tb_veiculos WHERE placa = %s"""
+            cursor.execute(query, (plate,))
+            vehicle_data = cursor.fetchone()
+            if not vehicle_data:
+                error = "Veículo não encontrado"
+        except Exception as e:
+            error = f"Erro ao buscar veículo: {str(e)}"
+        finally:
+            cursor.close()
+            conn.close()
+
+        return render_template('edit_vehicle.html', vehicle=vehicle_data, error=error, message=message, username=request.cookies.get('username'))
+
+    elif request.method == 'POST':
+        brandVehicle = request.form['brand_vehicle']
+        modelVehicle = request.form['model_vehicle']
+        engineVehicle = request.form['engine_vehicle']
+        plateVehicle = request.form['plate_vehicle']
+        colorVehicle = request.form['color_vehicle']
+        yearVehicle = request.form['year_fabrication']
+        yearModel = request.form['year_model']
+        kmsVehicle = request.form['kms_vehicle']
+        typeVehicle = request.form['type_vehicle']
+        conditionVehicle = request.form['condition_vehicle']
+        chassiVehicle = request.form['chassi_vehicle']
+        renavamVehicle = request.form['renavam_vehicle']
+        buypriceVehicle = request.form['buyprice_vehicle']
+        sellpriceVehicle = request.form['sellprice_vehicle']
+
+        try:
+
+            query = """
+                UPDATE tb_veiculos
+                SET marca = %s, modelo = %s, motor_veiculo = %s, cor = %s, ano_fabricacao = %s, ano_modelo = %s, km_rodado = %s, chassi = %s, renavam = %s, valor_compra = %s, valor_venda = %s, condicao = %s, categoria = %s
+                WHERE placa = %s
+            """
+            values = (brandVehicle, modelVehicle, engineVehicle, colorVehicle, yearVehicle, yearModel, kmsVehicle,
+                      chassiVehicle, renavamVehicle, buypriceVehicle, sellpriceVehicle, conditionVehicle, typeVehicle, plateVehicle)
+
+            cursor.execute(query, values)
+            conn.commit()
+            message = "Veículo atualizado com sucesso"
+        except Exception as e:
+            error = f"Erro ao atualizar veículo: {str(e)}"
+        finally:
+            cursor.close()
+            conn.close()
+
+        return redirect(url_for('vehicle_search', message=message))
+
+
 @app.route('/customer_search', methods=['GET', 'POST'])
 def customer_search():
     customer_data = None
     error = None
+    message = request.args.get('message')
+
     if request.method == 'POST':
         cpf = request.form['cpf_customer']
 
@@ -404,7 +474,91 @@ def customer_search():
             cursor.close()
             conn.close()
 
-    return render_template('customer_search.html', username=request.cookies.get('username'), customers=customer_data, error=error)
+    return render_template('customer_search.html', username=request.cookies.get('username'), customers=customer_data, error=error, message=message)
+
+
+@app.route('/delete_customer/<string:cpf>', methods=['POST'])
+def delete_customer(cpf):
+    conn = getDatabaseConnection()
+    cursor = conn.cursor()
+
+    query = """
+        DELETE FROM tb_clientes
+        WHERE cpf_cliente = %s
+    """
+    value = (cpf,)
+
+    try:
+        cursor.execute(query, value)
+        conn.commit()
+        message = "Cliente excluído com sucesso"
+    except Exception as e:
+        message = f"Erro ao excluir cliente: {str(e)}"
+    finally:
+        cursor.close()
+        conn.close()
+
+    return redirect(url_for('customer_search', message=message))
+
+
+@app.route('/edit_customer/<string:cpf>', methods=['GET', 'POST'])
+def edit_customer(cpf):
+    conn = getDatabaseConnection()
+    cursor = conn.cursor(dictionary=True)
+
+    customer_data = None
+    error = None
+    message = None
+
+    if request.method == 'GET':
+
+        try:
+            query = """SELECT * FROM tb_clientes WHERE cpf_cliente = %s"""
+            cursor.execute(query, (cpf,))
+            customer_data = cursor.fetchone()
+            if not customer_data:
+                error = "Cliente não encontrado"
+        except Exception as e:
+            error = f"Erro ao buscar cliente: {str(e)}"
+        finally:
+            cursor.close()
+            conn.close()
+
+        return render_template('edit_customer.html', customer=customer_data, error=error, message=message, username=request.cookies.get('username'))
+
+    elif request.method == 'POST':
+        nameCustomer = request.form['customer_name']
+        rgCustomer = request.form['customer_rg']
+        birthCustomer = request.form['customer_birth']
+        customerSex = request.form['customer']
+        phoneCustomer = request.form['customer_phone']
+        emailCustomer = request.form['customer_email']
+        addressCustomer = request.form['customer_address']
+        cityCustomer = request.form['customer_city']
+        stateCustomer = request.form['customer_state']
+        zipCustomer = request.form['customer_zip']
+        countryCustomer = request.form['customer_country']
+
+        try:
+
+            query = """
+                UPDATE tb_clientes
+                SET nome_cliente = %s, rg_cliente = %s, data_nascimento = %s, sexo_cliente = %s, telefone_cliente = %s, email_cliente = %s, endereco_cliente = %s, cidade_cliente = %s, estado_cliente = %s, cep_cliente = %s, pais_cliente = %s
+                WHERE cpf_cliente = %s
+            """
+            values = (nameCustomer, rgCustomer, birthCustomer, customerSex, phoneCustomer, emailCustomer,
+                      addressCustomer, cityCustomer, stateCustomer, zipCustomer, countryCustomer, cpf)
+
+            cursor.execute(query, values)
+            conn.commit()
+            message = "Cliente atualizado com sucesso"
+        except Exception as e:
+            error = f"Erro ao atualizar cliente: {str(e)}"
+        finally:
+            cursor.close()
+            conn.close()
+
+        return redirect(url_for('customer_search', message=message))
 
 
 @app.route('/reports')
@@ -416,6 +570,7 @@ def reports():
 def sales():
     conn = getDatabaseConnection()
     cursor = conn.cursor(dictionary=True)
+    message = request.args.get('message')
 
     vehicleSaleSelector = []
     message = None
@@ -423,7 +578,7 @@ def sales():
 
     try:
         cursor.execute(
-            "SELECT id_veiculo, marca, modelo, valor_venda, placa FROM tb_veiculos")
+            "SELECT id_veiculo, marca, modelo, valor_venda, placa, disponibilidade FROM tb_veiculos WHERE disponibilidade = 'Disponível'")
         vehicleSaleSelector = cursor.fetchall()  # Obtém todos os veículos
 
     except Exception as e:
@@ -444,6 +599,31 @@ def sales():
         error=error
     )
 
+
+@app.route('/sale_register', methods=['POST'])
+def sale_register():
+    vehicle_id = request.form.get('id_veiculo')
+    conn = getDatabaseConnection()
+    cursor = conn.cursor()
+    message = None
+    error = None
+
+    try:
+        # Atualiza a disponibilidade do veículo
+        cursor.execute(
+            "UPDATE tb_veiculos SET disponibilidade = 'Vendido' WHERE id_veiculo = %s", (vehicle_id,))
+        conn.commit()
+        flash("Venda registrada com sucesso", "success")
+    except Exception as e:
+        conn.rollback()
+        flash(f"Erro ao registrar venda: {str(e)}", "error")
+    finally:
+        cursor.close()
+        conn.close()
+
+    return redirect(url_for('sales', message=message, error=error))
+
+
 @app.route('/remove_vehicle/<int:id_veiculo>', methods=['POST'])
 def remove_vehicle(id_veiculo):
     conn = getDatabaseConnection()
@@ -451,7 +631,8 @@ def remove_vehicle(id_veiculo):
 
     try:
         # Exclui o veículo pelo ID
-        cursor.execute("DELETE FROM tb_veiculos WHERE id_veiculo = %s", (id_veiculo,))
+        cursor.execute(
+            "DELETE FROM tb_veiculos WHERE id_veiculo = %s", (id_veiculo,))
         conn.commit()
     except Exception as e:
         conn.rollback()
@@ -462,6 +643,7 @@ def remove_vehicle(id_veiculo):
 
     # Redireciona para a página de vendas
     return redirect(url_for('sales'))
+
 
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
@@ -474,36 +656,40 @@ def settings():
         new_password = request.form['new_password']
         confirm_password = request.form['confirm_password']
 
-        if new_password != confirm_password:
-            error = "As senhas não coincidem"
-        else:
-            conn = getDatabaseConnection()
-            cursor = conn.cursor(dictionary=True)
-            cursor.execute(
-                "SELECT senha FROM tb_usuarios WHERE nome = %s", (request.cookies.get(
-                    'username'),)
-            )
-            current_password_db = cursor.fetchone()
-            if current_password_db:
-                current_password_db = current_password_db['senha']
+        if current_password and new_password and confirm_password:
+
+            if new_password != confirm_password:
+                error = "As senhas não coincidem"
             else:
-                error = "Usuário não encontrado"
-            if current_password_db != current_password:
-                error = "Senha atual incorreta"
-            else:
+                conn = getDatabaseConnection()
+                cursor = conn.cursor(dictionary=True)
                 cursor.execute(
-                    "UPDATE tb_usuarios SET senha = %s WHERE nome = %s", (
-                        new_password, request.cookies.get('username'))
+                    "SELECT senha FROM tb_usuarios WHERE nome = %s", (request.cookies.get(
+                        'username'),)
                 )
-                conn.commit()
-                message = "Senha atualizada com sucesso"
-    
+                current_password_db = cursor.fetchone()
+                cursor.fetchall()
+
+                if current_password_db:
+                    current_password_db = current_password_db['senha']
+                else:
+                    error = "Usuário não encontrado"
+                if current_password_db != current_password:
+                    error = "Senha atual incorreta"
+                else:
+                    cursor.execute(
+                        "UPDATE tb_usuarios SET senha = %s WHERE nome = %s", (
+                            new_password, request.cookies.get('username'))
+                    )
+                    conn.commit()
+                    message = "Senha atualizada com sucesso"
+
     login = request.cookies.get('login')
-    
+
     if login:
         conn = getDatabaseConnection()
         cursor = conn.cursor(dictionary=True)
-        
+
         # Obter ID do usuário
         query = """
             SELECT id_usuario FROM tb_usuarios
@@ -514,7 +700,7 @@ def settings():
 
         if user:
             id_user = user['id_usuario']
-            
+
             # Obter a foto do funcionário (campo BLOB)
             query = """
                 SELECT foto_funcionario FROM tb_funcionarios
@@ -522,11 +708,10 @@ def settings():
             """
             cursor.execute(query, (id_user,))
             photo = cursor.fetchone()
-            print("foto selecionada")
             if photo and photo['foto_funcionario']:
                 # Converte o conteúdo binário da foto para base64
                 img_data = photo['foto_funcionario']
-                
+
                 # Detectar o formato da imagem com Pillow
                 img_type = None
                 try:
@@ -534,16 +719,17 @@ def settings():
                     img_type = image.format.lower()  # Formato da imagem (jpeg, png, etc.)
                 except Exception as e:
                     print(f"Erro ao detectar o tipo de imagem: {e}")
-                
+
                 if img_type:
-                    img_base64 = f"data:image/{img_type};base64," + base64.b64encode(img_data).decode('utf-8')
+                    img_base64 = f"data:image/{img_type};base64," + \
+                        base64.b64encode(img_data).decode('utf-8')
                 else:
                     img_base64 = None
             else:
                 img_base64 = None
-    
+
     # Processamento da foto
-    if 'profilePhoto' in request.files:
+    if request.method == 'POST':
         profilePhoto = request.files['profilePhoto']
         if profilePhoto:
             img_data = profilePhoto.read()
@@ -562,13 +748,10 @@ def settings():
                 SET foto_funcionario = %s
                 WHERE id_usuario = %s
             """, (img_data, id_user))
+            message = "Foto atualizada com sucesso"
             conn.commit()
-            message = "Foto de perfil atualizada com sucesso"
             cursor.close()
             conn.close()
-
-            return jsonify({'success': True})
-
 
     return render_template('settings.html', error=error, message=message, username=request.cookies.get('username'), img_base64=img_base64)
 

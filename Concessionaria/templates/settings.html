@@ -23,6 +23,9 @@
                     <a href="{{ url_for('index')}}">Home</a>
                 </div>
                 <div class="nav-item">
+                    <a href="{{ url_for('sales')}}">Venda</a>
+                </div>
+                <div class="nav-item">
                     <a href="#">Cadastro</a>
                     <div class="submenu">
                         <a href="{{ url_for('vehicle_register') }}">Veículos</a>
@@ -69,11 +72,11 @@
             </div>
 
             {% if message %}
-            <p style="color: green;">{{ message }}</p>
+            <p style="color: green; margin-top: -30px;">{{ message }}</p>
             {% endif %}
 
             {% if error %}
-            <p style="color: red;">{{ error }}</p>
+            <p style="color: red; margin-top: -30px;">{{ error }}</p>
             {% endif %}
 
             <form action="" method="POST" enctype="multipart/form-data">
@@ -82,22 +85,18 @@
                         <label for="photo">Foto</label>
 
                         {% if img_base64 %}
-                        <img src="{{ img_base64 }}" alt="user-photo" style="max-width: 250px;">
+                        <img src="{{ img_base64 }}" alt="user-photo" style="max-width: 250px; max-height: 250px; width: auto; height: auto; object-fit: contain;">
                         {% else %}
-                        <i class="material-symbols-outlined user-icon">account_circle</i>
-                        {% endif %}
+                        <i class="material-symbols-outlined user-icon" style="margin-left: 95px; margin-top: 5px;">account_circle</i>
+                        {% endif %} 
 
-                        <div style="display:flex; justify-content: space-between;">
-                            <input type="file" style="max-width: 93%;" name="profilePhoto" id="profilePhoto"
-                                accept="image/*">
-                            <button type="submit" style="width: auto; height: 55px; margin-top: 10px;"
-                                onclick="submitPhotoForm()">Enviar</button>
-                        </div>
+                        <input type="file" name="profilePhoto" id="profilePhoto"
+                            accept="image/*" style="max-width: 398px;">
 
                     </div>
                     <div class="form-item">
                         <label for="password">Senha atual</label>
-                        <input type="password" name="current_password" id="password" required>
+                        <input type="password" name="current_password" id="password">
                     </div>
                     <div class="form-item">
                         <label for="username">Nome do usuário</label>
@@ -105,14 +104,14 @@
                     </div>
                     <div class="form-item">
                         <label for="password">Nova senha</label>
-                        <input type="password" name="new_password" id="new-password" required>
+                        <input type="password" name="new_password" id="new-password">
                     </div>
                     <div class="form-item">
 
                     </div>
                     <div class="form-item">
                         <label for="password">Confirmar nova senha</label>
-                        <input type="password" name="confirm_password" id="confirm-password" required>
+                        <input type="password" name="confirm_password" id="confirm-password">
                     </div>
 
                     <div class="form-item form-button-vehicle-register">

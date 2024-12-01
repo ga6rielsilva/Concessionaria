@@ -10,16 +10,16 @@ CREATE TABLE IF NOT EXISTS tb_usuarios(
 	UNIQUE(login)
 );
 
-insert into tb_usuarios(nome, login, senha) values('Admin', 'admin', 'admin');
+insert into tb_usuarios(nome, login, senha) values('Administrador', 'admin', 'admin');
 
 CREATE TABLE IF NOT EXISTS tb_funcionarios(
 	id_funcionario INT NOT NULL AUTO_INCREMENT,
-	foto_funcionario BLOB NOT NULL,
+	foto_funcionario LONGBLOB,
 	nome_funcionario VARCHAR(40) NOT NULL,
 	cpf_funcionario VARCHAR(40) NOT NULL,
 	rg_funcionario VARCHAR(40) NOT NULL,
 	data_nascimento DATE NOT NULL,
-	sexo_funcionario CHAR(1) NOT NULL,
+	sexo_funcionario VARCHAR(40) NOT NULL,
 	cargo_funcionario VARCHAR(40) NOT NULL,
 	email_funcionario VARCHAR(40) NOT NULL,
 	telefone_funcionario VARCHAR(40) NOT NULL,
@@ -80,6 +80,7 @@ CREATE TABLE IF NOT EXISTS tb_veiculos(
 	valor_venda VARCHAR(40) NOT NULL,
 	condicao VARCHAR(40) NOT NULL,
 	categoria VARCHAR(40) NOT NULL,
+	disponibilidade VARCHAR(40) NOT NULL,
 	CONSTRAINT pk_veiculos PRIMARY KEY(id_veiculo),
 	UNIQUE(placa),
 	UNIQUE(chassi),
