@@ -18,13 +18,13 @@ def getDatabaseConnection():
             host='localhost',
             user='root',
             password='',
-            database='erp_concessionaria'
+            database='concessionaria'
         )
         return conn
     except mysql.connector.Error as err:
         # Verifica se o erro foi causado pela ausência do banco de dados
         if err.errno == errorcode.ER_BAD_DB_ERROR:
-            print("Banco de dados 'erp_concessionaria' não encontrado. Criando banco a partir do arquivo SQL...")
+            print("Banco de dados 'concessionaria' não encontrado. Criando banco a partir do arquivo SQL...")
             # Conecta ao MySQL sem selecionar um banco de dados
             conn = mysql.connector.connect(
                 host='localhost',
@@ -33,9 +33,9 @@ def getDatabaseConnection():
             )
             cursor = conn.cursor()
             # Executa o script SQL para criar o banco e tabelas
-            execute_sql_file(cursor, 'banco_de_dados/ERP_Concessionaria.sql')
+            execute_sql_file(cursor, 'banco_de_dados/concessionaria.sql')
             print("Banco de dados e tabelas criados com sucesso!")
-            conn.database = 'erp_concessionaria'  # Redefine o banco para o objeto de conexão
+            conn.database = 'concessionaria'  # Redefine o banco para o objeto de conexão
             return conn
         else:
             print(f"Erro ao conectar ao banco de dados: {err}")

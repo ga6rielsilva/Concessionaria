@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS erp_concessionaria;
-USE erp_concessionaria;
+CREATE DATABASE IF NOT EXISTS concessionaria;
+USE concessionaria;
 
 CREATE TABLE IF NOT EXISTS tb_usuarios(
 	id_usuario INT NOT NULL AUTO_INCREMENT,
