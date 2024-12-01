@@ -51,6 +51,9 @@ Este é um sistema de gerenciamento ERP para uma Concessionaria de veículos, on
    ```bash
    pip install mysql-connector-python
    ```
+   ```bash
+   pip install Pillow
+   ```
 
 4. Configure as variáveis de ambiente no arquivo `.env` (exemplo abaixo):
    ```env

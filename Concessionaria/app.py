@@ -313,8 +313,7 @@ def employee_register():
 
             # Confirmar a transação
             conn.commit()
-            message = f"Funcionário e usuário cadastrados com sucesso!<br> Login: {
-                userLogin}<br> Senha: {userPassword}"
+            message = f"Funcionário e usuário cadastrados com sucesso!<br> Login: {userLogin}<br> Senha: {userPassword}"
 
         except Exception as e:
             conn.rollback()
