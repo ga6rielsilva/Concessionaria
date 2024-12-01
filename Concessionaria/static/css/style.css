@@ -1,6 +1,4 @@
-/**
- * Arquivo CSS responsável pelo estilo da página da concessionária.
- */
+@charset "UTF-8";
 
 :root {
     --main-color: rgb(243, 249, 255);
