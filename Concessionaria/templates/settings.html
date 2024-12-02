@@ -83,44 +83,47 @@
 
             <form action="" method="POST" enctype="multipart/form-data">
                 <div class="form-container">
-                    <div class="form-item">
-                        <label for="photo">Foto</label>
+                    <div>
+                        <div class="form-item">
+                            <label for="photo">Foto</label>
 
-                        {% if img_base64 %}
-                        <img src="{{ img_base64 }}" alt="user-photo" style="max-width: 250px; max-height: 250px; width: auto; height: auto; object-fit: contain;">
-                        {% else %}
-                        <i class="material-symbols-outlined user-icon" style="margin-left: 95px; margin-top: 5px;">account_circle</i>
-                        {% endif %} 
+                            {% if img_base64 %}
+                            <img src="{{ img_base64 }}" alt="user-photo" class="image-preview"
+                                style="max-width: 250px; max-height: 250px; width: auto; height: auto; object-fit: contain;">
+                            {% endif %}
 
-                        <img id="preview" src="#" alt="Pré-visualização"
-                        style="display: none; margin-top: 10px; max-width: 398px;">
-                        
-                        <input type="file" name="profilePhoto" id="profilePhoto"
-                            accept="image/*" style="max-width: 398px;">
-                    </div>
-                    <div class="form-item">
-                        <label for="password">Senha atual</label>
-                        <input type="password" name="current_password" id="password">
-                    </div>
-                    <div class="form-item">
-                        <label for="username">Nome do usuário</label>
-                        <p class="form-item-user" id="username">{{ username }}</p>
-                    </div>
-                    <div class="form-item">
-                        <label for="password">Nova senha</label>
-                        <input type="password" name="new_password" id="new-password">
-                    </div>
-                    <div class="form-item">
+                            <label style="display: none;" id="labelFotoNova">Foto Nova</label>
+                            <img id="preview" src="#" alt="Pré-visualização" class="hidden-image-preview">
 
+                            <input type="file" name="profilePhoto" id="profilePhoto" accept="image/*" class="input-file">
+                        </div>
+                        <div class="form-item">
+                            <label for="username">Nome do usuário</label>
+                            <p class="form-item-user" id="username">{{ username }}</p>
+                        </div>
                     </div>
-                    <div class="form-item">
-                        <label for="password">Confirmar nova senha</label>
-                        <input type="password" name="confirm_password" id="confirm-password">
-                    </div>
+                    <div>
+                        <div class="form-item">
+                            <label for="password">Senha atual</label>
+                            <input type="password" name="current_password" id="password">
+                        </div>
+                        <div class="form-item">
+                            <label for="password">Nova senha</label>
+                            <input type="password" name="new_password" id="new-password">
+                        </div>
+                        <div class="form-item">
 
+                        </div>
+                        <div class="form-item">
+                            <label for="password">Confirmar nova senha</label>
+                            <input type="password" name="confirm_password" id="confirm-password">
+                        </div>
+                    </div>
+                    
                     <div class="form-item form-button-vehicle-register">
                         <button type="submit">Confirmar</button>
                     </div>
+                    
 
                 </div>
             </form>
@@ -133,7 +136,6 @@
             <p>© <span id="Ydate"></span> - GLW Sistemas - Todos os direitos reservados</p>
         </div>
     </footer>
-
 </body>
 
 </html>

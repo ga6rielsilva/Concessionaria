@@ -566,3 +566,23 @@ form {
 .delete-button:hover {
     background-color: #ff0000 !important;
 }
+
+.image-preview {
+    max-width: 200px;
+    max-height: 200px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.hidden-image-preview {
+    display: none;
+    max-width: 200px;
+    max-height: 200px;
+}
+
+.input-file {
+    max-width: 398px;
+    margin-top: 10px;
+}
