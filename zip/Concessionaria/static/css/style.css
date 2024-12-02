@@ -401,8 +401,7 @@ form {
 }
 
 .form-item {
-    margin-right: 20px;
-    margin-left: 20px;
+    margin: 20px;
     display: flex;
     flex-direction: column;
 }

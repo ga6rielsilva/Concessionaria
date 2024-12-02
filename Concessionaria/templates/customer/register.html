@@ -9,12 +9,11 @@
     <script src="{{ url_for('static', filename='javascript/event_handlers.js') }}"></script>
     <script src="{{ url_for('static', filename='javascript/manipulator.js') }}"></script>
     <script src="{{ url_for('static', filename='javascript/validator.js') }}"></script>
-    <title>Configurações</title>
 
+    <title>ERP Concessionaria</title>
 </head>
 
 <body>
-
     <header>
         <div class="header-container">
             <div class="logo">
@@ -53,7 +52,7 @@
 
             <div class="user-container">
                 <a class="user" id="user-icon" href="#">
-                    <p id="username">{{username}}</p>
+                    <p>{{username}}</p>
                     <i class="material-symbols-outlined user-icon">account_circle</i>
                 </a>
                 <div id="user-submenu" class="user-submenu">
@@ -67,73 +66,87 @@
     </header>
 
     <main>
-
         <div class="main-container">
             <div class="main-content">
-                <h1>Configurações</h1>
+                <h1>Cadastro de Clientes </h1>
             </div>
 
             {% if message %}
-            <p style="color: green; margin-top: -30px;">{{ message }}</p>
+            <p style="color: green; margin-top: -35px;" ><strong>{{ message }}</strong></p>
             {% endif %}
 
             {% if error %}
-            <p style="color: red; margin-top: -30px;">{{ error }}</p>
+            <p style="color: red; margin-top: -35px;"><strong>{{ error }}</strong></p>
             {% endif %}
 
-            <form action="" method="POST" enctype="multipart/form-data">
+            <form action="{{ url_for('customer.customer_register') }}" method="POST">
+
                 <div class="form-container">
                     <div class="form-item">
-                        <label for="photo">Foto</label>
-
-                        {% if img_base64 %}
-                        <img src="{{ img_base64 }}" alt="user-photo" style="max-width: 250px; max-height: 250px; width: auto; height: auto; object-fit: contain;">
-                        {% else %}
-                        <i class="material-symbols-outlined user-icon" style="margin-left: 95px; margin-top: 5px;">account_circle</i>
-                        {% endif %} 
-
-                        <img id="preview" src="#" alt="Pré-visualização"
-                        style="display: none; margin-top: 10px; max-width: 398px;">
-                        
-                        <input type="file" name="profilePhoto" id="profilePhoto"
-                            accept="image/*" style="max-width: 398px;">
+                        <label for="name">Nome</label>
+                        <input type="text" name="customer_name" id="name" required>
                     </div>
                     <div class="form-item">
-                        <label for="password">Senha atual</label>
-                        <input type="password" name="current_password" id="password">
+                        <label for="cpf">CPF</label>
+                        <input type="text" name="customer_cpf" id="cpf" maxlength="14" required>
                     </div>
                     <div class="form-item">
-                        <label for="username">Nome do usuário</label>
-                        <p class="form-item-user" id="username">{{ username }}</p>
+                        <label for="rg">RG</label>
+                        <input type="text" name="customer_rg" id="rg" maxlength="12" required>
                     </div>
                     <div class="form-item">
-                        <label for="password">Nova senha</label>
-                        <input type="password" name="new_password" id="new-password">
+                        <label for="birth">Data de Nascimento</label>
+                        <input type="date" name="customer_birth" id="birth" required>
                     </div>
                     <div class="form-item">
-
+                        <label for="sex">Sexo</label>
+                        <select name="customer_sex">
+                            <option value="" selected disabled>Selecione</option>
+                            <option value="M">Masculino</option>
+                            <option value="F">Feminino</option>
+                            <option value="O">Outro</option>
+                        </select required>
                     </div>
                     <div class="form-item">
-                        <label for="password">Confirmar nova senha</label>
-                        <input type="password" name="confirm_password" id="confirm-password">
+                        <label for="email">E-mail</label>
+                        <input type="email" name="customer_email" id="email" required>
                     </div>
-
-                    <div class="form-item form-button-vehicle-register">
-                        <button type="submit">Confirmar</button>
+                    <div class="form-item">
+                        <label for="phone">Telefone</label>
+                        <input type="text" name="customer_phone" id="phone" required>
                     </div>
-
+                    <div class="form-item">
+                        <label for="address">Endereço</label>
+                        <input type="text" name="customer_address" id="address" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="city">Cidade</label>
+                        <input type="text" name="customer_city" id="city" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="state">Estado</label>
+                        <input type="text" name="customer_state" id="state" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="zip">CEP</label>
+                        <input type="text" name="customer_zip" id="zip" required>
+                    </div>
+                    <div class="form-item">
+                        <label for="country">País</label>
+                        <input type="text" name="customer_country" id="country" required>
+                    </div>
+                    <div class="form-item form-button">
+                        <button type="submit">Cadastrar</button>
+                    </div>
                 </div>
             </form>
         </div>
-
     </main>
-
     <footer>
         <div class="footer-container register-footer">
             <p>© <span id="Ydate"></span> - GLW Sistemas - Todos os direitos reservados</p>
         </div>
     </footer>
-
 </body>
 
 </html>

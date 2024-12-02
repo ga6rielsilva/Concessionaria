@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@600" />
-    <script src="{{ url_for('static', filename='javascript/event_handlers.js') }}"></script>
-    <script src="{{ url_for('static', filename='javascript/manipulator.js') }}"></script>
-    <script src="{{ url_for('static', filename='javascript/validator.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 
     <title>ERP Concessionaria</title>
 </head>
@@ -21,31 +19,31 @@
             </div>
             <nav class="nav ">
                 <div class="nav-item">
-                    <a href="{{ url_for('index.home')}}">Home</a>
+                    <a href="{{ url_for('index')}}">Home</a>
                 </div>
                 <div class="nav-item">
-                    <a href="{{ url_for('sales.sales')}}">Venda</a>
+                    <a href="{{ url_for('sales')}}">Venda</a>
                 </div>
                 <div class="nav-item">
                     <a href="#">Cadastro</a>
                     <div class="submenu">
-                        <a href="{{ url_for('vehicle.vehicle_register') }}">Veículos</a>
-                        <a href="{{ url_for('customer.customer_register') }}">Clientes</a>
-                        <a href="{{ url_for('employee.employee_register') }}">Funcionários</a>
+                        <a href="{{ url_for('vehicle_register') }}">Veículos</a>
+                        <a href="{{ url_for('customer_register') }}">Clientes</a>
+                        <a href="{{ url_for('employee_register') }}">Funcionários</a>
                     </div>
                 </div>
                 <div class="nav-item">
                     <a href="#">Consulta</a>
                     <div class="submenu">
-                        <a href="{{ url_for('vehicle.vehicle_search') }}">Veículos</a>
-                        <a href="{{ url_for('customer.customer_search') }}">Clientes</a>
+                        <a href="{{ url_for('vehicle_search') }}">Veículos</a>
+                        <a href="{{ url_for('customer_search') }}">Clientes</a>
                     </div>
                 </div>
                 <div class="nav-item">
                     <a href="#">Relatórios</a>
                     <div class="submenu">
-                        <a href="{{ url_for('reports.reports') }}">Vendas</a>
-                        <a href="{{ url_for('reports.reports') }}">Estoque</a>
+                        <a href="#">Vendas</a>
+                        <a href="#">Estoque</a>
                     </div>
                 </div>
             </nav>
@@ -57,8 +55,8 @@
                 </a>
                 <div id="user-submenu" class="user-submenu">
                     <a href="#">Perfil</a>
-                    <a href="{{ url_for('settings.settings')}}">Configurações</a>
-                    <a href="{{ url_for('auth.logout') }}">Sair</a>
+                    <a href="{{ url_for('settings')}}">Configurações</a>
+                    <a href="{{ url_for('logout') }}">Sair</a>
                 </div>
             </div>
 
@@ -71,11 +69,11 @@
                 <h1>Relatórios</h1>
             </div>
             <div class="main-menu">
-                <a href="{{ url_for('reports.reports') }}" class="menu-item">
+                <a href="#" class="menu-item">
                     <p>Relatórios <br> Vendas</p>
                     <i class="material-symbols-outlined">paid</i>
                 </a>
-                <a href="{{ url_for('reports.reports') }}" class="menu-item">
+                <a href="#" class="menu-item">
                     <p>Relatórios <br> Estoques</p>
                     <i class="material-symbols-outlined menu-icon">package_2</i>
                 </a>

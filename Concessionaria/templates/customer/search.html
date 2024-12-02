@@ -9,12 +9,11 @@
     <script src="{{ url_for('static', filename='javascript/event_handlers.js') }}"></script>
     <script src="{{ url_for('static', filename='javascript/manipulator.js') }}"></script>
     <script src="{{ url_for('static', filename='javascript/validator.js') }}"></script>
-    <title>Configurações</title>
 
+    <title>ERP Concessionaria</title>
 </head>
 
 <body>
-
     <header>
         <div class="header-container">
             <div class="logo">
@@ -53,7 +52,7 @@
 
             <div class="user-container">
                 <a class="user" id="user-icon" href="#">
-                    <p id="username">{{username}}</p>
+                    <p>{{username}}</p>
                     <i class="material-symbols-outlined user-icon">account_circle</i>
                 </a>
                 <div id="user-submenu" class="user-submenu">
@@ -67,73 +66,59 @@
     </header>
 
     <main>
-
         <div class="main-container">
             <div class="main-content">
-                <h1>Configurações</h1>
+                <h1>Consulta de Clientes</h1>
             </div>
+            <div class="search-container search-item">
+                <form action="{{ url_for('customer.customer_search') }}" method="POST" id="search-form">
+                    <label for="cpf">CPF:</label>
+                    <input type="text" id="cpf" name="cpf_customer" placeholder="Digite o CPF" maxlength="14" required>
+                    <button type="submit">Buscar</button>
+                    {% if message %}
+                    <p style="color: green;"><strong>{{ message }}</strong></p>
+                    {% endif %}
+                </form>
 
-            {% if message %}
-            <p style="color: green; margin-top: -30px;">{{ message }}</p>
-            {% endif %}
-
-            {% if error %}
-            <p style="color: red; margin-top: -30px;">{{ error }}</p>
-            {% endif %}
-
-            <form action="" method="POST" enctype="multipart/form-data">
-                <div class="form-container">
-                    <div class="form-item">
-                        <label for="photo">Foto</label>
-
-                        {% if img_base64 %}
-                        <img src="{{ img_base64 }}" alt="user-photo" style="max-width: 250px; max-height: 250px; width: auto; height: auto; object-fit: contain;">
-                        {% else %}
-                        <i class="material-symbols-outlined user-icon" style="margin-left: 95px; margin-top: 5px;">account_circle</i>
-                        {% endif %} 
-
-                        <img id="preview" src="#" alt="Pré-visualização"
-                        style="display: none; margin-top: 10px; max-width: 398px;">
-                        
-                        <input type="file" name="profilePhoto" id="profilePhoto"
-                            accept="image/*" style="max-width: 398px;">
+                {% if customer %}
+                <div class="result-container">
+                    <h2>Resultado da busca</h2>
+                    <div class="edit-delete-button">
+                        <a href="{{ url_for('customer.edit_customer', cpf=customer['cpf_cliente']) }}" class="material-symbols-outlined edit-button ">edit</a>
+                        <form class="delete-Customers-form" action="{{ url_for('customer.delete_customer', cpf=customer['cpf_cliente']) }}"
+                            method="POST">
+                            <button type="submit" class="material-symbols-outlined delete-button"
+                                name="delete-button">delete</button>
+                        </form>
                     </div>
-                    <div class="form-item">
-                        <label for="password">Senha atual</label>
-                        <input type="password" name="current_password" id="password">
+                    <div class="customer-details">
+                        <p><strong>Nome:</strong> {{ customer['nome_cliente'] }}</p>
+                        <p><strong>CPF:</strong> {{ customer['cpf_cliente'] }}</p>
+                        <p><strong>RG:</strong> {{ customer['rg_cliente'] }}</p>
+                        <p><strong>Data de Nascimento:</strong> {{ customer['data_nascimento'] }}</p>
+                        <p><strong>Sexo:</strong> {{ customer['sexo_cliente'] }}</p>
+                        <p><strong>Telefone:</strong> {{ customer['telefone_cliente'] }}</p>
+                        <p><strong>Email:</strong> {{ customer['email_cliente'] }}</p>
+                        <p><strong>Endereço:</strong> {{ customer['endereco_cliente'] }}</p>
+                        <p><strong>Estado:</strong> {{ customer['estado_cliente'] }}</p>
+                        <p><strong>CEP:</strong> {{ customer['cep_cliente'] }}</p>
+                        <p><strong>Cidade:</strong> {{ customer['cidade_cliente'] }}</p>
+                        <p><strong>País:</strong> {{ customer['pais_cliente'] }}</p>
                     </div>
-                    <div class="form-item">
-                        <label for="username">Nome do usuário</label>
-                        <p class="form-item-user" id="username">{{ username }}</p>
-                    </div>
-                    <div class="form-item">
-                        <label for="password">Nova senha</label>
-                        <input type="password" name="new_password" id="new-password">
-                    </div>
-                    <div class="form-item">
-
-                    </div>
-                    <div class="form-item">
-                        <label for="password">Confirmar nova senha</label>
-                        <input type="password" name="confirm_password" id="confirm-password">
-                    </div>
-
-                    <div class="form-item form-button-vehicle-register">
-                        <button type="submit">Confirmar</button>
-                    </div>
-
                 </div>
-            </form>
+                {% endif %}
+
+                {% if error %}
+                <p style="color: red;">{{ error }}</p>
+                {% endif %}
+            </div>
         </div>
-
     </main>
-
     <footer>
-        <div class="footer-container register-footer">
+        <div class="footer-container">
             <p>© <span id="Ydate"></span> - GLW Sistemas - Todos os direitos reservados</p>
         </div>
     </footer>
-
 </body>
 
 </html>
