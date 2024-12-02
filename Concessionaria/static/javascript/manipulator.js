@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const userIcon = document.getElementById("user-icon");
     const userSubmenu = document.getElementById("user-submenu");
 
+    // Responsável por exibir e ocultar o submenu do usuário
     if (userIcon && userSubmenu) {
         userIcon.addEventListener("click", function (event) {
             event.preventDefault();
