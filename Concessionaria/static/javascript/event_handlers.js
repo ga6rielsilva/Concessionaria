@@ -151,14 +151,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
             reader.onload = function (e) {
                 previewImage.src = e.target.result;
-                previewImage.style.display = 'block'; // Mostra a imagem
-                labelFotoNova.style.display = 'inline'; // Mostra o label
+                previewImage.style.display = 'block';
+                labelFotoNova.style.display = 'inline';
             };
 
             reader.readAsDataURL(file);
         } else {
-            previewImage.style.display = 'none'; // Esconde a imagem
-            labelFotoNova.style.display = 'none'; // Esconde o label
+            previewImage.style.display = 'none';
+            labelFotoNova.style.display = 'none';
         }
     });
 

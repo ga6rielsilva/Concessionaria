@@ -13,6 +13,7 @@ class Employee:
         self.estado = estado
         self.pais = pais
 
+    # Método para salvar os dados do funcionário no banco de dados
     def save_to_db(self, cursor):
         query = """
             INSERT INTO tb_funcionarios (
@@ -31,21 +32,26 @@ class Employee:
             )
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
+        # Valores a serem inseridos no banco de dados
         values = (self.nome, self.cpf, self.rg, self.data_nascimento, self.sexo, self.telefone,
                   self.email, self.endereco, self.cep, self.cidade, self.estado, self.pais)
+        # Executa a query com os valores fornecidos
         cursor.execute(query, values)
 
+    # Método estático para encontrar um funcionário pelo CPF
     @staticmethod
     def find_by_cpf(cursor, cpf):
         query = "SELECT * FROM tb_funcionarios WHERE cpf_funcionario = %s"
         cursor.execute(query, (cpf,))
         return cursor.fetchone()
 
+    # Método estático para deletar um funcionário pelo CPF
     @staticmethod
     def delete_by_cpf(cursor, cpf):
         query = "DELETE FROM tb_funcionarios WHERE cpf_funcionario = %s"
         cursor.execute(query, (cpf,))
 
+    # Método estático para atualizar os dados de um funcionário pelo CPF
     @staticmethod
     def update_by_cpf(cursor, cpf, nome, rg, data_nascimento, sexo, telefone, email, endereco, cep, cidade, estado, pais):
         query = """

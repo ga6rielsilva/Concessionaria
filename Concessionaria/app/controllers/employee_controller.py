@@ -6,11 +6,12 @@ import io
 from PIL import Image
 
 def employee_register():
+    # Inicializa variáveis de erro e mensagem
     error = None
     message = None
 
     if request.method == "POST":
-        # Captura os dados do funcionário
+        # Captura os dados do funcionário do formulário
         nameEmployee = request.form['employee_name']
         cpfEmployee = request.form['employee_cpf']
         rgEmployee = request.form['employee_rg']
@@ -25,6 +26,7 @@ def employee_register():
         countryEmployee = request.form['employee_country']
         employeePosition = request.form['employee_position']
 
+        # Processa a foto do funcionário, se fornecida
         photo_file = request.files.get('profilePhoto')
         img_data = None
 
@@ -42,7 +44,7 @@ def employee_register():
                 error = f"Erro ao processar a imagem: {e}"
                 img_data = None
 
-        # Gerar login padrão
+        # Gera um login padrão baseado no nome do funcionário
         name_parts = nameEmployee.split()
         if len(name_parts) >= 2:
             base_login = f"{name_parts[0].lower()}_{name_parts[-1].lower()}"
@@ -53,7 +55,7 @@ def employee_register():
         conn = getDatabaseConnection()
         cursor = conn.cursor()
 
-        # Garantir que o login seja único
+        # Garante que o login seja único
         userLogin = base_login
         counter = 1
         while True:
@@ -61,14 +63,14 @@ def employee_register():
                 "SELECT COUNT(*) FROM tb_usuarios WHERE login = %s", (userLogin,))
             if cursor.fetchone()[0] == 0:
                 break  # Login é único
-            userLogin = f"{base_login}{counter}"  # Incrementar contador
+            userLogin = f"{base_login}{counter}"  # Incrementa contador
             counter += 1
 
-        # Gerar senha aleatória de 6 dígitos
+        # Gera uma senha aleatória de 6 dígitos
         userPassword = str(random.randint(100000, 999999))
 
         try:
-            # Inserir o usuário na tabela tb_usuarios
+            # Insere o usuário na tabela tb_usuarios
             user_query = """
                 INSERT INTO tb_usuarios (
                     nome,
@@ -80,10 +82,10 @@ def employee_register():
             user_values = (nameEmployee, userLogin, userPassword)
             cursor.execute(user_query, user_values)
 
-            # Recuperar o ID do usuário recém-criado
+            # Recupera o ID do usuário recém-criado
             userId = cursor.lastrowid
 
-            # Inserir o funcionário na tabela tb_funcionarios
+            # Insere o funcionário na tabela tb_funcionarios
             employee_query = """
                 INSERT INTO tb_funcionarios (
                     foto_funcionario,
@@ -112,81 +114,101 @@ def employee_register():
             )
             cursor.execute(employee_query, employee_values)
 
-            # Confirmar a transação
+            # Confirma a transação
             conn.commit()
             message = f"Funcionário e usuário cadastrados com sucesso!<br> Login: {userLogin}<br> Senha: {userPassword}"
 
         except Exception as e:
+            # Reverte a transação em caso de erro
             conn.rollback()
             error = f"Erro ao cadastrar funcionário e usuário: {str(e)}"
         finally:
+            # Fecha o cursor e a conexão com o banco de dados
             cursor.close()
             conn.close()
 
+    # Renderiza o template de registro de funcionário com as mensagens de erro ou sucesso
     return render_template('employee/register.html', username=request.cookies.get('username'), error=error, message=message)
 
 def employee_search():
+    # Inicializa variáveis de dados do funcionário, erro e mensagem
     employee_data = None
     error = None
     message = request.args.get('message')
 
     if request.method == 'POST':
+        # Captura o CPF do funcionário do formulário
         cpf = request.form['cpf_employee']
 
+        # Conexão com o banco de dados
         conn = getDatabaseConnection()
         cursor = conn.cursor(dictionary=True)
 
         try:
+            # Busca o funcionário pelo CPF
             employee_data = Employee.find_by_cpf(cursor, cpf)
             if employee_data is None:
                 error = "Funcionário não encontrado"
         except Exception as e:
             error = f"Erro ao buscar funcionário: {str(e)}"
         finally:
+            # Fecha o cursor e a conexão com o banco de dados
             cursor.close()
             conn.close()
 
+    # Renderiza o template de busca de funcionário com os dados do funcionário, erro ou mensagem
     return render_template('employee/search.html', username=request.cookies.get('username'), employees=employee_data, error=error, message=message)
 
 def delete_employee(cpf):
+    # Conexão com o banco de dados
     conn = getDatabaseConnection()
     cursor = conn.cursor()
 
     try:
+        # Deleta o funcionário pelo CPF
         Employee.delete_by_cpf(cursor, cpf)
         conn.commit()
         message = "Funcionário deletado com sucesso!"
     except Exception as e:
+        # Reverte a transação em caso de erro
         conn.rollback()
         message = f"Erro ao deletar funcionário: {e}"
     finally:
+        # Fecha o cursor e a conexão com o banco de dados
         cursor.close()
         conn.close()
 
+    # Redireciona para a página de busca de funcionário com a mensagem de sucesso ou erro
     return redirect(url_for('employee/search', message=message))
 
 def edit_employee(cpf):
+    # Conexão com o banco de dados
     conn = getDatabaseConnection()
     cursor = conn.cursor(dictionary=True)
 
+    # Inicializa variáveis de dados do funcionário, erro e mensagem
     employee_data = None
     error = None
     message = None
 
     if request.method == 'GET':
         try:
+            # Busca o funcionário pelo CPF
             employee_data = Employee.find_by_cpf(cursor, cpf)
             if not employee_data:
                 error = "Funcionário não encontrado"
         except Exception as e:
             error = f"Erro ao buscar funcionário: {str(e)}"
         finally:
+            # Fecha o cursor e a conexão com o banco de dados
             cursor.close()
             conn.close()
 
+        # Renderiza o template de edição de funcionário com os dados do funcionário, erro ou mensagem
         return render_template('employee/edit.html', employee=employee_data, error=error, message=message, username=request.cookies.get('username'))
 
     elif request.method == 'POST':
+        # Captura os dados do funcionário do formulário
         nameEmployee = request.form['employee_name']
         rgEmployee = request.form['employee_rg']
         birthEmployee = request.form['employee_birth']
@@ -200,6 +222,7 @@ def edit_employee(cpf):
         countryEmployee = request.form['employee_country']
 
         try:
+            # Atualiza os dados do funcionário pelo CPF
             Employee.update_by_cpf(cursor, cpf, nameEmployee, rgEmployee, birthEmployee, employeeSex, phoneEmployee,
                                    emailEmployee, addressEmployee, zipEmployee, cityEmployee, stateEmployee, countryEmployee)
             conn.commit()
@@ -207,7 +230,9 @@ def edit_employee(cpf):
         except Exception as e:
             error = f"Erro ao atualizar funcionário: {str(e)}"
         finally:
+            # Fecha o cursor e a conexão com o banco de dados
             cursor.close()
             conn.close()
 
+        # Redireciona para a página de busca de funcionário com a mensagem de sucesso ou erro
         return redirect(url_for('employee/search', message=message))
