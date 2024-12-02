@@ -65,8 +65,7 @@ Este é um sistema de gerenciamento ERP para uma Concessionaria de veículos, on
 
 ## Estrutura do Projeto
 
-<details>
-### <summary>Estrutura do Projeto</summary>
+Estrutura do Projeto
 ```plaintext
    banco_de_dados/
    └── concessionaria.sql
@@ -125,7 +124,6 @@ Este é um sistema de gerenciamento ERP para uma Concessionaria de veículos, on
            │   └── settings.html
            └── main.py
 ```
-</details>
 
 ---
 
