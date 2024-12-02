@@ -67,18 +67,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Máscara de RG
     const rgInput = document.getElementById("rg");
+    
     if (rgInput) {
+        // Função para validar o RG
         function validarRG(rg) {
+            // Remove todos os caracteres que não são dígitos do RG
             const rgNumbers = rg.replace(/\D/g, "");
     
+            // Verifica se o número de dígitos do RG está entre 5 e 14
             return rgNumbers.length >= 5 && rgNumbers.length <= 14;
         }
     
+        // Adiciona um ouvinte de evento para o input do RG que será acionado a cada entrada de dados
         rgInput.addEventListener("input", function (event) {
+            // Obtém o valor atual do input
             let rg = event.target.value;
     
+            // Remove todos os caracteres que não são dígitos do RG
             rg = rg.replace(/\D/g, "");
     
+            // Formata o RG de acordo com o número de dígitos
             if (rg.length === 7) {
                 rg = rg.replace(/^(\d{1})(\d{3})(\d{3})$/, "$1.$2.$3");
             } else if (rg.length === 8) {
@@ -91,8 +99,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 rg = rg.replace(/^(\d{1,2})(\d{3})?$/, (_, p1, p2) => p2 ? `${p1}.${p2}` : p1);
             }
     
+            // Atualiza o valor do input com o RG formatado
             event.target.value = rg;
     
+            // Valida o RG e define a mensagem de validade personalizada
             if (validarRG(rg.replace(/\D/g, ""))) {
                 event.target.setCustomValidity("");
             } else {
@@ -100,15 +110,15 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     
+        // Função responsável por permitir a exclusão dos elementos de formatação do RG
         rgInput.addEventListener("keydown", function (event) {
             if (event.key === "Backspace") {
                 let cursorPosition = rgInput.selectionStart;
                 let value = rgInput.value;
     
-    
                 if (cursorPosition > 0 && value[cursorPosition - 1].match(/[.\- ]/)) {
                     rgInput.setSelectionRange(cursorPosition - 1, cursorPosition - 1);
-                    event.preventDefault(); // Previne comportamento padrão do backspace
+                    event.preventDefault();
                 }
             }
         });
