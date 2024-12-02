@@ -79,7 +79,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const parcelasInput = document.getElementById("parcelasAmount");
     const ParcelasPriceInput = document.getElementById("ParcelasPrice");
     const valorTotal = document.getElementById("valorTotal");
-
     if (parcelasInput && ParcelasPriceInput && originalPriceInput && valorTotal) {
         parcelasInput.addEventListener("change", function () {
             const selectedOption = parcelasInput.options[parcelasInput.selectedIndex];
@@ -87,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             const price = originalPriceInput.value.replace(/\D/g, "");
-            const interestRate = 0.12;
+            const interestRate = 0.16;
             const TotalPrice = price * Math.pow(1 + interestRate, parcelas / 12);
             const ParcelasPrice = TotalPrice / parcelas;
 
@@ -100,7 +99,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Formulario de delete de veículos
     const deleteVehicleForms = document.querySelectorAll("form.delete-form");
-
     if (deleteVehicleForms.length > 0) {
         deleteVehicleForms.forEach((form) => {
             form.addEventListener("submit", function (event) {
@@ -115,7 +113,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Formulario de delete de cliente
     const deleteCustomersForms = document.querySelectorAll("form.delete-Customers-form");
-
     if (deleteCustomersForms.length > 0) {
         deleteCustomersForms.forEach((form) => {
             form.addEventListener("submit", function (event) {
@@ -131,7 +128,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Confirmação de venda
     const confirmSaleForms = document.getElementById("vehicle-selector");
     const hiddenInput = document.getElementById("selectedVehicleId");
-
     if (confirmSaleForms && hiddenInput) {
         confirmSaleForms.addEventListener("change", function () {
             // Pegando o ID do veículo selecionado
@@ -142,4 +138,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         });
     }
+
+    // log para verificar se o script foi carregado
+    console.log("Event_handlers.js carregado com sucesso!");
 });

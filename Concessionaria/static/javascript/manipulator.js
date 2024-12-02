@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Código do submenu do usuário
     const userIcon = document.getElementById("user-icon");
     const userSubmenu = document.getElementById("user-submenu");
-
     if (userIcon && userSubmenu) {
         userIcon.addEventListener("click", function (event) {
             event.preventDefault();
@@ -26,4 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
+
+    // log para verificar se o script foi carregado
+    console.log("Manipulator.js carregado com sucesso!");
 });

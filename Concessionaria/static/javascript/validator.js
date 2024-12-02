@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     // Validação do CPF e máscara
     const cpfok = document.getElementById("cpf");
-
     if (cpfok) {
 
         function validarCPF(cpf) {
@@ -55,35 +54,56 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Máscara de RG
-    const rg = document.getElementById("rg");
-
-    if (rg) {
-        rg.setAttribute("maxlength", "12");
-
+    const rgInput = document.getElementById("rg");
+    if (rgInput) {
         function validarRG(rg) {
             const rgNumbers = rg.replace(/\D/g, "");
-            return rgNumbers.length === 9;
+    
+            return rgNumbers.length >= 5 && rgNumbers.length <= 14;
         }
-
-        rg.addEventListener("input", function (event) {
+    
+        rgInput.addEventListener("input", function (event) {
             let rg = event.target.value;
-
-            rg = rg.replace(/\D/g, "")
-                .replace(/(\d{2})(\d{3})(\d{3})(\d{1})/, "$1.$2.$3-$4");
-
+    
+            rg = rg.replace(/\D/g, "");
+    
+            if (rg.length === 7) {
+                rg = rg.replace(/^(\d{1})(\d{3})(\d{3})$/, "$1.$2.$3");
+            } else if (rg.length === 8) {
+                rg = rg.replace(/^(\d{2})(\d{3})(\d{3})$/, "$1.$2.$3");
+            } else if (rg.length === 9) {
+                rg = rg.replace(/^(\d{2})(\d{3})(\d{3})(\d{1})$/, "$1.$2.$3-$4");
+            } else if (rg.length > 5) {
+                rg = rg.replace(/^(\d{1,2})(\d{3})(\d{1,4})$/, "$1.$2.$3");
+            } else {
+                rg = rg.replace(/^(\d{1,2})(\d{3})?$/, (_, p1, p2) => p2 ? `${p1}.${p2}` : p1);
+            }
+    
             event.target.value = rg;
-
-            if (validarRG(rg)) {
+    
+            if (validarRG(rg.replace(/\D/g, ""))) {
                 event.target.setCustomValidity("");
             } else {
-                event.target.setCustomValidity("O RG informado é inválido");
+                event.target.setCustomValidity("O RG informado é inválido.");
+            }
+        });
+    
+        rgInput.addEventListener("keydown", function (event) {
+            if (event.key === "Backspace") {
+                let cursorPosition = rgInput.selectionStart;
+                let value = rgInput.value;
+    
+    
+                if (cursorPosition > 0 && value[cursorPosition - 1].match(/[.\- ]/)) {
+                    rgInput.setSelectionRange(cursorPosition - 1, cursorPosition - 1);
+                    event.preventDefault(); // Previne comportamento padrão do backspace
+                }
             }
         });
     }
 
     // Máscara de telefone
     const telefone = document.getElementById("phone");
-
     if (telefone) {
         telefone.setAttribute("maxlength", "15");
 
@@ -110,7 +130,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Máscara de CEP
     const cep = document.getElementById("zip");
-
     if (cep) {
         function validarCEP(cep) {
             const cepNumeros = cep.replace(/\D/g, "");
@@ -135,7 +154,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Máscara de placa de veículo
     const placa = document.getElementById("plate_vehicle");
-
     if (placa) {
         placa.setAttribute("maxlength", "7");
 
@@ -151,7 +169,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Máscara para quilometragem
     const km = document.getElementById("kms_vehicle");
-
     if (km) {
         km.addEventListener("input", function (event) {
             let kms = event.target.value;
@@ -166,7 +183,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Máscara para formatar o preenchimento do preço
     const priceFormatterElements = document.getElementsByClassName("price_formatter");
     const price = document.getElementById("price");
-
     if (priceFormatterElements.length > 0) {
         Array.from(priceFormatterElements).forEach((element) => {
             element.addEventListener("input", function (event) {
@@ -191,7 +207,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Validação do Renavam
     const renavam = document.getElementById("renavam_vehicle");
-
     if (renavam) {
         renavam.setAttribute("maxlength", "11");
 
@@ -217,7 +232,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Validação do Chassi
     const chassi = document.getElementById("chassi_vehicle");
-
     if (chassi) {
         chassi.setAttribute("maxlength", "17");
 
@@ -240,4 +254,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
+
+    // Verificação de carregamento dos script
+    console.log("Validator.js carregado com sucesso!");
 });

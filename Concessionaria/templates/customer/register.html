@@ -72,11 +72,11 @@
             </div>
 
             {% if message %}
-            <p style="color: green; margin-top: -35px;" ><strong>{{ message }}</strong></p>
+            <p style="color: green; margin-top: -30px;" ><strong>{{ message }}</strong></p>
             {% endif %}
 
             {% if error %}
-            <p style="color: red; margin-top: -35px;"><strong>{{ error }}</strong></p>
+            <p style="color: red; margin-top: -30px;"><strong>{{ error }}</strong></p>
             {% endif %}
 
             <form action="{{ url_for('customer.customer_register') }}" method="POST">
@@ -92,7 +92,7 @@
                     </div>
                     <div class="form-item">
                         <label for="rg">RG</label>
-                        <input type="text" name="customer_rg" id="rg" maxlength="12" required>
+                        <input type="text" name="customer_rg" id="rg">
                     </div>
                     <div class="form-item">
                         <label for="birth">Data de Nascimento</label>

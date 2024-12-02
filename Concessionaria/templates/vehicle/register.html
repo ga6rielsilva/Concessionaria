@@ -73,11 +73,11 @@
             <form action="{{ url_for('vehicle.vehicle_register') }}" method="POST">
 
                 {% if message %}
-                <p style="color: green; text-align: center;"><strong>{{ message }}</strong></p>
+                <p style="color: green; text-align: center; margin-top: -30px;"><strong>{{ message }}</strong></p>
                 {% endif %}
 
                 {% if error %}
-                <p style="color: red; text-align: center;"><strong>{{ error }}</strong></p>
+                <p style="color: red; text-align: center; margin-top: -30px;"><strong>{{ error }}</strong></p>
                 {% endif %}
                 
                 <div class="form-container">
