@@ -142,4 +142,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
         });
     }
+
+    // Mostra label quando foto for adicionada na settings
+    const fileInput = document.getElementById('profilePhoto');
+    const previewImage = document.getElementById('preview');
+    const labelFotoNova = document.getElementById('labelFotoNova');
+
+    fileInput.addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                previewImage.src = e.target.result;
+                previewImage.style.display = 'block'; // Mostra a imagem
+                labelFotoNova.style.display = 'inline'; // Mostra o label
+            };
+
+            reader.readAsDataURL(file);
+        } else {
+            previewImage.style.display = 'none'; // Esconde a imagem
+            labelFotoNova.style.display = 'none'; // Esconde o label
+        }
+    });
 });
