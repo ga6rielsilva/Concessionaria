@@ -55,40 +55,77 @@ Este é um sistema de gerenciamento ERP para uma Concessionaria de veículos, on
    pip install Pillow
    ```
 
-4. Configure as variáveis de ambiente no arquivo `.env` (exemplo abaixo):
-   ```env
-   DATABASE_URL=postgres://usuario:senha@localhost:5432/nome-do-banco
-   PORT=3000
-   ```
-
-5. Execute as migrações do banco de dados:
-   ```bash
-   npx sequelize-cli db:migrate
-   ```
-
-6. Inicie o servidor:
-   ```bash
-   npm start
-   ```
-
 ---
 
 ## Uso
 
-1. **Acessar a interface**: Acesse `http://localhost:3000` em seu navegador.
-2. **Criar uma tarefa**: Clique em "Nova Tarefa" e preencha os detalhes.
-3. **Gerenciar tarefas**: Edite, exclua ou marque tarefas como concluídas para organizar suas atividades.
+1. **Acessar a interface**: Acesse `http://localhost:5000` em seu navegador.
 
 ---
 
 ## Estrutura do Projeto
 
-- `/src` - Código-fonte principal do sistema.
-- `/src/models` - Modelos para as entidades do banco de dados.
-- `/src/controllers` - Controladores que gerenciam a lógica de cada rota.
-- `/src/routes` - Definições de rotas para a API.
-- `/migrations` - Arquivos de migração para criar e modificar tabelas.
-- `/config` - Arquivo de configuração de conexão com o banco de dados.
+<details>
+### <summary>Estrutura do Projeto</summary>
+```plaintext
+   banco_de_dados/
+   └── concessionaria.sql
+   concessionaria/
+   └── app/
+       ├── controllers/
+       │   ├── auth_controller.py
+       │   ├── customer_controller.py
+       │   ├── employee_controller.py
+       │   ├── index_controller.py
+       │   ├── reports_controller.py
+       │   ├── sales_controller.py
+       │   ├── settings_controller.py
+       │   └── vehicle_controller.py
+       ├── database/
+       │   └── connection.py
+       ├── models/
+       │   ├── customer.py
+       │   ├── employee.py
+       │   ├── sale.py
+       │   └── vehicle.py
+       ├── routes/
+       │   ├── auth_routes.py
+       │   ├── customer_routes.py
+       │   ├── employee_routes.py
+       │   ├── index_routes.py
+       │   ├── reports_routes.py
+       │   ├── sales_routes.py
+       │   ├── settings_routes.py
+       │   └── vehicle_routes.py
+       └── static/
+           ├── css/
+           │   ├── login.css
+           │   └── style.css
+           ├── img/
+           │   └── logo.png
+           ├── javascript/
+           │   ├── event_handlers.js
+           │   ├── manipulator.js
+           │   └── validator.js
+           ├── templates/
+           │   ├── customer/
+           │   │   ├── edit.html
+           │   │   ├── register.html
+           │   │   └── search.html
+           │   ├── employee/
+           │   │   └── register.html
+           │   ├── vehicle/
+           │   │   ├── edit.html
+           │   │   ├── register.html
+           │   │   └── search.html
+           │   ├── index.html
+           │   ├── login.html
+           │   ├── reports.html
+           │   ├── sales.html
+           │   └── settings.html
+           └── main.py
+```
+</details>
 
 ---
 
