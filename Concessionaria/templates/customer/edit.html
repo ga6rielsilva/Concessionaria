@@ -80,7 +80,7 @@
                 <div class="form-container">
                     <div class="form-item">
                         <label for="customer_name">Nome:</label>
-                        <input type="text" id="customer_name" name="customer_name"
+                        <input type="text" id="name" name="customer_name"
                             value="{{ customer['nome_cliente'] }}" required>
                     </div>
                     <div class="form-item">
@@ -106,7 +106,7 @@
                     </div>
                     <div class="form-item">
                         <label for="customer_phone">Telefone:</label>
-                        <input type="text" id="customer_phone" name="customer_phone"
+                        <input type="text" id="phone" name="customer_phone"
                             value="{{ customer['telefone_cliente'] }}" required>
                     </div>
                     <div class="form-item">
@@ -116,17 +116,17 @@
                     </div>
                     <div class="form-item">
                         <label for="customer_address">Endereço:</label>
-                        <input type="text" id="customer_address" name="customer_address"
+                        <input type="text" id="address" name="customer_address"
                             value="{{ customer['endereco_cliente'] }}" required>
                     </div>
                     <div class="form-item">
                         <label for="customer_city">Cidade:</label>
-                        <input type="text" id="customer_city" name="customer_city"
+                        <input type="text" id="city" name="customer_city"
                             value="{{ customer['cidade_cliente'] }}" required>
                     </div>
                     <div class="form-item">
                         <label for="customer_state">Estado:</label>
-                        <input type="text" id="customer_state" name="customer_state"
+                        <input type="text" id="state" name="customer_state"
                             value="{{ customer['estado_cliente'] }}" required>
                     </div>
                     <div class="form-item">
@@ -136,11 +136,11 @@
                     </div>
                     <div class="form-item">
                         <label for="customer_country">País:</label>
-                        <input type="text" id="customer_country" name="customer_country"
+                        <input type="text" id="country" name="customer_country"
                             value="{{ customer['pais_cliente'] }}" required>
                     </div>
                     <div class="form-item form-button">
-                        <button type="submit">Salvar Alterações</button>
+                        <button type="submit">Salvar alterações</button>
                     </div>
                 </div>
             </form>
