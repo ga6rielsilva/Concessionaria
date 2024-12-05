@@ -6,7 +6,6 @@ import io
 from PIL import Image
 
 def employee_register():
-    # Inicializa variáveis de erro e mensagem
     error = None
     message = None
 

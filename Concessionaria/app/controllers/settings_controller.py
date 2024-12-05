@@ -5,7 +5,6 @@ import io
 from PIL import Image
 
 def settings():
-    # Inicializa as variáveis de erro, mensagem e imagem base64
     error = None
     message = None
     img_base64 = None

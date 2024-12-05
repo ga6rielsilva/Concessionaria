@@ -1,4 +1,4 @@
-from flask import request, render_template, redirect, url_for
+from flask import request, render_template
 from app.database.connection import getDatabaseConnection
 
 def stockreport():

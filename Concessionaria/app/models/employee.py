@@ -1,5 +1,6 @@
 class Employee:
-    def __init__(self, nome, cpf, rg, data_nascimento, sexo, telefone, email, endereco, cep, cidade, estado, pais):
+    def __init__(self, nome, cpf, rg, data_nascimento, sexo, telefone, email,
+                 endereco, cep, cidade, estado, pais):
         self.nome = nome
         self.cpf = cpf
         self.rg = rg
@@ -38,26 +39,40 @@ class Employee:
         # Executa a query com os valores fornecidos
         cursor.execute(query, values)
 
-    # Método estático para encontrar um funcionário pelo CPF
+    # Método para encontrar um funcionário pelo CPF
     @staticmethod
     def find_by_cpf(cursor, cpf):
         query = "SELECT * FROM tb_funcionarios WHERE cpf_funcionario = %s"
         cursor.execute(query, (cpf,))
         return cursor.fetchone()
 
-    # Método estático para deletar um funcionário pelo CPF
+    # Método para deletar um funcionário pelo CPF
     @staticmethod
     def delete_by_cpf(cursor, cpf):
         query = "DELETE FROM tb_funcionarios WHERE cpf_funcionario = %s"
         cursor.execute(query, (cpf,))
 
-    # Método estático para atualizar os dados de um funcionário pelo CPF
+    # Método para atualizar os dados de um funcionário pelo CPF
     @staticmethod
-    def update_by_cpf(cursor, cpf, nome, rg, data_nascimento, sexo, telefone, email, endereco, cep, cidade, estado, pais):
+    def update_by_cpf(cursor, cpf, nome, rg, data_nascimento, sexo, telefone,
+                      email, endereco, cep, cidade, estado, pais):
         query = """
-            UPDATE tb_funcionarios
-            SET nome_funcionario = %s, rg_funcionario = %s, data_nascimento = %s, sexo_funcionario = %s, telefone_funcionario = %s, email_funcionario = %s, endereco_funcionario = %s, cidade_funcionario = %s, estado_funcionario = %s, cep_funcionario = %s, pais_funcionario = %s
+            UPDATE tb_funcionarios SET
+                nome_funcionario = %s,
+                rg_funcionario = %s,
+                data_nascimento = %s,
+                sexo_funcionario = %s,
+                telefone_funcionario = %s,
+                email_funcionario = %s,
+                endereco_funcionario = %s,
+                cidade_funcionario = %s,
+                estado_funcionario = %s,
+                cep_funcionario = %s,
+                pais_funcionario = %s
             WHERE cpf_funcionario = %s
         """
-        values = (nome, rg, data_nascimento, sexo, telefone, email, endereco, cep, cidade, estado, pais, cpf)
+        # Valores a serem atualizados no banco de dados
+        values = (nome, rg, data_nascimento, sexo, telefone, email, endereco,
+                  cep, cidade, estado, pais, cpf)
+        # Executa a query com os valores fornecidos
         cursor.execute(query, values)
