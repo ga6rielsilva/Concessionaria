@@ -45,7 +45,7 @@
                     <a href="#">Relatórios</a>
                     <div class="submenu">
                         <a href="{{ url_for('reports.reports') }}">Vendas</a>
-                        <a href="{{ url_for('reports.reports') }}">Estoque</a>
+                        <a href="{{ url_for('reports.stockreport') }}">Estoque</a>
                     </div>
                 </div>
             </nav>
@@ -75,9 +75,9 @@
                     <p>Relatórios <br> Vendas</p>
                     <i class="material-symbols-outlined">paid</i>
                 </a>
-                <a href="{{ url_for('reports.reports') }}" class="menu-item">
-                    <p>Relatórios <br> Estoques</p>
-                    <i class="material-symbols-outlined menu-icon">package_2</i>
+                <a href="{{ url_for('reports.stockreport') }}" class="menu-item">
+                    <p>Relatórios <br> Estoque</p>
+                    <i class="material-symbols-outlined">inventory_2</i>
                 </a>
             </div>
     </main>

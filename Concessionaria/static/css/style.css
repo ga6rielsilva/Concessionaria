@@ -586,3 +586,39 @@ form {
     max-width: 398px;
     margin-top: 10px;
 }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 6px;
+    text-align: center;
+    /* width: 40px; */
+}
+
+.available {
+    color: green;
+    font-weight: bold;
+}
+
+.sold {
+    color: red;
+    font-weight: bold;
+}
+
+tr:nth-child(odd) {
+    background-color: #fff;  /* Cor de fundo para linhas ímpares */
+}
+
+/* Cor de fundo para a linha par */
+tr:nth-child(even) {
+    background-color: #f2f2f2;  /* Cor de fundo para linhas pares */
+}

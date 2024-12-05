@@ -67,53 +67,60 @@
 
     <main>
         <div class="main-container">
-            <div class="main-content">
-                <h1>Consulta de Veiculos </h1>
+            <h1>Relatório de Estoque</h1>
+
+            {% if message %}
+            <div class="message" style="color: red;">
+                <p>{{message}}</p>
             </div>
-            <div class="search-container search-item">
-                <form action="{{ url_for('vehicle.vehicle_search') }}" method="POST" id="search-form">
-                    <label for="plate_vehicle">Placa</label>
-                    <input type="text" name="plate_vehicle" id="plate_vehicle" placeholder="Digite a Placa do Veículo" required>
-                    <button type="submit">Buscar</button>
-                    {% if message %}
-                    <p style="color: green;"><strong>{{ message }}</strong></p>
-                    {% endif %}
-                </form>
+            {% endif %}
 
-                {% if vehicle %}
-                <div id="result-container">
-                    <div class="search-edit">
-                        <h2>Resultado da Busca</h2>
-                        <div class="edit-delete-button">
-                            <a href="{{ url_for('vehicle.edit_vehicle', plate=vehicle['placa']) }}" class="material-symbols-outlined edit-button" name="edit-button">edit<a>
-                            <form class="delete-form" action="{{ url_for('vehicle.delete_vehicle', plate=vehicle['placa']) }}" method="POST">
-                                <button type="submit" class="material-symbols-outlined delete-button" name="delete-button">delete</button>
-                            </form>
-                        </div>
-                    </div>
-                    <div id="vehicle-details">
-                        <p class="{% if vehicle.disponibilidade == 'Disponível' %}available{% else %}sold{% endif %}"><strong style="color: black;">Disponibilidade:</strong> {{ vehicle['disponibilidade']}}</p>
-                        <p><strong>categoria:</strong> {{vehicle['categoria']}} </p>
-                        <p><strong>Marca:</strong> {{ vehicle['marca'] }}</p>
-                        <p><strong>Modelo:</strong> {{ vehicle['modelo'] }}</p>
-                        <p><strong>Motor:</strong> {{ vehicle['motor_veiculo'] }}</p>
-                        <p><strong>Ano de Fabricação:</strong> {{ vehicle['ano_fabricacao'] }}</p>
-                        <p><strong>Ano do Modelo:</strong> {{ vehicle['ano_modelo'] }}</p>
-                        <p><strong>Cor:</strong> {{ vehicle['cor'] }}</p>
-                        <p><strong>Placa:</strong> {{ vehicle['placa'] }}</p>
-                        <p><strong>Chassi:</strong> {{ vehicle['chassi'] }}</p>
-                        <p><strong>Quilometragem:</strong> {{ vehicle['km_rodado'] }} km</p>
-                        <p><strong>Preço:</strong> {{ vehicle['valor_venda'] }}</p>
-                        <p><strong>Condição:</strong> {{ vehicle['condicao'] }}</p>
-                    </div>
-                </div>
-                {% endif %}
-
-                {% if error %}
-                <p style="color: red;"><strong>{{ error }}</strong></p>
-                {% endif %}
+            {% if error %}
+            <div class="message" style="color: red;">
+                <p>{{error}}</p>
             </div>
+            {% endif %}
 
+            {% if vehicles %}
+            <div class="search-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Disponibilidade</th>
+                            <th>Categoria</th>
+                            <th>Marca</th>
+                            <th>Modelo</th>
+                            <th>Placa</th>
+                            <th>Motor</th>
+                            <th>Ano do Veículo</th>
+                            <th>Ano de Fabricação</th>
+                            <th>Cor</th>
+                            <th>Quilometragem</th>
+                            <th>Valor de Venda</th>
+                            <th>Condição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for vehicle in vehicles %}
+                        <tr>
+                            <td class="{% if vehicle.disponibilidade == 'Disponível' %}available{% else %}sold{% endif %}">{{vehicle['disponibilidade']}}</td>
+                            <td>{{vehicle['categoria']}}</td>
+                            <td>{{vehicle['marca']}}</td>
+                            <td>{{vehicle['modelo']}}</td>
+                            <td>{{vehicle['placa']}}</td>
+                            <td>{{vehicle['motor_veiculo']}}</td>
+                            <td>{{vehicle['ano_modelo']}}</td>
+                            <td>{{vehicle['ano_fabricacao']}}</td>
+                            <td>{{vehicle['cor']}}</td>
+                            <td>{{vehicle['km_rodado']}} km</td>
+                            <td>{{vehicle['valor_venda']}}</td>
+                            <td>{{vehicle['condicao']}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
         </div>
     </main>
     <footer>
