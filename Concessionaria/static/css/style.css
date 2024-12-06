@@ -197,6 +197,19 @@ a {
     align-items: center;
 }
 
+/* Deixa alinhado os botões da página reports */
+.main-menu2 {
+    scale: 1.2;
+    height: 60%;
+    margin: 10px auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    justify-items: center;
+    align-items: center;
+}
+
+
 .menu-item {
     display: flex;
     flex-direction: column;
@@ -305,6 +318,16 @@ a {
     text-decoration: none;
     padding: 10px 20px;
     margin: 0 5px;
+}
+
+/* Centraliza ao h1 da pagina principal */
+.h1pgprincipal {
+    text-align: center;
+}
+
+/* Centraliza o p da pagina principal */
+.prpgprincipal{
+    text-align: center;
 }
 
 /* Contêiner do usuário */
