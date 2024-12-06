@@ -144,24 +144,28 @@ document.addEventListener("DOMContentLoaded", function () {
     const previewImage = document.getElementById('preview');
     const labelFotoNova = document.getElementById('labelFotoNova');
 
-    fileInput.addEventListener('change', function (event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
+    if (fileInput && previewImage && labelFotoNova) {
 
-            reader.onload = function (e) {
-                previewImage.src = e.target.result;
-                previewImage.style.display = 'block';
-                labelFotoNova.style.display = 'inline';
-            };
+        fileInput.addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
 
-            reader.readAsDataURL(file);
-        } else {
-            previewImage.style.display = 'none';
-            labelFotoNova.style.display = 'none';
-        }
-    });
+                reader.onload = function (e) {
+                    previewImage.src = e.target.result;
+                    previewImage.style.display = 'block';
+                    labelFotoNova.style.display = 'inline';
+                };
 
+                reader.readAsDataURL(file);
+            } else {
+                previewImage.style.display = 'none';
+                labelFotoNova.style.display = 'none';
+            }
+        });
+
+    }
+    
     // log para verificar se o script foi carregado
     console.log("Event_handlers.js carregado com sucesso!");
 });
