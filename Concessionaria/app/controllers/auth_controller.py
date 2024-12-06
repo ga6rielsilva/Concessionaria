@@ -39,7 +39,7 @@ def login():
         cursor = conn.cursor()
         query = """
             SELECT * FROM tb_usuarios
-            WHERE login = %s AND senha = %s
+            WHERE BINARY login = %s AND BINARY senha = %s
         """
         cursor.execute(query, (login, password))
         user = cursor.fetchone()
