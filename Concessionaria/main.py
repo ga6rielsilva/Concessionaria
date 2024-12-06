@@ -1,7 +1,6 @@
 from flask import Flask
-from app.database.connection import getDatabaseConnection
 from app.routes import (auth_routes, customer_routes, employee_routes, reports_routes, index_routes, sales_routes, settings_routes, vehicle_routes)
-from app.controllers.auth_controller import restrict_access
+from app.controllers.auth_controller import restrict_access, userEmployeeForAdmin
 
 app = Flask(__name__, template_folder='templates')
 app.secret_key = 'z/\x9c\x9bO\r\xcb\xec\xa5kSC\x890P(\xf0\xbd\xa2\\K\xf3\x13\xd4'
@@ -22,8 +21,5 @@ def before_request():
     return restrict_access()
 
 if __name__ == '__main__':
-    try:
-        conn = getDatabaseConnection()
-        conn.close()
-    finally:
-        app.run(debug=True)
+    userEmployeeForAdmin()
+    app.run(debug=True)

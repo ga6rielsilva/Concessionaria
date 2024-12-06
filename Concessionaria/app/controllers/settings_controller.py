@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import render_template, request, redirect, url_for
 from app.database.connection import getDatabaseConnection
 import base64
 import io
@@ -98,7 +98,7 @@ def settings():
 
     # Processamento da foto
     if request.method == 'POST':
-        profilePhoto = request.files['profilePhoto']
+        profilePhoto = request.files.get('profilePhoto')
         if profilePhoto:
             # Lê os dados da foto
             img_data = profilePhoto.read()
@@ -123,6 +123,8 @@ def settings():
             conn.commit()
             cursor.close()
             conn.close()
+            # Atualiza a página caso a foto tenha sido alterada
+            return redirect(url_for('settings.settings'))
 
     # Renderiza o template settings.html com as variáveis de contexto
     return render_template('settings.html', error=error, message=message, username=request.cookies.get('username'), img_base64=img_base64)
