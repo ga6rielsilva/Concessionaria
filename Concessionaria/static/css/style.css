@@ -341,12 +341,13 @@ a {
     display: none;
     position: absolute;
     top: 100%;
-    right: 5px;
-    background-color: var(--main-color);
+    right: 10px;
+    background-color: white;
     min-width: 150px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
     z-index: 1;
+    margin-top: 5px;
 }
 
 .user-submenu a {
