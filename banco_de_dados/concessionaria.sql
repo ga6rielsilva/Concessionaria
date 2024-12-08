@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS tb_veiculos(
 	placa VARCHAR(40) NOT NULL,
 	chassi VARCHAR(40) NOT NULL,
 	renavam VARCHAR(40) NOT NULL,
-	km_rodado INT NOT NULL,
+	km_rodado VARCHAR(40) NOT NULL,
 	valor_compra VARCHAR(40) NOT NULL,
 	valor_venda VARCHAR(40) NOT NULL,
 	condicao VARCHAR(40) NOT NULL,

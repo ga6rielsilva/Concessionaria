@@ -82,8 +82,8 @@
             {% endif %}
 
             {% if vehicles %}
-            <div class="search-container">
-                <table>
+            <div class="search-container-table">
+                <table id="vehicleTable">
                     <thead>
                         <tr>
                             <th>Disponibilidade</th>
@@ -103,7 +103,7 @@
                     <tbody>
                         {% for vehicle in vehicles %}
                         <tr>
-                            <td class="{% if vehicle.disponibilidade == 'Disponível' %}available{% else %}sold{% endif %}">{{vehicle['disponibilidade']}}</td>
+                            <td class="{% if vehicle.disponibilidade in ['Disponível', 'disponível', 'Disponivel', 'disponivel'] %}available{% else %}sold{% endif %}">{{vehicle['disponibilidade']}}</td>
                             <td>{{vehicle['categoria']}}</td>
                             <td>{{vehicle['marca']}}</td>
                             <td>{{vehicle['modelo']}}</td>
