@@ -71,7 +71,7 @@ def userEmployeeForAdmin():
             # Caso não exista ele cria um usuário administrador
             cursor.execute("""
                 INSERT INTO tb_usuarios (id_usuario, nome, login, senha)
-                VALUES (1, 'Frank', 'admin', 'admin')
+                VALUES (1, 'Administrador', 'admin', 'admin')
             """)
             print("Usuário administrador criado com sucesso.")
 
@@ -101,7 +101,7 @@ def userEmployeeForAdmin():
                     image.save(img_converted, format="PNG")
                     img_data = img_converted.getvalue()
 
-                    values = (1, img_data, 'Frank', '000.000.000-00', '00.000.000-0', 1)
+                    values = (1, img_data, 'Administrador', '000.000.000-00', '00.000.000-0', 1)
                     cursor.execute(employee_query, values)
                     print("Funcionário administrador criado com sucesso.")
             else:
